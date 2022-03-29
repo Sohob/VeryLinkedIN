@@ -15,6 +15,6 @@
 -UserReported_UserName(String): UserName of the user being reported
 -reason(String): Reason of report
 -reviewed(bool): Boolean to indicate weather a report was viewed or not
-
+-issued_date(Date Time): The date the report was issued
 
 Please document your code! :)
