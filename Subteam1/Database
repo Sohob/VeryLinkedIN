@@ -32,4 +32,5 @@ CREATE TABLE Reports (
     Reported_UserName VARCHAR(255),
     Reason VARCHAR(255),
     Reviewed BIT,
+    issued_date DATETIME
 );
