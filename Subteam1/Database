@@ -1,0 +1,35 @@
+-- Create a new database called 'LinkedIn'
+-- Connect to the 'master' database to run this snippet
+USE master
+GO
+-- Create the new database if it does not exist already
+IF NOT EXISTS (
+    SELECT name
+        FROM sys.databases
+        WHERE name = N'LinkedIn'
+)
+CREATE DATABASE LinkedIn
+GO
+
+
+CREATE TABLE USERS (
+    USER_NAME varchar(255),
+    NAME varchar(255),
+    Password VARCHAR(255),
+    Age datetime,
+    Profile_photo VARBINARY(2048)
+);
+CREATE TABLE BLOCKED_Accounts (
+    User_Name varchar(255),
+    Blocked_UserName VARCHAR(255)
+);
+CREATE TABLE Skills (
+    User_Name varchar(255),
+    Skill VARCHAR(255)
+);
+CREATE TABLE Reports (
+    User_Name varchar(255),
+    Reported_UserName VARCHAR(255),
+    Reason VARCHAR(255),
+    Reviewed BIT,
+);
