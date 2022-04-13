@@ -8,6 +8,7 @@ IF NOT EXISTS (
         FROM sys.databases
         WHERE name = N'LinkedIn'
 )
+--postgresql
 CREATE DATABASE LinkedIn
 GO
 
@@ -16,8 +17,8 @@ CREATE TABLE USERS (
     USER_NAME varchar(255),
     NAME varchar(255),
     Password VARCHAR(255),
-    Age datetime,
-    Profile_photo VARBINARY(2048)
+    Age TIMESTAMP,
+    Profile_photo bytea
 );
 CREATE TABLE BLOCKED_Accounts (
     User_Name varchar(255),
@@ -32,5 +33,5 @@ CREATE TABLE Reports (
     Reported_UserName VARCHAR(255),
     Reason VARCHAR(255),
     Reviewed BIT,
-    issued_date DATETIME
+    issued_date TIMESTAMP
 );
