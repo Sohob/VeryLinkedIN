@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mypost" />
+        <module name="viewpost" />
+        <module name="profile" />
+        <module name="groups" />
+        <module name="recommendations" />
+        <module name="account" />
+        <module name="reporting" />
+        <module name="notifications" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
