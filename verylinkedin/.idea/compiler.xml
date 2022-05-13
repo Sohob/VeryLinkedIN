@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="mypost" />
+        <module name="core" />
         <module name="viewpost" />
         <module name="profile" />
         <module name="groups" />

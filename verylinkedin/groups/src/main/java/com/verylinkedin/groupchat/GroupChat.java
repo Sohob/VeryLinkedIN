@@ -2,6 +2,8 @@ package com.verylinkedin.groupchat;
 
 import lombok.Builder;
 import lombok.Data;
+import org.bson.json.JsonObject;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.ArrayList;
 
@@ -9,9 +11,8 @@ import java.util.ArrayList;
 @Builder
 public class GroupChat {
     private ArrayList<Integer> participants;
-    private ArrayList<Integer> admins;
+    private Integer admin;
     private String title;
     private String description;
-    private String chatText;
-    private String groupPhoto;
-}
+    private ArrayList<Message> chatText;
+    private String groupPhoto;}

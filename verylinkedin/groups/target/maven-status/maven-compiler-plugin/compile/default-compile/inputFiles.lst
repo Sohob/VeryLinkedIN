@@ -1,0 +1,15 @@
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/GroupChatApplication.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/Command.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/GroupChat.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/GroupRepository.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/CreateGroupRequest.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/SendingMessageRequest.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/GroupChatService.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/ViewChat.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/Message.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/RabbitMQSender.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/MessageRepository.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/SendMessage.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/config/RabbitMQConfig.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/GroupChatController.java
+/home/mostafa/Documents/VeryLinkedIN/VeryLinkedIN/verylinkedin/groups/src/main/java/com/verylinkedin/groupchat/CreateGroup.java
