@@ -4,3 +4,17 @@ server:
 spring:
   application:
     name: groups
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: GroupChats
+
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    groups: groups.queue
+  routing-keys:
+    internal-groups: internal.groups.routing.key

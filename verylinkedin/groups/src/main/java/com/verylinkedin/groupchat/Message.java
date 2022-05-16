@@ -2,16 +2,19 @@ package com.verylinkedin.groupchat;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Data
 @Builder
+@ToString
 public class Message {
-    private int sender;
+    private String sender;
     private LocalDateTime time;
     private String content;
-    private ArrayList<Integer> read;
-    private ArrayList<Integer> unread;
+    private ArrayList<String> read;
+    private ArrayList<String> unread;
 }

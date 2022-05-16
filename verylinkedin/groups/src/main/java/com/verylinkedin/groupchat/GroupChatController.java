@@ -1,32 +1,29 @@
 package com.verylinkedin.groupchat;
 
-/*
+
 import lombok.extern.slf4j.Slf4j;
-import messagingrabbitmq.MessagingRabbitmqApplication;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Dictionary;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Optional;
 
 @Slf4j
 @RestController
 @Component
 @RequestMapping("api/v1/groups")
-public record GroupChatController(GroupChatService groupChatService,Receiver receiver, RabbitTemplate rabbitTemplate) {
+public record GroupChatController(GroupChatService groupChatService, RabbitTemplate rabbitTemplate) {
 
 
-    @GetMapping("/view/{groupId}")
+    // TODO Replace userId from path variable when authentication is finished
+    @GetMapping("/view/{userId}/{groupId}")
     public @ResponseBody
-    ResponseEntity<String> viewChat(@PathVariable String groupId) throws InterruptedException {
+    ResponseEntity<String> viewChat(@PathVariable String groupId, @PathVariable String userId) {
         log.info("viewing messages in group {}", groupId);
-        List res = groupChatService.viewChat(groupId);
+        List<GroupChat> res = groupChatService.viewChat(groupId, userId);
         return new ResponseEntity<String>("Chat details: " + res,
                 HttpStatus.OK);
     }/*
@@ -47,5 +44,5 @@ public record GroupChatController(GroupChatService groupChatService,Receiver rec
     public void createGroup(@RequestBody CreateGroupRequest createGroupRequest){
         log.info("message being sent {}", createGroupRequest);
         groupChatService.createGroup(createGroupRequest);
-    }
-}*/
+    }*/
+}

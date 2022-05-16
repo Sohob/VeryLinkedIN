@@ -10,6 +10,7 @@
         <module name="mypost" />
         <module name="core" />
         <module name="viewpost" />
+        <module name="amqp" />
         <module name="profile" />
         <module name="groups" />
         <module name="recommendations" />
