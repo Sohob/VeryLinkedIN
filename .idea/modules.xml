@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/VeryLinkedIN.iml" filepath="$PROJECT_DIR$/.idea/VeryLinkedIN.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/account/account.iml" filepath="$PROJECT_DIR$/verylinkedin/account/account.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/amqp/amqp.iml" filepath="$PROJECT_DIR$/verylinkedin/amqp/amqp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/core/core.iml" filepath="$PROJECT_DIR$/verylinkedin/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/docker/docker.iml" filepath="$PROJECT_DIR$/verylinkedin/docker/docker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/groups/groups.iml" filepath="$PROJECT_DIR$/verylinkedin/groups/groups.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/mypost/mypost.iml" filepath="$PROJECT_DIR$/verylinkedin/mypost/mypost.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/notifications/notifications.iml" filepath="$PROJECT_DIR$/verylinkedin/notifications/notifications.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/profile/profile.iml" filepath="$PROJECT_DIR$/verylinkedin/profile/profile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/recommendations/recommendations.iml" filepath="$PROJECT_DIR$/verylinkedin/recommendations/recommendations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/reporting/reporting.iml" filepath="$PROJECT_DIR$/verylinkedin/reporting/reporting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/verylinkedin.iml" filepath="$PROJECT_DIR$/verylinkedin/verylinkedin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/viewpost/viewpost.iml" filepath="$PROJECT_DIR$/verylinkedin/viewpost/viewpost.iml" />
+    </modules>
+  </component>
+</project>
