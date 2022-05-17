@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mypost" />
+        <module name="core" />
+        <module name="viewpost" />
+        <module name="amqp" />
+        <module name="profile" />
+        <module name="groups" />
+        <module name="recommendations" />
+        <module name="account" />
+        <module name="reporting" />
+        <module name="notifications" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="account" target="17" />
+      <module name="amqp" target="17" />
+      <module name="core" target="17" />
+      <module name="groups" target="17" />
+      <module name="mypost" target="17" />
+      <module name="notifications" target="17" />
+      <module name="profile" target="17" />
+      <module name="recommendations" target="17" />
+      <module name="reporting" target="17" />
+      <module name="verylinkedin" target="17" />
+      <module name="viewpost" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

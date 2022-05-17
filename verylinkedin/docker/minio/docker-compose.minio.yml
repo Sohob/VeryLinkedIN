@@ -1,0 +1,23 @@
+version: "3"
+
+networks:
+  dev-net:
+    driver: bridge
+
+volumes:
+  minio_volume:
+
+services:
+  # starts 4 docker containers running minio server instances. Each
+  # minio server's web interface will be accessible on the host at port
+  # 9001 through 9004.
+  minio:
+    image: minio/minio
+    ports:
+      - "9001:9000"
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    command: server /data
+    volumes:
+      - minio_volume:/data

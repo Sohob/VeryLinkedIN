@@ -4,3 +4,6 @@ server:
 spring:
   application:
     name: core
+  data:
+    mongodb.host: localhost
+    mongodb.port: 27017
