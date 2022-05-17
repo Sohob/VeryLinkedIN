@@ -1,0 +1,20 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: mypost
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: MyPost
+
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    groups: mypost.queue
+  routing-keys:
+    internal-groups: internal.mypost.routing.key
