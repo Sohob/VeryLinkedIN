@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 
 
@@ -28,9 +29,9 @@ public class Post {
 //    @LastModifiedDate
 //    private DateTime lastModified;
     private boolean isPublic=true;
+    private ArrayList<Comment> comments;
     private ArrayList<Media> media;
-
-
+    private ArrayList<String> likes;
 }
 
 
