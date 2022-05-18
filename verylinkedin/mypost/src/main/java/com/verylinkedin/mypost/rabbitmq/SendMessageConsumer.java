@@ -3,6 +3,7 @@ package com.verylinkedin.mypost.rabbitmq;
 
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
 import com.verylinkedin.mypost.PostService;
+import com.verylinkedin.mypost.deletePost.DeletePostRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
@@ -51,6 +52,12 @@ public class SendMessageConsumer {
                 EditPostRequest editPost = new EditPostRequest(requestJSON.getString("postId"),requestJSON.getString("content"));
                 postService.editPost(editPost);
                 break;
+
+            case "com.verylinkedin.mypost.deletePost.DeletePostRequest":
+                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+                DeletePostRequest deletePostRequest = new DeletePostRequest(requestJSON.getString("postId"));
+                postService.deletePost(deletePostRequest);
+                System.out.println("yarab"); break;
         }
 
 

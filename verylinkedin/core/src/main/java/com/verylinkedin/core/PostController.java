@@ -3,6 +3,7 @@ package com.verylinkedin.core;
 import com.verylinkedin.amqp.RabbitMQMessageProducer;
 import com.verylinkedin.mypost.CreatePost.CreatePostRequest;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
+import com.verylinkedin.mypost.deletePost.DeletePostRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -28,10 +29,19 @@ public class PostController {
         );
     }
     @PutMapping("/editPost")
-    public void editPost(@RequestBody EditPostRequest editPostRequest)  {
+    public void editPost(@RequestBody EditPostRequest editPostRequest) {
 
         rabbitMQMessageProducer.publish(
                 editPostRequest,
+                "internal.exchange",
+                "internal.mypost.routing.key"
+        );
+    }
+    @DeleteMapping("/deletePost")
+    public void  deletePost(@RequestBody DeletePostRequest deletePostRequest)  {
+
+        rabbitMQMessageProducer.publish(
+                deletePostRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
