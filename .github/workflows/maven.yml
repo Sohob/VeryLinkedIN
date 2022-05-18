@@ -24,3 +24,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file verylinkedin/pom.xml
+
+    - name: Build Posts service
+      run: mvn -B package --file verylinkedin/mypost/pom.xml
