@@ -38,15 +38,15 @@ jobs:
         - name: Build Account service
           run: mvn -B package --file verylinkedin/account/pom.xml
     ####
-        - name: Test - Posts service
-          run: mvn -B   verylinkedin/mypost/test
-
-        - name: Test - Groups service
-          run: mvn -B   verylinkedin/groups/test
-
-        - name: Build Account service
-          run: mvn -B   verylinkedin/account/test
-
+#        - name: Test - Posts service
+#          run: mvn -B   verylinkedin/mypost/test
+#
+#        - name: Test - Groups service
+#          run: mvn -B   verylinkedin/groups/test
+#
+#        - name: Build Account service
+#          run: mvn -B   verylinkedin/account/test
+#
 #    #
     #    - name: Test - Notification service
     #      run: mvn -B  --file verylinkedin/notifications/pom.xml
