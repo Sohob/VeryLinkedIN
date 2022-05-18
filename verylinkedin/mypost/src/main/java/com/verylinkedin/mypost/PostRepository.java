@@ -8,4 +8,5 @@ import java.util.List;
 public interface PostRepository extends MongoRepository<Post, Integer> {
 
     Post findById(String id);
+    void deleteById(String id);
 }
