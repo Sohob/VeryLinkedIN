@@ -1,6 +1,7 @@
 package com.verylinkedin.mypost.rabbitmq;
 
 
+import com.verylinkedin.mypost.EditPost.EditPostRequest;
 import com.verylinkedin.mypost.PostService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,12 @@ public class SendMessageConsumer {
 
                 postService.createPost(createPostRequest);
                 System.out.print(x);
-
+                break;
+            case "com.verylinkedin.mypost.EditPost.EditPostRequest":
+                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+                EditPostRequest editPost = new EditPostRequest(requestJSON.getString("postId"),requestJSON.getString("content"));
+                postService.editPost(editPost);
+                break;
         }
 
 

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PostRepository extends MongoRepository<Post, Integer> {
 
-    List<Post> findById(String id);
+    Post findById(String id);
 }
