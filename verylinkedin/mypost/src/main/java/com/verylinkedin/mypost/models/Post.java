@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
+
 
 @Data
 @AllArgsConstructor
@@ -26,8 +28,7 @@ public class Post {
 //    @LastModifiedDate
 //    private DateTime lastModified;
     private boolean isPublic;
-
-    private Media[] media;
+    private ArrayList<Media> media;
 
 
 }
