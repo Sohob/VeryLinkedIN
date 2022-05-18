@@ -2,6 +2,7 @@ package com.verylinkedin.core;
 import com.verylinkedin.amqp.RabbitMQMessageProducer;
 import com.verylinkedin.groupchat.creategroup.CreateGroupRequest;
 import com.verylinkedin.groupchat.sendmessage.SendingMessageRequest;
+import com.verylinkedin.mypost.CreatePost.CreatePostRequest ;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,18 @@ public class Controller {
     // TODO Replace userId from path variable when authentication is finished
     @PostMapping("/view/{userId}/{groupId}/send")
     public void sendMessage(@RequestBody SendingMessageRequest request, @PathVariable String userId, @PathVariable String groupId){
+
         rabbitMQMessageProducer.publish(
                 new SendingMessageRequest(userId,groupId,request.message()),
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
+
     }
     @PostMapping("/create")
     public void createGroup(@RequestBody CreateGroupRequest createGroupRequest){
         //log.info("message being sent {}", createGroupRequest);
+
         rabbitMQMessageProducer.publish(
                 createGroupRequest,
                 "internal.exchange",
@@ -47,6 +51,18 @@ public class Controller {
         );
     }*/
     //@RabbitListener(queues = "${rabbitmq.queues.groups}")
+
+
+
+    @GetMapping("/post")
+    public void  createPost(@RequestBody CreatePostRequest createPostRequest)  {
+    System.out.print ("ddddd");
+        rabbitMQMessageProducer.publish(
+                createPostRequest,
+                "internal.exchange",
+                "internal.mypost.routing.key"
+        );
+       }
     public @ResponseBody
     ResponseEntity<String> viewChatResponse(ResponseEntity<String> message) {
         return message;

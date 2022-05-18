@@ -25,5 +25,4 @@ services:
       - "5672:5672"
     networks:
       - dev-net
-    volumes:
-    - ./conf/:/etc/rabbitmq/
+

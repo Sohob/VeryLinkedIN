@@ -22,6 +22,7 @@ public record GroupChatController(GroupChatService groupChatService, RabbitTempl
     @GetMapping("/view/{userId}/{groupId}")
     public @ResponseBody
     ResponseEntity<String> viewChat(@PathVariable String groupId, @PathVariable String userId) {
+
         log.info("viewing messages in group {}", groupId);
         List<GroupChat> res = groupChatService.viewChat(groupId, userId);
         return new ResponseEntity<String>("Chat details: " + res,

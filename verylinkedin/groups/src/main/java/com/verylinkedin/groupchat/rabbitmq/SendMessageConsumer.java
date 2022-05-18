@@ -41,6 +41,7 @@ public class SendMessageConsumer {
                 groupChatService.sendMessage(request);break;
            case "com.verylinkedin.groupchat.creategroup.CreateGroupRequest":
                // Convert to a JSON object
+               System.out.println("hhhhhhh");
                 requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
                log.info("Request JSON looks like this {}", requestJSON.getJSONArray("participants").getString(0));
 
