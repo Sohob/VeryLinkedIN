@@ -1,6 +1,7 @@
 package com.verylinkedin.mypost.rabbitmq;
 
 
+import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
 import com.verylinkedin.mypost.PostService;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
@@ -58,6 +59,14 @@ public class SendMessageConsumer {
                 DeletePostRequest deletePostRequest = new DeletePostRequest(requestJSON.getString("postId"));
                 postService.deletePost(deletePostRequest);
                 System.out.println("yarab"); break;
+
+            case "com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest":
+                System.out.println("leeeeeeh");
+                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+                ChangeVisibilityRequest changeVisibilityRequest= new ChangeVisibilityRequest(requestJSON.getString("userId"),requestJSON.getString("postId"));
+                postService.changeVisibility(changeVisibilityRequest);
+                break;
+
         }
 
 

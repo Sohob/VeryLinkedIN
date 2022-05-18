@@ -1,6 +1,7 @@
 package com.verylinkedin.core;
 
 import com.verylinkedin.amqp.RabbitMQMessageProducer;
+import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest;
 import com.verylinkedin.mypost.CreatePost.CreatePostRequest;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
@@ -46,5 +47,17 @@ public class PostController {
                 "internal.mypost.routing.key"
         );
     }
+
+    @PutMapping("/changeVisibility")
+    public void  changeVisibility(@RequestBody ChangeVisibilityRequest changeVisibilityRequest)  {
+
+        rabbitMQMessageProducer.publish(
+                changeVisibilityRequest,
+                "internal.exchange",
+                "internal.mypost.routing.key"
+        );
+    }
+
+
 
 }

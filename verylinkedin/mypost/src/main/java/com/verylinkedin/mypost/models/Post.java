@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,8 @@ public class Post {
 //    private DateTime createdAt;
 //    @LastModifiedDate
 //    private DateTime lastModified;
-    private boolean isPublic=true;
+    @Field
+    private boolean isPublic;
     private ArrayList<Media> media;
 
 
