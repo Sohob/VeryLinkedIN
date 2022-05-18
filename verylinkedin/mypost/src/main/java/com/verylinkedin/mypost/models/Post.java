@@ -5,21 +5,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.ArrayList;
 
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Document
 @Builder
 
 
 public class Post {
-    private int userId;
-
+    private String userId;
     @Id
-    private int id;
+    private String id;
     private String content;
     //    @Version
 //    private Long version;
@@ -27,7 +27,7 @@ public class Post {
 //    private DateTime createdAt;
 //    @LastModifiedDate
 //    private DateTime lastModified;
-    private boolean isPublic;
+    private boolean isPublic=true;
     private ArrayList<Media> media;
 
 

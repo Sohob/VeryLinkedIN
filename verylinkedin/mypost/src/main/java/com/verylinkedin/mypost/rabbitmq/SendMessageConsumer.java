@@ -1,9 +1,9 @@
 package com.verylinkedin.mypost.rabbitmq;
 
 
+import com.verylinkedin.mypost.PostService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.amqp.core.Message;
@@ -11,14 +11,12 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import com.verylinkedin.mypost.CreatePost.CreatePostRequest ;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class SendMessageConsumer {
+    private final PostService postService;
 
 
 
@@ -38,6 +36,13 @@ public class SendMessageConsumer {
 
                 requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
                 CreatePostRequest x = new CreatePostRequest(requestJSON.getString("userId"),requestJSON.getString("content"));
+
+                CreatePostRequest createPostRequest = new CreatePostRequest(
+
+                        requestJSON.getString("userId"),
+                        requestJSON.getString("content"));
+
+                postService.createPost(createPostRequest);
                 System.out.print(x);
 
         }

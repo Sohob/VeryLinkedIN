@@ -54,9 +54,9 @@ public class Controller {
 
 
 
-    @GetMapping("/post")
+    @PostMapping("/CreatePost")
     public void  createPost(@RequestBody CreatePostRequest createPostRequest)  {
-    System.out.print ("ddddd");
+
         rabbitMQMessageProducer.publish(
                 createPostRequest,
                 "internal.exchange",
