@@ -1,7 +1,5 @@
 package com.verylinkedin.mypost.models;
 
-import org.springframework.data.annotation.Id;
-
 public class Comment {
     private String id;
     private String userId;
