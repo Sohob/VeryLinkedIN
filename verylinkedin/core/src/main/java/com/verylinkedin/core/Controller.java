@@ -52,17 +52,6 @@ public class Controller {
     }*/
     //@RabbitListener(queues = "${rabbitmq.queues.groups}")
 
-
-
-    @PostMapping("/CreatePost")
-    public void  createPost(@RequestBody CreatePostRequest createPostRequest)  {
-
-        rabbitMQMessageProducer.publish(
-                createPostRequest,
-                "internal.exchange",
-                "internal.mypost.routing.key"
-        );
-       }
     public @ResponseBody
     ResponseEntity<String> viewChatResponse(ResponseEntity<String> message) {
         return message;
