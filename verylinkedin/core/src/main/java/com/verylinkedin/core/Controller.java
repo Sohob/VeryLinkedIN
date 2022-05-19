@@ -1,6 +1,7 @@
 package com.verylinkedin.core;
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
 import com.verylinkedin.core.requests.CreateGroupRequest;
+import com.verylinkedin.core.requests.Notification;
 import com.verylinkedin.core.requests.SendingMessageRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+
 
 @Slf4j
 @RestController
@@ -17,6 +19,16 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class Controller {
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
+
+    @PostMapping("/notification_user")
+    public String notification(@RequestBody Notification notification){
+        rabbitMQMessageProducer.publish(
+                notification,
+                "internal.exchange",
+                "internal.notifications.routing.key"
+        );
+        return "NOTIFICATION";
+    }
 
     // TODO Replace userId from path variable when authentication is finished
     @PostMapping("/view/{userId}/{groupId}/send")
