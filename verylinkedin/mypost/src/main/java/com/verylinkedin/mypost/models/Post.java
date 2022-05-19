@@ -24,7 +24,7 @@ public class Post {
 //    private DateTime createdAt;
 //    @LastModifiedDate
 //    private DateTime lastModified;
-    private boolean isPublic;
+        private boolean isPublic;
     private ArrayList<Comment> comments;
     private ArrayList<Media> media;
     private ArrayList<String> likes;

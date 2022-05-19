@@ -16,6 +16,7 @@ public record PostService(PostRepository postRepository) {
     public void createPost(CreatePostRequest request){
         CreatePost createGroup = new CreatePost(request, postRepository);
         createGroup.execute();
+
     }
 
     public void editPost(EditPostRequest request){

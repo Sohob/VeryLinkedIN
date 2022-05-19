@@ -22,9 +22,7 @@ services:
       - dev-net
 
   mongo_results:
-    networks:
-      - dev-net
-    container_name: mongo_results
+    container_name: mongo_container
     image: mongo:4.0.1
     volumes:
       - mongo_data:/data/db

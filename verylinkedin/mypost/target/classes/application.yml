@@ -18,3 +18,10 @@ rabbitmq:
     groups: mypost.queue
   routing-keys:
     internal-groups: internal.mypost.routing.key
+
+minio:
+  endpoint: localhost
+  port: 9001
+  accessKey: minio
+  secretKey: minio123
+
