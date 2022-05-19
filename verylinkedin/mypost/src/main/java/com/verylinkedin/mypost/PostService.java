@@ -10,6 +10,8 @@ import com.verylinkedin.mypost.CreatePost.CreatePost;
 import com.verylinkedin.mypost.CreatePost.CreatePostRequest;
 import com.verylinkedin.mypost.EditPost.EditPost;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
+import com.verylinkedin.mypost.LikePost.LikePost;
+import com.verylinkedin.mypost.LikePost.LikePostRequest;
 import com.verylinkedin.mypost.deletePost.DeletePost;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
 
@@ -45,5 +47,10 @@ public record PostService(PostRepository postRepository) {
     public void banUser(BanUserRequest request) {
         BanUser banUser = new BanUser(request, postRepository);
         banUser.execute();
+    }
+
+    public void likePost(LikePostRequest request){
+        LikePost likePost = new LikePost(request, postRepository);
+        likePost.execute();
     }
 }

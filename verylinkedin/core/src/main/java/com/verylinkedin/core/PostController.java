@@ -6,6 +6,7 @@ import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest;
 import com.verylinkedin.mypost.AddComment.AddCommentRequest;
 import com.verylinkedin.mypost.CreatePost.CreatePostRequest;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
+import com.verylinkedin.mypost.LikePost.LikePostRequest;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,6 +75,16 @@ public class PostController {
 
         rabbitMQMessageProducer.publish(
                 banUserRequest,
+                "internal.exchange",
+                "internal.mypost.routing.key"
+        );
+    }
+
+    @PutMapping("/likePost")
+    public void  likePost(@RequestBody LikePostRequest likePostRequest)  {
+
+        rabbitMQMessageProducer.publish(
+                likePostRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );

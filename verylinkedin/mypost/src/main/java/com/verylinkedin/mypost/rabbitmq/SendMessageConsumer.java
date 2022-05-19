@@ -5,6 +5,7 @@ import com.verylinkedin.mypost.BanUser.BanUserRequest;
 import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest;
 import com.verylinkedin.mypost.AddComment.AddCommentRequest;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
+import com.verylinkedin.mypost.LikePost.LikePostRequest;
 import com.verylinkedin.mypost.PostService;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
 import lombok.AllArgsConstructor;
@@ -66,6 +67,11 @@ public class SendMessageConsumer {
                 requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
                 ChangeVisibilityRequest changeVisibilityRequest= new ChangeVisibilityRequest(requestJSON.getString("userId"),requestJSON.getString("postId"));
                 postService.changeVisibility(changeVisibilityRequest);
+                break;
+            case "com.verylinkedin.mypost.LikePost.LikePostRequest":
+                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+                LikePostRequest likePostRequest = new LikePostRequest(requestJSON.getString("userId"),requestJSON.getString("postId"));
+                postService.likePost(likePostRequest);
                 break;
 
             case "com.verylinkedin.mypost.AddComment.AddCommentRequest":
