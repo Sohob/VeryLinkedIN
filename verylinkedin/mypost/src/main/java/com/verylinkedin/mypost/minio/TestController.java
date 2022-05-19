@@ -10,9 +10,12 @@ import com.verylinkedin.mypost.minio.config.*;
 import com.verylinkedin.mypost.models.Media;
 
 import io.minio.messages.Item;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -30,12 +33,16 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
+@Service
+@AllArgsConstructor
+@Slf4j
 @RestController
 @RequestMapping("/files")
 public class TestController {
 
     @Autowired
     private MinioService minioService;
+    private MediaService mediaService ;
 
     @GetMapping
     public List<Item> testMinio() throws MinioException {
@@ -63,10 +70,10 @@ public class TestController {
 
             minioService.upload(path, file.getInputStream(), file.getContentType());
 
-//            MediaService mediaService ;
-//           CreateMediaRequest createMediaRequest = new CreateMediaRequest();
-//            Media media_doc  =  mediaService.createMedia(createMediaRequest);
-//            int id = media_doc.getId();
+            System.out.println(mediaService);
+           CreateMediaRequest createMediaRequest = new CreateMediaRequest();
+            Media media_doc  =  mediaService.createMedia(createMediaRequest);
+            int id = media_doc.getId();
 
             HashMap<String, String> map = new HashMap<>();
 
