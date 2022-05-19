@@ -67,13 +67,11 @@ public class TestController {
     public HashMap addAttachement(@RequestParam("file") MultipartFile file , HttpServletRequest request ) {
         Path path = Path.of(file.getOriginalFilename());
         try {
-
-            minioService.upload(path, file.getInputStream(), file.getContentType());
-
-            System.out.println(mediaService);
            CreateMediaRequest createMediaRequest = new CreateMediaRequest();
             Media media_doc  =  mediaService.createMedia(createMediaRequest);
-            int id = media_doc.getId();
+            String id = media_doc.getId();
+
+            minioService.upload(Path.of(id), file.getInputStream(), file.getContentType());
 
             HashMap<String, String> map = new HashMap<>();
 
@@ -85,8 +83,8 @@ public class TestController {
             serverURL = new URL(newUri.getScheme(),      // http
                     newUri.getHost(),  // host
                     newUri.getPort(),
-                    "/files/");
-            map.put( "self", String.valueOf(serverURL));
+                    "/files/"+id);
+            map.put( "link", String.valueOf(serverURL));
 
 
 

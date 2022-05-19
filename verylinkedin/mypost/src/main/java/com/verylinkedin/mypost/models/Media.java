@@ -12,6 +12,6 @@ import org.springframework.data.annotation.Id;
 @Builder
 public class Media {
     @Id
-    private int id;
+    private String id;
     private String type;
 }
