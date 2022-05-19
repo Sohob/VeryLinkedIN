@@ -2,6 +2,7 @@ package com.verylinkedin.mypost.models;
 
 import lombok.Builder;
 import lombok.Data;
+import org.jetbrains.annotations.Contract;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,10 +25,11 @@ public class Post {
 //    private DateTime createdAt;
 //    @LastModifiedDate
 //    private DateTime lastModified;
-        private boolean isPublic;
+    private boolean isPublic;
     private ArrayList<Comment> comments;
     private ArrayList<Media> media;
     private ArrayList<String> likes;
+    private ArrayList<String> banned;
 }
 
 

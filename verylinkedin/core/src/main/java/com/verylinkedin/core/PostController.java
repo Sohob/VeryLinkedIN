@@ -1,7 +1,9 @@
 package com.verylinkedin.core;
 
 import com.verylinkedin.amqp.RabbitMQMessageProducer;
+import com.verylinkedin.mypost.BanUser.BanUserRequest;
 import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest;
+import com.verylinkedin.mypost.AddComment.AddCommentRequest;
 import com.verylinkedin.mypost.CreatePost.CreatePostRequest;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
@@ -47,12 +49,31 @@ public class PostController {
                 "internal.mypost.routing.key"
         );
     }
+    @PutMapping("/addComment")
+    public void editPost(@RequestBody AddCommentRequest addCommentRequest) {
+
+        rabbitMQMessageProducer.publish(
+                addCommentRequest,
+                "internal.exchange",
+                "internal.mypost.routing.key"
+        );
+    }
 
     @PutMapping("/changeVisibility")
     public void  changeVisibility(@RequestBody ChangeVisibilityRequest changeVisibilityRequest)  {
 
         rabbitMQMessageProducer.publish(
                 changeVisibilityRequest,
+                "internal.exchange",
+                "internal.mypost.routing.key"
+        );
+    }
+
+    @PutMapping("/banUser")
+    public void editPost(@RequestBody BanUserRequest banUserRequest) {
+
+        rabbitMQMessageProducer.publish(
+                banUserRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );

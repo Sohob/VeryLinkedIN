@@ -1,7 +1,9 @@
 package com.verylinkedin.mypost.rabbitmq;
 
 
+import com.verylinkedin.mypost.BanUser.BanUserRequest;
 import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest;
+import com.verylinkedin.mypost.AddComment.AddCommentRequest;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
 import com.verylinkedin.mypost.PostService;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
@@ -57,8 +59,7 @@ public class SendMessageConsumer {
             case "com.verylinkedin.mypost.deletePost.DeletePostRequest":
                 requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
                 DeletePostRequest deletePostRequest = new DeletePostRequest(requestJSON.getString("postId"));
-                postService.deletePost(deletePostRequest);
-                System.out.println("yarab"); break;
+                postService.deletePost(deletePostRequest); break;
 
             case "com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest":
                 System.out.println("leeeeeeh");
@@ -67,6 +68,15 @@ public class SendMessageConsumer {
                 postService.changeVisibility(changeVisibilityRequest);
                 break;
 
+            case "com.verylinkedin.mypost.AddComment.AddCommentRequest":
+                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+                AddCommentRequest addCommentRequest = new AddCommentRequest(requestJSON.getString("postId"), requestJSON.getString("userId"), requestJSON.getString("content"));
+                postService.addComment(addCommentRequest);break;
+
+            case "com.verylinkedin.mypost.BanUser.BanUserRequest":
+                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+                BanUserRequest banUserRequest = new BanUserRequest(requestJSON.getString("postId"), requestJSON.getString("userId"));
+                postService.banUser(banUserRequest);break;
         }
 
 
