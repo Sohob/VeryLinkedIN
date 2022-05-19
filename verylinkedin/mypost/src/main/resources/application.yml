@@ -9,6 +9,10 @@ spring:
       host: localhost
       port: 27017
       database: MyPost
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
 
 
 rabbitmq:
