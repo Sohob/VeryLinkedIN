@@ -56,12 +56,12 @@
         <artifactId>jersey-core</artifactId>
         <version>1.19</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.minio/minio -->
     <dependency>
         <groupId>io.minio</groupId>
         <artifactId>minio</artifactId>
-        <version>3.0.6</version>
+        <version>8.1.0</version>
     </dependency>
-
 
 
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor -->

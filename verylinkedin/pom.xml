@@ -60,12 +60,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/io.minio/minio -->
-    <dependency>
-      <groupId>io.minio</groupId>
-      <artifactId>minio</artifactId>
-      <version>8.1.0</version>
-    </dependency>
+
 
     <dependency>
       <groupId>org.projectlombok</groupId>
