@@ -18,7 +18,6 @@
     <module>notifications</module>
     <module>recommendations</module>
       <module>core</module>
-    <module>amqp</module>
   </modules>
 
   <name>verylinkedin</name>

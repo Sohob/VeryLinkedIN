@@ -1,0 +1,6 @@
+com/verylinkedin/core/Controller.class
+com/verylinkedin/core/VerylinkedinApplication.class
+com/verylinkedin/core/amqp/RabbitMQMessageProducer.class
+com/verylinkedin/core/amqp/RabbitMQConfig.class
+com/verylinkedin/core/requests/SendingMessageRequest.class
+com/verylinkedin/core/requests/CreateGroupRequest.class

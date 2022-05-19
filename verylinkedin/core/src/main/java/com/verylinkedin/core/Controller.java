@@ -1,5 +1,5 @@
 package com.verylinkedin.core;
-import com.verylinkedin.amqp.RabbitMQMessageProducer;
+import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
 import com.verylinkedin.core.requests.CreateGroupRequest;
 import com.verylinkedin.core.requests.SendingMessageRequest;
 import lombok.AllArgsConstructor;

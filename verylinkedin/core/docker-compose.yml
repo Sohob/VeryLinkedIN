@@ -1,33 +1,21 @@
 version: "3.7"
 services:
-  groups:
+  core:
     build: .
     restart: always
     environment:
       RABBITMQ_SERVER: rabbitmq
-      MONGO_SERVER: mongo
       SPRING_PROFILES_ACTIVE: docker
     ports:
-      - "8081:8081"
+      - "8080:8080"
     depends_on:
-      - mongo
       - rabbitmq
     networks:
       - spring
-      - mongo
-  mongo:
-    container_name: 'mongo'
-    image: "mongo:latest"
-    volumes:
-      - data:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - mongo
 
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: 'rabbitmq'
+    container_name: 'rabbitmq-core'
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -43,9 +31,5 @@ volumes:
   data:
 
 networks:
-  rabbitmq_go_net:
-    driver: bridge
   spring:
-    driver: bridge
-  mongo:
     driver: bridge

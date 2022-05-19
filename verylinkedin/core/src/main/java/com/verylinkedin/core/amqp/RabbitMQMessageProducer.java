@@ -1,4 +1,4 @@
-package com.verylinkedin.amqp;
+package com.verylinkedin.core.amqp;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

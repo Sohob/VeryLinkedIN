@@ -1,4 +1,4 @@
-package com.verylinkedin.amqp;
+package com.verylinkedin.core.amqp;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;
