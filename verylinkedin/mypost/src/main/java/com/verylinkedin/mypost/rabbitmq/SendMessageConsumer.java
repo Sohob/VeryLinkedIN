@@ -27,7 +27,6 @@ public class SendMessageConsumer {
     public void consumer(Message requestFromQueue) throws JSONException {
 //        String typeId = (String) requestFromQueue.getMessageProperties().getHeaders().get("__TypeId__");
         System.out.println("hahahahha");
-        System.out.println(postService);
         System.out.println(requestFromQueue.getMessageProperties().getHeaders().get("__TypeId__"));
         log.info("Consumed {} from queue", requestFromQueue);
         String typeId = (String) requestFromQueue.getMessageProperties().getHeaders().get("__TypeId__");
