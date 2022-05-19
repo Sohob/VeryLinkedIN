@@ -6,11 +6,11 @@ spring:
     name: groups
   data:
     mongodb:
-      host: localhost
+      host: mongo
       port: 27017
       database: GroupChats
   rabbitmq:
-    addresses: localhost:5672
+    addresses: rabbitmq
 
 rabbitmq:
   exchanges:

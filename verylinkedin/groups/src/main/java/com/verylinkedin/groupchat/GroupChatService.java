@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.eq;
-
 
 @Service
 public record GroupChatService(GroupRepository groupRepository) {
@@ -31,7 +29,9 @@ public record GroupChatService(GroupRepository groupRepository) {
         groupRepository.saveAll(chat);*/
         //JSONObject obj = new JSONObject(request);
         SendMessage sendMessage = new SendMessage(request, groupRepository);
-        sendMessage.execute();
+        Thread thread = new Thread(new CommandRunnable(sendMessage));
+        thread.start();
+        //sendMessage.execute();
     }
 
     public void createGroup(CreateGroupRequest request) {
@@ -54,7 +54,9 @@ public record GroupChatService(GroupRepository groupRepository) {
                 .build();
         groupRepository.save(groupChat);*/
         CreateGroup createGroup = new CreateGroup(request, groupRepository);
-        createGroup.execute();
+        //createGroup.execute();
+        Thread thread = new Thread(new CommandRunnable(createGroup));
+        thread.start();
     }
 
     public List<GroupChat> viewChat(String groupId, String userId) {

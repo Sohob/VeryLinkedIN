@@ -1,7 +1,7 @@
 package com.verylinkedin.core;
 import com.verylinkedin.amqp.RabbitMQMessageProducer;
-import com.verylinkedin.groupchat.creategroup.CreateGroupRequest;
-import com.verylinkedin.groupchat.sendmessage.SendingMessageRequest;
+import com.verylinkedin.core.requests.CreateGroupRequest;
+import com.verylinkedin.core.requests.SendingMessageRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
