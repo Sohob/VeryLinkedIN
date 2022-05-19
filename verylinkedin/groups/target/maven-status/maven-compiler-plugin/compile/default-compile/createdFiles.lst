@@ -1,0 +1,17 @@
+com/verylinkedin/groupchat/GroupRepository.class
+com/verylinkedin/groupchat/creategroup/CreateGroup.class
+com/verylinkedin/groupchat/rabbitmq/SendMessageConsumer.class
+com/verylinkedin/groupchat/sendmessage/SendMessage.class
+com/verylinkedin/groupchat/GroupChat.class
+com/verylinkedin/groupchat/GroupChatController.class
+com/verylinkedin/groupchat/GroupChatApplication.class
+com/verylinkedin/groupchat/Message.class
+com/verylinkedin/groupchat/sendmessage/SendingMessageRequest.class
+com/verylinkedin/groupchat/Command.class
+com/verylinkedin/groupchat/creategroup/CreateGroupRequest.class
+com/verylinkedin/groupchat/Message$MessageBuilder.class
+com/verylinkedin/groupchat/GroupsConfig.class
+com/verylinkedin/groupchat/GroupChat$GroupChatBuilder.class
+com/verylinkedin/groupchat/viewchat/ViewChat.class
+com/verylinkedin/groupchat/GroupChatService.class
+com/verylinkedin/groupchat/CommandMap.class
