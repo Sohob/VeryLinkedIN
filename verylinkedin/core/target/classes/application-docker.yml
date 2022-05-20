@@ -4,5 +4,3 @@ server:
 spring:
   application:
     name: core
-  rabbitmq:
-    addresses: rabbitmq

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public record CreateGroup(CreateGroupRequest request, GroupRepository groupRepository) implements Command {
 
     @Override
-    public void execute() {
+    public Object execute() {
         Message messages = Message.builder()
                 .sender(request.owner())
                 .content("Chat has been created!")
@@ -30,5 +30,6 @@ public record CreateGroup(CreateGroupRequest request, GroupRepository groupRepos
                 .chatText(tempList)
                 .build();
         groupRepository.save(groupChat);
+        return null;
     }
 }

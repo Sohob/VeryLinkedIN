@@ -1,17 +1,18 @@
 package com.verylinkedin.core;
 
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
-import com.verylinkedin.core.requests.CreateGroupRequest;
-import com.verylinkedin.core.requests.Notification;
-import com.verylinkedin.core.requests.NotificationList;
-import com.verylinkedin.core.requests.SendingMessageRequest;
+import com.verylinkedin.core.requests.*;
+import com.verylinkedin.core.responses.ViewChatResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.ExecutionException;
 
 
 @Slf4j
@@ -64,13 +65,39 @@ public class Controller {
     @GetMapping("/view/{userId}/{groupId}")
     public ResponseEntity<String> viewChat(@PathVariable String userId, @PathVariable String groupId) {
         log.info("viewing messages in group {} as user {}", groupId, userId);
-        String res = rabbitMQMessageProducer.publishAndReceive(
-                groupId,
+        ListenableFuture<String> listenableFuture =  rabbitMQMessageProducer.publishAndReceive(
+                new ViewChatRequest(userId,groupId),
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
-        return new ResponseEntity<String>("Chat details: " + res,
-                HttpStatus.OK);
+
+        try {
+            Object res = listenableFuture.get();
+            return new ResponseEntity<String>("Chat details: " + res,
+                    HttpStatus.OK);
+        } catch (InterruptedException | ExecutionException e) {
+            return new ResponseEntity<String>("Invalid chat",
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        /*
+        AsyncRabbitTemplate.RabbitConverterFuture<ViewChatResponse> rabbitConverterFuture =  rabbitMQMessageProducer.publishAndReceive(
+                new ViewChatRequest(userId,groupId),
+                "internal.exchange",
+                "internal.groups.routing.key"
+        );
+        rabbitConverterFuture.addCallback(new ListenableFutureCallback<>() {
+            @Override
+            public void onFailure(Throwable ex) {
+                // ...
+            }
+
+            @Override
+            public void onSuccess(ViewChatResponse viewChatResponse) {
+                log.info("Response received {}", viewChatResponse);
+
+            }
+        });*/
     }
 
 }

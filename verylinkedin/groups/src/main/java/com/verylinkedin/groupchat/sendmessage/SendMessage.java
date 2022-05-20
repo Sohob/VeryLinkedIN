@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public record SendMessage(SendingMessageRequest request, GroupRepository groupRepository) implements Command {
 
     @Override
-    public void execute() {
+    public Object execute() {
         GroupChat chat = groupRepository.findById(request.groupId()).get(0);
         ArrayList<String> unreadList = new ArrayList<String>(chat.getParticipants());
         ArrayList<String> readList = new ArrayList<String>();
@@ -26,5 +26,6 @@ public record SendMessage(SendingMessageRequest request, GroupRepository groupRe
         chat.getChatText().add(message);
         //groupRepository.deleteAll();
         groupRepository.save(chat);
+        return null;
     }
 }

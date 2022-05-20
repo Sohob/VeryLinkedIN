@@ -1,21 +1,20 @@
 package com.verylinkedin.core.amqp;
 
-import com.verylinkedin.core.requests.CreateGroupRequest;
+import com.verylinkedin.core.responses.ViewChatResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Message;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.amqp.core.AsyncAmqpTemplate;
+import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
+import org.springframework.util.concurrent.ListenableFuture;
 
 @Component
 @Slf4j
 @AllArgsConstructor
 public class RabbitMQMessageProducer {
 
-    private final AmqpTemplate amqpTemplate;
+    private final AsyncRabbitTemplate amqpTemplate;
 
     public void publish(Object payload, String exchange, String routingKey) {
         log.info("Publishing to {} using routingKey {}. Payload: {}", exchange, routingKey, payload);
@@ -23,13 +22,14 @@ public class RabbitMQMessageProducer {
         log.info("Published to {} using routingKey {}. Payload: {}", exchange, routingKey, payload);
     }
 
-    public String publishAndReceive(Object payload, String exchange, String routingKey) {
+    public AsyncRabbitTemplate.RabbitConverterFuture<String> publishAndReceive(Object payload, String exchange, String routingKey) {
         log.info("Publishing to {} using routingKey {}. Payload: {}", exchange, routingKey, payload);
-        String res = (String) amqpTemplate.convertSendAndReceive(exchange, routingKey, payload);
+        AsyncRabbitTemplate.RabbitConverterFuture<String> res = amqpTemplate.convertSendAndReceiveAsType(exchange, routingKey, payload, new ParameterizedTypeReference<>() {
+        });
         log.info("Published to {} using routingKey {}. Payload: {}", exchange, routingKey, payload);
         // Convert Byte stream to JSONObject
         //JSONObject responseJSON = new JSONObject(new String(res));
-        log.info("Received {} of type {}", res, res.getClass());
+        //log.info("Received {} of type {}", res, res.getClass());
         return res;
     }
 

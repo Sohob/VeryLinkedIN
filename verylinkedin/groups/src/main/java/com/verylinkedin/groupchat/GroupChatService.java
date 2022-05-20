@@ -4,10 +4,10 @@ import com.verylinkedin.groupchat.creategroup.CreateGroup;
 import com.verylinkedin.groupchat.creategroup.CreateGroupRequest;
 import com.verylinkedin.groupchat.sendmessage.SendMessage;
 import com.verylinkedin.groupchat.sendmessage.SendingMessageRequest;
+import com.verylinkedin.groupchat.viewchat.ViewChat;
+import com.verylinkedin.groupchat.viewchat.ViewChatRequest;
+import com.verylinkedin.groupchat.viewchat.ViewChatResponse;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
@@ -59,7 +59,9 @@ public record GroupChatService(GroupRepository groupRepository) {
         thread.start();
     }
 
-    public GroupChat viewChat(String groupId, String userId) {
+    public ViewChatResponse viewChat(ViewChatRequest request) {
+        /*
+
         // Query the database for GroupChats of the same ID
         GroupChat chat = groupRepository.findById(groupId).get(0);
         // Get the chat's messages
@@ -74,6 +76,12 @@ public record GroupChatService(GroupRepository groupRepository) {
         }
         // Update the group chat in the database
         groupRepository.save(chat);
-        return groupRepository.findById(groupId).get(0);
+        return groupRepository.findById(groupId).get(0);*/
+        ViewChat viewChat = new ViewChat(request, groupRepository);
+        ViewChatResponse response = (ViewChatResponse) viewChat.execute();
+        // TODO Multithreading here
+        //Thread thread = new Thread(new CommandRunnable(createGroup));
+        //thread.start();
+        return response;
     }
 }

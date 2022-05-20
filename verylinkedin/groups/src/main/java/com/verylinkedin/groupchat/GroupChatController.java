@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("api/v1/groups")
 public record GroupChatController(GroupChatService groupChatService, RabbitTemplate rabbitTemplate) {
 
-
+/*
     // TODO Replace userId from path variable when authentication is finished
     @GetMapping("/view/{userId}/{groupId}")
     public @ResponseBody

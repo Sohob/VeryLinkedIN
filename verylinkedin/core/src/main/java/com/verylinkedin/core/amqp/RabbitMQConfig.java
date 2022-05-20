@@ -2,6 +2,8 @@ package com.verylinkedin.core.amqp;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.AsyncAmqpTemplate;
+import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -15,6 +17,13 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     private final ConnectionFactory connectionFactory;
+
+    @Bean
+    public AsyncRabbitTemplate asyncRabbitTemplate(
+            RabbitTemplate rabbitTemplate){
+        return new AsyncRabbitTemplate(rabbitTemplate);
+    }
+
 
     @Bean
     public AmqpTemplate amqpTemplate() {

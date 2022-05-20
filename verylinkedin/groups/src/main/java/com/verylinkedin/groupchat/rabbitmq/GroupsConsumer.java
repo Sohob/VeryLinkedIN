@@ -1,15 +1,22 @@
 package com.verylinkedin.groupchat.rabbitmq;
 
+import com.google.gson.Gson;
 import com.verylinkedin.groupchat.CommandMap;
 import com.verylinkedin.groupchat.creategroup.CreateGroupRequest;
 import com.verylinkedin.groupchat.GroupChatService;
 import com.verylinkedin.groupchat.sendmessage.SendingMessageRequest;
+import com.verylinkedin.groupchat.viewchat.ViewChatRequest;
+import com.verylinkedin.groupchat.viewchat.ViewChatResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +31,7 @@ public class GroupsConsumer {
     private final GroupChatService groupChatService;
 
     @RabbitListener(queues = "${rabbitmq.queues.groups}")
-    public Message consumer(Message requestFromQueue) throws JSONException {
+    public Object consumer(Message requestFromQueue) throws JSONException, ParseException {
         String typeId = (String) requestFromQueue.getMessageProperties().getHeaders().get("__TypeId__");
         log.info("Consumed {} from queue", requestFromQueue);
         log.info("Message of type {}", typeId);
@@ -63,17 +70,30 @@ public class GroupsConsumer {
                 // Execute the request
                groupChatService.createGroup(createGroupRequest);
                break;
-            default:
+            case "com.verylinkedin.core.requests.ViewChatRequest":
                 // Convert to a JSON object
                 //requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
-                log.info("Request JSON looks like this {}", new String(requestFromQueue.getBody()));
+                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+                log.info("Request JSON looks like this {}", requestJSON);
+
 
                 // Create the request
+                ViewChatRequest viewChatRequest = new ViewChatRequest(
+                        requestJSON.getString("userId"),
+                        requestJSON.getString("groupId"));
+                log.info("Request looks like this {}", viewChatRequest);
                 //log.info("Sending {} to service", createGroupRequest);
                 // Execute the request
-                //groupChatService.createGroup(createGroupRequest);
+                ViewChatResponse viewChatResponse = groupChatService.viewChat(viewChatRequest);
+                log.info("Returning response {}", viewChatResponse);
+                MessageProperties messageProperties = new MessageProperties();
+                messageProperties.setContentType(messageProperties.CONTENT_TYPE_JSON);
+                Gson gson = new Gson();
+                String viewChatResponseGson = gson.toJson(viewChatResponse.toString(), String.class);
+                Message responseMessage = new Message(viewChatResponseGson.getBytes(), messageProperties);
+                return responseMessage;
         }
 
-        return requestFromQueue;
+        return null;
     }
 }
