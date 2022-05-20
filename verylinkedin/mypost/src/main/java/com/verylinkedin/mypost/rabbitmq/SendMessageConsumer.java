@@ -7,6 +7,7 @@ import com.verylinkedin.mypost.AddComment.AddCommentRequest;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
 import com.verylinkedin.mypost.LikePost.LikePostRequest;
 import com.verylinkedin.mypost.PostService;
+import com.verylinkedin.mypost.UnlikePost.UnlikePostRequest;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +74,11 @@ public class SendMessageConsumer {
                 LikePostRequest likePostRequest = new LikePostRequest(requestJSON.getString("userId"),requestJSON.getString("postId"));
                 postService.likePost(likePostRequest);
                 break;
-
+            case "com.verylinkedin.mypost.UnlikePost.UnlikePostRequest":
+                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+                UnlikePostRequest unlikePostRequest = new UnlikePostRequest(requestJSON.getString("userId"),requestJSON.getString("postId"));
+                postService.unlikePost(unlikePostRequest);
+                break;
             case "com.verylinkedin.mypost.AddComment.AddCommentRequest":
                 requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
                 AddCommentRequest addCommentRequest = new AddCommentRequest(requestJSON.getString("postId"), requestJSON.getString("userId"), requestJSON.getString("content"));

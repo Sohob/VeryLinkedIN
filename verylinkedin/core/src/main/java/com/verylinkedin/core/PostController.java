@@ -7,6 +7,7 @@ import com.verylinkedin.mypost.AddComment.AddCommentRequest;
 import com.verylinkedin.mypost.CreatePost.CreatePostRequest;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
 import com.verylinkedin.mypost.LikePost.LikePostRequest;
+import com.verylinkedin.mypost.UnlikePost.UnlikePostRequest;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -85,6 +86,16 @@ public class PostController {
 
         rabbitMQMessageProducer.publish(
                 likePostRequest,
+                "internal.exchange",
+                "internal.mypost.routing.key"
+        );
+    }
+
+    @PutMapping("/unlikePost")
+    public void unlikePost(@RequestBody UnlikePostRequest unlikePostRequest)  {
+
+        rabbitMQMessageProducer.publish(
+                unlikePostRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );

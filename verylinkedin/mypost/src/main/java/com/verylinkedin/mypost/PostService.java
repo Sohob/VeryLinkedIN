@@ -12,6 +12,8 @@ import com.verylinkedin.mypost.EditPost.EditPost;
 import com.verylinkedin.mypost.EditPost.EditPostRequest;
 import com.verylinkedin.mypost.LikePost.LikePost;
 import com.verylinkedin.mypost.LikePost.LikePostRequest;
+import com.verylinkedin.mypost.UnlikePost.UnlikePost;
+import com.verylinkedin.mypost.UnlikePost.UnlikePostRequest;
 import com.verylinkedin.mypost.deletePost.DeletePost;
 import com.verylinkedin.mypost.deletePost.DeletePostRequest;
 
@@ -53,4 +55,9 @@ public record PostService(PostRepository postRepository) {
         LikePost likePost = new LikePost(request, postRepository);
         likePost.execute();
     }
+    public void unlikePost(UnlikePostRequest request){
+        UnlikePost unlikePost = new UnlikePost(request, postRepository);
+        unlikePost.execute();
+    }
+
 }
