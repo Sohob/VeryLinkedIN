@@ -1,4 +1,5 @@
 package com.verylinkedin.core;
+
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
 import com.verylinkedin.core.requests.CreateGroupRequest;
 import com.verylinkedin.core.requests.Notification;
@@ -6,6 +7,7 @@ import com.verylinkedin.core.requests.NotificationList;
 import com.verylinkedin.core.requests.SendingMessageRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ public class Controller {
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     @PostMapping("/notification_user")
-    public String notification(@RequestBody Notification notification){
+    public String notification(@RequestBody Notification notification) {
         rabbitMQMessageProducer.publish(
                 notification,
                 "internal.exchange",
@@ -31,7 +33,7 @@ public class Controller {
         return "NOTIFICATION";
     }
     @PostMapping("/notifications")
-    public String notificationList(@RequestBody NotificationList notificationList){
+    public String notificationList(@RequestBody NotificationList notificationList) {
         rabbitMQMessageProducer.publish(
                 notificationList,
                 "internal.exchange",
@@ -42,7 +44,7 @@ public class Controller {
 
     // TODO Replace userId from path variable when authentication is finished
     @PostMapping("/view/{userId}/{groupId}/send")
-    public void sendMessage(@RequestBody SendingMessageRequest request, @PathVariable String userId, @PathVariable String groupId){
+    public void sendMessage(@RequestBody SendingMessageRequest request, @PathVariable String userId, @PathVariable String groupId) {
         rabbitMQMessageProducer.publish(
                 new SendingMessageRequest(userId,groupId,request.message()),
                 "internal.exchange",
@@ -50,27 +52,25 @@ public class Controller {
         );
     }
     @PostMapping("/create")
-    public void createGroup(@RequestBody CreateGroupRequest createGroupRequest){
+    public void createGroup(@RequestBody CreateGroupRequest createGroupRequest) {
         //log.info("message being sent {}", createGroupRequest);
         rabbitMQMessageProducer.publish(
                 createGroupRequest,
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
-    }/*
+    }
         // TODO Replace userId from path variable when authentication is finished
-    @GetMapping("/view/{groupId}")
-    public void viewChat(@PathVariable String groupId) throws InterruptedException {
-        log.info("viewing messages in group {}", groupId);
-        rabbitMQMessageProducer.publish(
+    @GetMapping("/view/{userId}/{groupId}")
+    public ResponseEntity<String> viewChat(@PathVariable String userId, @PathVariable String groupId) {
+        log.info("viewing messages in group {} as user {}", groupId, userId);
+        String res = rabbitMQMessageProducer.publishAndReceive(
                 groupId,
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
-    }*/
-    //@RabbitListener(queues = "${rabbitmq.queues.groups}")
-    public @ResponseBody
-    ResponseEntity<String> viewChatResponse(ResponseEntity<String> message) {
-        return message;
+        return new ResponseEntity<String>("Chat details: " + res,
+                HttpStatus.OK);
     }
+
 }

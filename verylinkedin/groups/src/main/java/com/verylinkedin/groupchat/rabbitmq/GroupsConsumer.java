@@ -24,7 +24,7 @@ public class GroupsConsumer {
     private final GroupChatService groupChatService;
 
     @RabbitListener(queues = "${rabbitmq.queues.groups}")
-    public void consumer(Message requestFromQueue) throws JSONException {
+    public Message consumer(Message requestFromQueue) throws JSONException {
         String typeId = (String) requestFromQueue.getMessageProperties().getHeaders().get("__TypeId__");
         log.info("Consumed {} from queue", requestFromQueue);
         log.info("Message of type {}", typeId);
@@ -35,7 +35,10 @@ public class GroupsConsumer {
                 Class commandClass = cMap.getCommandMap().get(typeId);
                 requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
                 log.info("Request JSON looks like this {}", requestJSON);
-                SendingMessageRequest request = new SendingMessageRequest(requestJSON.getString("userId"),requestJSON.getString("groupId"),requestJSON.getString("message"));
+                SendingMessageRequest request = new SendingMessageRequest(
+                        requestJSON.getString("userId"),
+                        requestJSON.getString("groupId"),
+                        requestJSON.getString("message"));
                 log.info("Request looks like this {}", request);
                 groupChatService.sendMessage(request);break;
            case "com.verylinkedin.core.requests.CreateGroupRequest":
@@ -59,8 +62,18 @@ public class GroupsConsumer {
                 log.info("Sending {} to service", createGroupRequest);
                 // Execute the request
                groupChatService.createGroup(createGroupRequest);
+               break;
+            default:
+                // Convert to a JSON object
+                //requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+                log.info("Request JSON looks like this {}", new String(requestFromQueue.getBody()));
+
+                // Create the request
+                //log.info("Sending {} to service", createGroupRequest);
+                // Execute the request
+                //groupChatService.createGroup(createGroupRequest);
         }
 
-
+        return requestFromQueue;
     }
 }

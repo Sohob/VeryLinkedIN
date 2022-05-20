@@ -1,4 +1,4 @@
-package com.verylinkedin.groupchat;
+package com.verylinkedin.groupchat.rabbitmq;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

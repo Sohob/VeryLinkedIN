@@ -59,7 +59,7 @@ public record GroupChatService(GroupRepository groupRepository) {
         thread.start();
     }
 
-    public List<GroupChat> viewChat(String groupId, String userId) {
+    public GroupChat viewChat(String groupId, String userId) {
         // Query the database for GroupChats of the same ID
         GroupChat chat = groupRepository.findById(groupId).get(0);
         // Get the chat's messages
@@ -74,6 +74,6 @@ public record GroupChatService(GroupRepository groupRepository) {
         }
         // Update the group chat in the database
         groupRepository.save(chat);
-        return groupRepository.findById(groupId);
+        return groupRepository.findById(groupId).get(0);
     }
 }

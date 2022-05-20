@@ -4,31 +4,11 @@ services:
     build: .
     restart: always
     environment:
-      RABBITMQ_SERVER: rabbitmq
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"
-    depends_on:
-      - rabbitmq
     networks:
       - spring
-
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: 'rabbitmq-core'
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq/
-      - rabbitmq_log:/var/log/rabbitmq/
-    networks:
-      - spring
-
-volumes:
-  rabbitmq_data:
-  rabbitmq_log:
-  data:
 
 networks:
   spring:
