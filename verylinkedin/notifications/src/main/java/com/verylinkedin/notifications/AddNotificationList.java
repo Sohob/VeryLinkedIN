@@ -6,21 +6,23 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class AddNotification implements Command{
-    public Notification notification;
+public class AddNotificationList implements Command{
+    public NotificationList notificationList;
 
-    public AddNotification(Notification notification){
-        this.notification=notification;
+    public AddNotificationList(NotificationList notificationList){
+        this.notificationList=notificationList;
 
     }
     public void execute(){
         Firestore db= FirestoreClient.getFirestore();
+        for(String id: notificationList.users){
             Map<String, Object> docData = new HashMap<>();
-            docData.put("message",notification.message);
-            db.collection(notification.to).document().set(docData);
-
+            docData.put("message",notificationList.message);
+            db.collection(id).document().set(docData);
+        }
 
     }
 }

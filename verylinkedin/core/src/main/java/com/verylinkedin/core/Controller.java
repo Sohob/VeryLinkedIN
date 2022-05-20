@@ -2,6 +2,7 @@ package com.verylinkedin.core;
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
 import com.verylinkedin.core.requests.CreateGroupRequest;
 import com.verylinkedin.core.requests.Notification;
+import com.verylinkedin.core.requests.NotificationList;
 import com.verylinkedin.core.requests.SendingMessageRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,15 @@ public class Controller {
     public String notification(@RequestBody Notification notification){
         rabbitMQMessageProducer.publish(
                 notification,
+                "internal.exchange",
+                "internal.notifications.routing.key"
+        );
+        return "NOTIFICATION";
+    }
+    @PostMapping("/notifications")
+    public String notificationList(@RequestBody NotificationList notificationList){
+        rabbitMQMessageProducer.publish(
+                notificationList,
                 "internal.exchange",
                 "internal.notifications.routing.key"
         );
