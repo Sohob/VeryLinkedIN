@@ -7,9 +7,9 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"
-    networks:
-      - spring
+
 
 networks:
-  spring:
-    driver: bridge
+  default:
+    external:
+      name: test

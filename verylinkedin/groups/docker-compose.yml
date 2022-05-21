@@ -12,9 +12,8 @@ services:
     depends_on:
       - mongo
       - rabbitmq
-    networks:
-      - spring
-      - mongo
+
+
   mongo:
     container_name: 'mongo'
     image: "mongo:latest"
@@ -22,8 +21,6 @@ services:
       - data:/data/db
     ports:
       - "27017:27017"
-    networks:
-      - mongo
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -34,8 +31,7 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/
       - rabbitmq_log:/var/log/rabbitmq/
-    networks:
-      - spring
+
 
 volumes:
   rabbitmq_data:
@@ -43,9 +39,6 @@ volumes:
   data:
 
 networks:
-  rabbitmq_go_net:
-    driver: bridge
-  spring:
-    driver: bridge
-  mongo:
-    driver: bridge
+  default:
+    external:
+      name: test
