@@ -2,6 +2,7 @@ package com.verylinkedin.groupchat;
 
 import com.verylinkedin.groupchat.creategroup.CreateGroup;
 import com.verylinkedin.groupchat.creategroup.CreateGroupRequest;
+import com.verylinkedin.groupchat.rabbitmq.threadPoolManager;
 import com.verylinkedin.groupchat.sendmessage.SendMessage;
 import com.verylinkedin.groupchat.sendmessage.SendingMessageRequest;
 import com.verylinkedin.groupchat.viewchat.ViewChat;
@@ -9,9 +10,9 @@ import com.verylinkedin.groupchat.viewchat.ViewChatRequest;
 import com.verylinkedin.groupchat.viewchat.ViewChatResponse;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public record GroupChatService(GroupRepository groupRepository) {
+
     public void sendMessage(SendingMessageRequest request) {
         /*List<GroupChat> chat = groupRepository.findAll();
         ArrayList<Integer> unreadList = new ArrayList<>(chat.get(0).getParticipants());
@@ -28,9 +29,15 @@ public record GroupChatService(GroupRepository groupRepository) {
         groupRepository.deleteAll();
         groupRepository.saveAll(chat);*/
         //JSONObject obj = new JSONObject(request);
-        SendMessage sendMessage = new SendMessage(request, groupRepository);
-        Thread thread = new Thread(new CommandRunnable(sendMessage));
-        thread.start();
+        while(true){
+            if(threadPoolManager.getThreads()>0){
+            SendMessage sendMessage = new SendMessage(request, groupRepository);
+            threadPoolManager.setThreads(threadPoolManager.getThreads()-1);
+            Thread thread = new Thread(new CommandRunnable(sendMessage));
+            thread.start();
+            break;
+            }
+        }
         //sendMessage.execute();
     }
 
