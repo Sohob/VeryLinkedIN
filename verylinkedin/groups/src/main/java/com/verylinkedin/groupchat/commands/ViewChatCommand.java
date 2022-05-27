@@ -1,17 +1,19 @@
-package com.verylinkedin.groupchat.viewchat;
+package com.verylinkedin.groupchat.commands;
 
 import com.verylinkedin.groupchat.Command;
 import com.verylinkedin.groupchat.GroupChat;
 import com.verylinkedin.groupchat.GroupRepository;
 import com.verylinkedin.groupchat.Message;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.verylinkedin.groupchat.requests.ViewChatRequest;
+import com.verylinkedin.groupchat.responses.ViewChatResponse;
+import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 
 import java.util.ArrayList;
 
-public record ViewChat(ViewChatRequest viewChatRequest, GroupRepository groupRepository) implements Command {
+public record ViewChatCommand(ViewChatRequest viewChatRequest, GroupRepository groupRepository) implements Command {
     @Override
-    public Object execute() {
+    public String execute() {
         // Query the database for GroupChats of the same ID
         GroupChat chat = groupRepository.findById(viewChatRequest.groupId()).get(0);
         // Get the chat's messages
@@ -26,6 +28,7 @@ public record ViewChat(ViewChatRequest viewChatRequest, GroupRepository groupRep
         }
         // Update the group chat in the database
         groupRepository.save(chat);
-        return new ViewChatResponse(groupRepository.findById(viewChatRequest.groupId()).get(0).toString());
+
+        return new ViewChatResponse(groupRepository.findById(viewChatRequest.groupId()).get(0).toString()).toString();
     }
 }

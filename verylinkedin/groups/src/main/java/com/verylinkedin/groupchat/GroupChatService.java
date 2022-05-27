@@ -1,18 +1,21 @@
 package com.verylinkedin.groupchat;
-
-import com.verylinkedin.groupchat.creategroup.CreateGroup;
-import com.verylinkedin.groupchat.creategroup.CreateGroupRequest;
-import com.verylinkedin.groupchat.sendmessage.SendMessage;
-import com.verylinkedin.groupchat.sendmessage.SendingMessageRequest;
-import com.verylinkedin.groupchat.viewchat.ViewChat;
-import com.verylinkedin.groupchat.viewchat.ViewChatRequest;
-import com.verylinkedin.groupchat.viewchat.ViewChatResponse;
+/*/*
+import com.verylinkedin.groupchat.commands.CreateGroupCommand;
+import com.verylinkedin.groupchat.requests.CreateGroupRequest;
+import com.verylinkedin.groupchat.commands.SendMessageCommand;
+import com.verylinkedin.groupchat.requests.SendMessageRequest;
+import com.verylinkedin.groupchat.commands.ViewChatCommand;
+import com.verylinkedin.groupchat.requests.ViewChatRequest;
+import com.verylinkedin.groupchat.responses.ViewChatResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-
+@Slf4j
 @Service
 public record GroupChatService(GroupRepository groupRepository) {
-    public void sendMessage(SendingMessageRequest request) {
+    public void sendMessage(SendMessageRequest request) throws JSONException {
         /*List<GroupChat> chat = groupRepository.findAll();
         ArrayList<Integer> unreadList = new ArrayList<>(chat.get(0).getParticipants());
         ArrayList<Integer> readList = new ArrayList<>();
@@ -28,10 +31,12 @@ public record GroupChatService(GroupRepository groupRepository) {
         groupRepository.deleteAll();
         groupRepository.saveAll(chat);*/
         //JSONObject obj = new JSONObject(request);
-        SendMessage sendMessage = new SendMessage(request, groupRepository);
-        Thread thread = new Thread(new CommandRunnable(sendMessage));
-        thread.start();
-        //sendMessage.execute();
+        // Parse the JSON request to form the body
+/*
+        SendMessageCommand sendMessage = new SendMessageCommand(request, groupRepository);
+        //Thread thread = new Thread(new CommandRunnable(sendMessage));
+        //thread.start();
+        sendMessage.execute();
     }
 
     public void createGroup(CreateGroupRequest request) {
@@ -52,8 +57,8 @@ public record GroupChatService(GroupRepository groupRepository) {
                 .groupPhoto(request.groupPhoto())
                 .chatText(tempList)
                 .build();
-        groupRepository.save(groupChat);*/
-        CreateGroup createGroup = new CreateGroup(request, groupRepository);
+        groupRepository.save(groupChat);*//*
+        CreateGroupCommand createGroup = new CreateGroupCommand(request, groupRepository);
         //createGroup.execute();
         Thread thread = new Thread(new CommandRunnable(createGroup));
         thread.start();
@@ -76,12 +81,12 @@ public record GroupChatService(GroupRepository groupRepository) {
         }
         // Update the group chat in the database
         groupRepository.save(chat);
-        return groupRepository.findById(groupId).get(0);*/
-        ViewChat viewChat = new ViewChat(request, groupRepository);
-        ViewChatResponse response = (ViewChatResponse) viewChat.execute();
+        return groupRepository.findById(groupId).get(0);*//*
+        ViewChatCommand viewChat = new ViewChatCommand(request, groupRepository);
+        //ViewChatResponse response = (ViewChatResponse) viewChat.execute();
         // TODO Multithreading here
         //Thread thread = new Thread(new CommandRunnable(createGroup));
         //thread.start();
-        return response;
+        return null;
     }
-}
+}*/

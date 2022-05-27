@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+/*
 @Slf4j
 @RestController
 @Component
 @RequestMapping("api/v1/groups")
 public record GroupChatController(GroupChatService groupChatService, RabbitTemplate rabbitTemplate) {
 
-/*
+
     // TODO Replace userId from path variable when authentication is finished
     @GetMapping("/view/{userId}/{groupId}")
     public @ResponseBody
@@ -43,5 +43,5 @@ public record GroupChatController(GroupChatService groupChatService, RabbitTempl
     public void createGroup(@RequestBody CreateGroupRequest createGroupRequest){
         log.info("message being sent {}", createGroupRequest);
         groupChatService.createGroup(createGroupRequest);
-    }*/
-}
+    }
+}*/

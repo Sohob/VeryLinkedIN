@@ -11,6 +11,9 @@ spring:
       database: GroupChats
   rabbitmq:
     addresses: localhost:5672
+    listener:
+      simple:
+        default-requeue-rejected: false
 
 rabbitmq:
   exchanges:

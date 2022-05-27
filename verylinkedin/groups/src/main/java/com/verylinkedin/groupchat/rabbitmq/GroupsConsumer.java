@@ -1,42 +1,68 @@
 package com.verylinkedin.groupchat.rabbitmq;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.verylinkedin.groupchat.Command;
 import com.verylinkedin.groupchat.CommandMap;
-import com.verylinkedin.groupchat.creategroup.CreateGroupRequest;
-import com.verylinkedin.groupchat.GroupChatService;
-import com.verylinkedin.groupchat.sendmessage.SendingMessageRequest;
-import com.verylinkedin.groupchat.viewchat.ViewChatRequest;
-import com.verylinkedin.groupchat.viewchat.ViewChatResponse;
+import com.verylinkedin.groupchat.GroupRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONString;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 
-@Service
+@Component
 @AllArgsConstructor
 @Slf4j
+
 public class GroupsConsumer {
 
-    private final GroupChatService groupChatService;
+    private final GroupRepository groupRepository;
+
 
     @RabbitListener(queues = "${rabbitmq.queues.groups}")
-    public Object consumer(Message requestFromQueue) throws JSONException, ParseException {
-        String typeId = (String) requestFromQueue.getMessageProperties().getHeaders().get("__TypeId__");
-        log.info("Consumed {} from queue", requestFromQueue);
-        log.info("Message of type {}", typeId);
-        CommandMap cMap = new CommandMap();
-        JSONObject requestJSON;
+    public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
+
+            // This part uses reflection to dynamically process requests
+
+            // Get the request type from the message properties
+            String typeId = (String) requestFromQueue.getMessageProperties().getHeaders().get("__TypeId__");
+            log.info("Consumed {} from queue {}", requestFromQueue, requestObject);
+            log.info("Message of type {}", typeId);
+
+            // Initialize the command map
+            //new CommandMap();
+
+            // Get classes for the request and the command using the request type header
+            Class commandClass = CommandMap.getCommandClass(typeId);
+            Class requestClass = CommandMap.getRequestClass(typeId);
+            log.info("Maps look like this {} {}",commandClass.getName(), requestClass.getName());
+            // Get the constructor for the command class
+            Constructor commandConstructor = commandClass.getConstructor(requestClass, GroupRepository.class);
+
+            // Now parse the request body
+            JSONObject requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
+            log.info("Request JSON looks like this {}", requestJSON);
+
+            // We map the request to our request class
+            ObjectMapper objectMapper = new ObjectMapper();
+            Object mappedRequest = objectMapper.readValue(requestJSON.toString(), requestClass);
+            log.info("Mapped object looks like this {}", mappedRequest);
+
+            // Create the command using the mapped request and the repository
+            Command commandObject = (Command) commandConstructor.newInstance(mappedRequest, groupRepository);
+            Object response = commandObject.execute();
+            log.info("Executed the command with response {}",response);
+            return response;
+
+        /*
         switch (typeId){
             case "com.verylinkedin.core.requests.SendingMessageRequest":
                 Class commandClass = cMap.getCommandMap().get(typeId);
@@ -92,8 +118,10 @@ public class GroupsConsumer {
                 String viewChatResponseGson = gson.toJson(viewChatResponse.toString(), String.class);
                 Message responseMessage = new Message(viewChatResponseGson.getBytes(), messageProperties);
                 return responseMessage;
+
+
         }
 
-        return null;
+        return null;*/
     }
 }

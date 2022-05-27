@@ -21,6 +21,7 @@ public class RabbitMQConfig {
     @Bean
     public AsyncRabbitTemplate asyncRabbitTemplate(
             RabbitTemplate rabbitTemplate){
+        rabbitTemplate.setMessageConverter(jacksonConverter());
         return new AsyncRabbitTemplate(rabbitTemplate);
     }
 

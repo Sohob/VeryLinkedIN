@@ -1,4 +1,4 @@
-package com.verylinkedin.groupchat.viewchat;
+package com.verylinkedin.groupchat.requests;
 
 public record ViewChatRequest(
         String userId,

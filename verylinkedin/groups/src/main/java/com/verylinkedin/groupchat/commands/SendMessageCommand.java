@@ -1,14 +1,17 @@
-package com.verylinkedin.groupchat.sendmessage;
+package com.verylinkedin.groupchat.commands;
 
 import com.verylinkedin.groupchat.Command;
 import com.verylinkedin.groupchat.GroupChat;
 import com.verylinkedin.groupchat.GroupRepository;
 import com.verylinkedin.groupchat.Message;
+import com.verylinkedin.groupchat.requests.SendMessageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public record SendMessage(SendingMessageRequest request, GroupRepository groupRepository) implements Command {
+public record SendMessageCommand(SendMessageRequest request, GroupRepository groupRepository) implements Command {
 
     @Override
     public Object execute() {
@@ -26,6 +29,6 @@ public record SendMessage(SendingMessageRequest request, GroupRepository groupRe
         chat.getChatText().add(message);
         //groupRepository.deleteAll();
         groupRepository.save(chat);
-        return null;
+        return new ResponseEntity<String>("Success", HttpStatus.OK).toString();
     }
 }

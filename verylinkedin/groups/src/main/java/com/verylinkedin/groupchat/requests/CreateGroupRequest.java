@@ -1,4 +1,4 @@
-package com.verylinkedin.groupchat.creategroup;
+package com.verylinkedin.groupchat.requests;
 
 import java.util.ArrayList;
 
