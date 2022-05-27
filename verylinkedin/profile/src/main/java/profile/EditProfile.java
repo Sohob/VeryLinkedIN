@@ -1,7 +1,11 @@
 package profile;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class EditProfile {
 
-public static void main(String Args []){
-
+    public static void main(String [] args){
+    SpringApplication.run(EditProfile.class, args);
 }}
