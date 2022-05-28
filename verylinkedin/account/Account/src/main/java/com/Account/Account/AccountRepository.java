@@ -8,5 +8,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
 
     public Account findByUsername(String username);
-
+   // public void deleteByUsername(String username);
 }
+
+

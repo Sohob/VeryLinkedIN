@@ -24,7 +24,8 @@ public class AccountController {
     }
 
     @DeleteMapping("/account/{id}")
-    public String deleteAccount(@PathVariable Long id){
-        return accountService.deleteAccount(id);
+    public String deleteAccount(@PathVariable Long id,@RequestHeader("Authorization") String token){
+        System.out.println(token.substring(7));
+        return accountService.deleteAccount(id , token.substring(7));
     }
 }

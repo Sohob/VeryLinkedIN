@@ -10,6 +10,8 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -39,6 +41,7 @@ public class AccountService {
 
 
         Account accountDB = accountRepository.findByUsername(username);
+        long id = accountDB.getId();
 
         if (accountDB == null) {
             return "Login Failed";
@@ -50,13 +53,17 @@ public class AccountService {
             return "Login Failed";
         }
 
-
-        return "done";
+        return jwtUtil.generateToken(id);
     }
 
-    public String deleteAccount(Long id) {
-        accountRepository.deleteById(id);
-        return "delete";
+    public String deleteAccount(long userID , String token) {
+
+        if(jwtUtil.validateToken(token,userID)){
+            accountRepository.deleteById(userID);
+            System.out.println("del");
+            return "delete";
+        }
+        return "unauth";
     }
 
 
