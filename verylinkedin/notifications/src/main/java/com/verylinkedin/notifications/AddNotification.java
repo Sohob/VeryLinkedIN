@@ -16,10 +16,13 @@ public class AddNotification implements Command{
 
     }
     public void execute(){
+        System.out.println("execute");
         Firestore db= FirestoreClient.getFirestore();
-            Map<String, Object> docData = new HashMap<>();
-            docData.put("message",notification.message);
-            db.collection(notification.to).document().set(docData);
+        System.out.println(db);
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("message",notification.message);
+        db.collection(notification.to).document().set(docData);
+        System.out.println("FINISH");
 
 
     }
