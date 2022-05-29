@@ -39,7 +39,6 @@ public class AccountService {
         String rawPassword = account.getPassword();
         String username = account.getUsername();
 
-
         Account accountDB = accountRepository.findByUsername(username);
         long id = accountDB.getId();
 

@@ -4,7 +4,18 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/verylinkedin/account/Account/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/notifications/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/verylinkedin/groups/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/mypost/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/profile/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/recommendations/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/reporting/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/viewpost/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK" />

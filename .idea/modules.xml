@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/verylinkedin/account/Account/Account.iml" filepath="$PROJECT_DIR$/verylinkedin/account/Account/Account.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/VeryLinkedIN.iml" filepath="$PROJECT_DIR$/.idea/VeryLinkedIN.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/notifications/notifications.iml" filepath="$PROJECT_DIR$/verylinkedin/notifications/notifications.iml" />
     </modules>
   </component>
 </project>
