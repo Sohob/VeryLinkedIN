@@ -1,9 +1,9 @@
 package com.verylinkedin.groupchat.commands;
 
 import com.verylinkedin.groupchat.Command;
-import com.verylinkedin.groupchat.GroupChat;
+import com.verylinkedin.groupchat.classes.GroupChat;
 import com.verylinkedin.groupchat.GroupRepository;
-import com.verylinkedin.groupchat.Message;
+import com.verylinkedin.groupchat.classes.Message;
 import com.verylinkedin.groupchat.requests.SendMessageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,6 @@ public record SendMessageCommand(SendMessageRequest request, GroupRepository gro
                 .unread(unreadList)
                 .time(LocalDateTime.now()).build();
         chat.getChatText().add(message);
-        //groupRepository.deleteAll();
         groupRepository.save(chat);
         return new ResponseEntity<String>("Success", HttpStatus.OK).toString();
     }

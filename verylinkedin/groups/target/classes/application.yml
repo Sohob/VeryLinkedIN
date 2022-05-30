@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8081
 
 spring:
   application:
@@ -9,15 +9,17 @@ spring:
       host: localhost
       port: 27017
       database: GroupChats
-#  rabbitmq:
-#    addresses: localhost:5672
-#    username: bor3y
-#    password: bor3y
-#    listener:
-#      simple:
-#        default-requeue-rejected: false
+  rabbitmq:
+    addresses: localhost:5672
+    username: bor3y
+    password: bor3y
+    listener:
+      simple:
+        default-requeue-rejected: false
 
 rabbitmq:
+  consumers: 5
+  max-consumers: 5
   exchanges:
     internal: internal.exchange
   queues:

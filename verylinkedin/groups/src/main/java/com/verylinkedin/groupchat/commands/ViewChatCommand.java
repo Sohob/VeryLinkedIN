@@ -1,13 +1,11 @@
 package com.verylinkedin.groupchat.commands;
 
 import com.verylinkedin.groupchat.Command;
-import com.verylinkedin.groupchat.GroupChat;
+import com.verylinkedin.groupchat.classes.GroupChat;
 import com.verylinkedin.groupchat.GroupRepository;
-import com.verylinkedin.groupchat.Message;
+import com.verylinkedin.groupchat.classes.Message;
 import com.verylinkedin.groupchat.requests.ViewChatRequest;
 import com.verylinkedin.groupchat.responses.ViewChatResponse;
-import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 
 import java.util.ArrayList;
 

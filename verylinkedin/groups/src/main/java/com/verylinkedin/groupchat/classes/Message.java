@@ -1,4 +1,4 @@
-package com.verylinkedin.groupchat;
+package com.verylinkedin.groupchat.classes;
 
 import lombok.Builder;
 import lombok.Data;

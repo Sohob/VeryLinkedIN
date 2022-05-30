@@ -1,5 +1,6 @@
 server:
   port: 8080
+  address: localhost
 
 spring:
   application:
@@ -11,8 +12,13 @@ spring:
     multipart:
       max-request-size: 100MB
       max-file-size: 100MB
-
-
+  rabbitmq:
+    addresses: localhost:5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        default-requeue-rejected: false
 rabbitmq:
   publisher-confirm-type: correlated
   publisher-returns:  true
@@ -22,10 +28,4 @@ rabbitmq:
     groups: mypost.queue
   routing-keys:
     internal-groups: internal.mypost.routing.key
-
-minio:
-  endpoint: localhost
-  port: 9001
-  accessKey: minio
-  secretKey: minio123
 
