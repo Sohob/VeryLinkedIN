@@ -9,11 +9,13 @@ spring:
       host: localhost
       port: 27017
       database: GroupChats
-  rabbitmq:
-    host: localhost
-    username: guest
-    password: guest
-    port: 5672
+#  rabbitmq:
+#    addresses: localhost:5672
+#    username: bor3y
+#    password: bor3y
+#    listener:
+#      simple:
+#        default-requeue-rejected: false
 
 rabbitmq:
   exchanges:

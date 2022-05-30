@@ -1,10 +1,11 @@
 package com.verylinkedin.mypost.ChangeVisibility;
 
+import com.verylinkedin.mypost.Command;
 import com.verylinkedin.mypost.PostRepository;
 import com.verylinkedin.mypost.models.Post;
 
-public record ChangeVisibility(ChangeVisibilityRequest request, PostRepository postRepository) {
-    public void execute() {
+public record ChangeVisibility(ChangeVisibilityRequest request, PostRepository postRepository) implements Command {
+    public Object execute() {
 
 
         Post post = (Post) postRepository.findById(request.postId());
@@ -13,5 +14,7 @@ public record ChangeVisibility(ChangeVisibilityRequest request, PostRepository p
             post.setPublic(!(post.isPublic()));
         }
         postRepository.save(post);
+        return null ;
+
     }
 }

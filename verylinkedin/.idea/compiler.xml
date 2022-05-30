@@ -10,7 +10,6 @@
         <module name="mypost" />
         <module name="core" />
         <module name="viewpost" />
-        <module name="amqp" />
         <module name="profile" />
         <module name="groups" />
         <module name="recommendations" />
@@ -19,5 +18,8 @@
         <module name="notifications" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="amqp" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

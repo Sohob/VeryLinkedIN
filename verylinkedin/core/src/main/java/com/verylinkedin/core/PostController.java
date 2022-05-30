@@ -1,16 +1,14 @@
 package com.verylinkedin.core;
 
-import com.verylinkedin.amqp.RabbitMQMessageProducer;
-import com.verylinkedin.mypost.BanUser.BanUserRequest;
-import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest;
-import com.verylinkedin.mypost.AddComment.AddCommentRequest;
-import com.verylinkedin.mypost.CreatePost.CreatePostRequest;
-import com.verylinkedin.mypost.EditPost.EditPostRequest;
-import com.verylinkedin.mypost.LikePost.LikePostRequest;
-import com.verylinkedin.mypost.UnlikePost.UnlikePostRequest;
-import com.verylinkedin.mypost.deletePost.DeletePostRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
+import com.verylinkedin.core.postsRequests.*;
+import com.verylinkedin.core.postsResponse.Response;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -101,6 +99,16 @@ public class PostController {
         );
     }
 
+    @GetMapping("")
+    public ResponseEntity<String> getPosts(@RequestParam  String userId) throws JSONException, JsonProcessingException {
+        log.info("viewing posts of user {}", userId);
+        Object viewPostsResponse =  rabbitMQMessageProducer.publishAndReceive(
+                new GetPostsRequest(userId),
+                "internal.exchange",
+                "internal.mypost.routing.key"
+        );
+        log.info("here {}",viewPostsResponse );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(String.valueOf(new Response(viewPostsResponse.toString())), HttpStatus.OK);
+        return responseResponseEntity;
 
-
-}
+}}

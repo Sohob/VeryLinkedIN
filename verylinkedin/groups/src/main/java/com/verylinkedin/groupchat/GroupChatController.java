@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-
+/*
 @Slf4j
 @RestController
 @Component
@@ -24,7 +23,7 @@ public record GroupChatController(GroupChatService groupChatService, RabbitTempl
     ResponseEntity<String> viewChat(@PathVariable String groupId, @PathVariable String userId) {
 
         log.info("viewing messages in group {}", groupId);
-        List<GroupChat> res = groupChatService.viewChat(groupId, userId);
+        GroupChat res = groupChatService.viewChat(groupId, userId);
         return new ResponseEntity<String>("Chat details: " + res,
                 HttpStatus.OK);
     }/*
@@ -45,5 +44,5 @@ public record GroupChatController(GroupChatService groupChatService, RabbitTempl
     public void createGroup(@RequestBody CreateGroupRequest createGroupRequest){
         log.info("message being sent {}", createGroupRequest);
         groupChatService.createGroup(createGroupRequest);
-    }*/
-}
+    }
+}*/

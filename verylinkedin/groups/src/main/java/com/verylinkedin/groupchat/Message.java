@@ -3,7 +3,6 @@ package com.verylinkedin.groupchat;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

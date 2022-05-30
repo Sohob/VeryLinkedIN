@@ -1,0 +1,16 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: notifications
+  rabbitmq:
+    addresses: localhost:5672
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notifications: notifications.queue
+  routing-keys:
+    internal-notifications: internal.notifications.routing.key

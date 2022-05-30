@@ -10,13 +10,12 @@
         <module name="core" />
         <module name="mypost" />
         <module name="viewpost" />
-        <module name="amqp" />
         <module name="profile" />
         <module name="groups" />
-        <module name="recommendations" />
         <module name="account" />
         <module name="reporting" />
         <module name="notifications" />
+        <module name="redis" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -28,6 +27,7 @@
       <module name="notifications" target="17" />
       <module name="profile" target="17" />
       <module name="recommendations" target="17" />
+      <module name="redis" target="17" />
       <module name="reporting" target="17" />
       <module name="verylinkedin" target="17" />
       <module name="viewpost" target="17" />
