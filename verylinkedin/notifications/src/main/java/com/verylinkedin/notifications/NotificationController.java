@@ -22,6 +22,11 @@ public class NotificationController {
             public static  void Notification(Message messageFromQueue)  {
         System.out.println("INSIDE NOTIFICATION");
         System.out.println(messageFromQueue);
+
+        // fetch comman name
+        // get the corresponding class from the hashtable CM
+        // instantiate class
+        // call execute
         try{
         String typeId = (String) messageFromQueue.getMessageProperties().getHeaders().get("__TypeId__");
         System.out.println("type: "+typeId);
