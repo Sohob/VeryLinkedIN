@@ -37,7 +37,6 @@ public class RabbitMQConfig {
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
         SimpleRabbitListenerContainerFactory factory =
                 new SimpleRabbitListenerContainerFactory();
-        factory.setConcurrentConsumers(5);
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(jacksonConverter());
         return factory;
