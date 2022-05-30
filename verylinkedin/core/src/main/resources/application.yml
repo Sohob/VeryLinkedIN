@@ -7,3 +7,25 @@ spring:
   data:
     mongodb.host: localhost
     mongodb.port: 27017
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+
+
+rabbitmq:
+  publisher-confirm-type: correlated
+  publisher-returns:  true
+  exchanges:
+    internal: internal.exchange
+  queues:
+    groups: mypost.queue
+  routing-keys:
+    internal-groups: internal.mypost.routing.key
+
+minio:
+  endpoint: localhost
+  port: 9001
+  accessKey: minio
+  secretKey: minio123
+

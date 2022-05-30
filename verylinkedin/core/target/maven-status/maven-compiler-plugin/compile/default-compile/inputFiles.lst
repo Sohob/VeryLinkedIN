@@ -1,3 +1,7 @@
-C:\Users\atame\Desktop\Github\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\Controller.java
-C:\Users\atame\Desktop\Github\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\VerylinkedinApplication.java
-C:\Users\atame\Desktop\Github\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\PostController.java
+C:\Users\Lenovo\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\rabbitmq\HelloController.java
+C:\Users\Lenovo\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\Controller.java
+C:\Users\Lenovo\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\VerylinkedinApplication.java
+C:\Users\Lenovo\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\AsyncRPCClient.java
+C:\Users\Lenovo\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\AsyncRabbitTemplate.java
+C:\Users\Lenovo\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\PostController.java
+C:\Users\Lenovo\VeryLinkedIN\verylinkedin\core\src\main\java\com\verylinkedin\core\rabbitmq\RabbitConfig.java
