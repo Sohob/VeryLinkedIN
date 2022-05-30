@@ -8,6 +8,8 @@ import java.io.IOException;
 @SpringBootApplication
 public class GroupChatApplication {
 
-    public static void main(String[] args) throws IOException {SpringApplication.run(GroupChatApplication.class, args);
-    new CommandMap();}
+    public static void main(String[] args) throws IOException {
+        new CommandMap();
+        SpringApplication.run(GroupChatApplication.class, args);
+    }
 }
