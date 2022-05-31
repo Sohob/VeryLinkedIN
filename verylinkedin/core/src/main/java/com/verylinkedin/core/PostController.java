@@ -1,12 +1,12 @@
 package com.verylinkedin.core;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
+import com.verylinkedin.core.amqp.RabbitMQMessageProducerV2;
 import com.verylinkedin.core.postsRequests.*;
-import com.verylinkedin.core.postsResponse.Response;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
+import org.springframework.amqp.core.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Service
 @AllArgsConstructor
 public class PostController {
-    private final RabbitMQMessageProducer rabbitMQMessageProducer;
+    private final RabbitMQMessageProducerV2 rabbitMQMessageProducer;
 
     @PostMapping("/createPost")
     public void  createPost(@RequestBody CreatePostRequest createPostRequest)  {
@@ -102,13 +102,12 @@ public class PostController {
     @GetMapping("")
     public ResponseEntity<String> getPosts(@RequestParam  String userId) throws JSONException, JsonProcessingException {
         log.info("viewing posts of user {}", userId);
-        Object viewPostsResponse =  rabbitMQMessageProducer.publishAndReceive(
+        byte[] viewPostsResponse =    rabbitMQMessageProducer.publishAndReceive(
                 new GetPostsRequest(userId),
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
-        log.info("here {}",viewPostsResponse );
-        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(String.valueOf(new Response(viewPostsResponse.toString())), HttpStatus.OK);
+        log.info("here {}",new String(viewPostsResponse) );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(new String(viewPostsResponse), HttpStatus.OK);
         return responseResponseEntity;
-
 }}

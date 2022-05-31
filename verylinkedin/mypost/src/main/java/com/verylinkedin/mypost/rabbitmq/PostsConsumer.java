@@ -2,23 +2,23 @@ package com.verylinkedin.mypost.rabbitmq;
 
 
 
-        import com.fasterxml.jackson.core.JsonProcessingException;
-        import com.fasterxml.jackson.databind.ObjectMapper;
-        import com.verylinkedin.mypost.Command;
-        import com.verylinkedin.mypost.CommandMap;
-        import com.verylinkedin.mypost.PostRepository;
-        import lombok.AllArgsConstructor;
-        import lombok.extern.slf4j.Slf4j;
-        import net.minidev.json.parser.ParseException;
-        import org.json.JSONException;
-        import org.json.JSONObject;
-        import org.springframework.amqp.core.Message;
-        import org.springframework.amqp.rabbit.annotation.RabbitListener;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.verylinkedin.mypost.Command;
+import com.verylinkedin.mypost.CommandMap;
+import com.verylinkedin.mypost.PostRepository;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.parser.ParseException;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-        import java.lang.reflect.Constructor;
-        import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 
 @Component
@@ -30,7 +30,7 @@ public class PostsConsumer {
     private final PostRepository postRepository;
 
     @RabbitListener(queues = "${rabbitmq.queues.groups}", concurrency = "${rabbitmq.consumers}-${rabbitmq.max-consumers}")
-    public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
+    public String consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
 
         // This part uses reflection to dynamically process requests
 
@@ -60,7 +60,7 @@ public class PostsConsumer {
 
         // Create the command using the mapped request and the repository
         Command commandObject = (Command) commandConstructor.newInstance(mappedRequest, postRepository);
-        Object response = commandObject.execute();
+        String   response = (String) commandObject.execute();
         log.info("Executed the command with response {}",response);
         return response;
 
