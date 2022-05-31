@@ -1,9 +1,7 @@
 package com.verylinkedin.mypost;
 
-import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibility;
-import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest;
-import com.verylinkedin.mypost.CreateMedia.CreateMedia;
-import com.verylinkedin.mypost.CreateMedia.CreateMediaRequest;
+import com.verylinkedin.mypost.commands.CreateMedia.CreateMedia;
+import com.verylinkedin.mypost.commands.CreateMedia.CreateMediaRequest;
 
 
 import com.verylinkedin.mypost.models.Media;

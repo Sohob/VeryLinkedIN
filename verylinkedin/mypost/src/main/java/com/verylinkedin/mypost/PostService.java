@@ -1,21 +1,21 @@
 package com.verylinkedin.mypost;
 
-import com.verylinkedin.mypost.BanUser.BanUser;
-import com.verylinkedin.mypost.BanUser.BanUserRequest;
-import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibility;
-import com.verylinkedin.mypost.ChangeVisibility.ChangeVisibilityRequest;
-import com.verylinkedin.mypost.AddComment.AddComment;
-import com.verylinkedin.mypost.AddComment.AddCommentRequest;
-import com.verylinkedin.mypost.CreatePost.CreatePost;
-import com.verylinkedin.mypost.CreatePost.CreatePostRequest;
-import com.verylinkedin.mypost.EditPost.EditPost;
-import com.verylinkedin.mypost.EditPost.EditPostRequest;
-import com.verylinkedin.mypost.LikePost.LikePost;
-import com.verylinkedin.mypost.LikePost.LikePostRequest;
-import com.verylinkedin.mypost.UnlikePost.UnlikePost;
-import com.verylinkedin.mypost.UnlikePost.UnlikePostRequest;
-import com.verylinkedin.mypost.deletePost.DeletePost;
-import com.verylinkedin.mypost.deletePost.DeletePostRequest;
+import com.verylinkedin.mypost.commands.BanUser.BanUser;
+import com.verylinkedin.mypost.commands.BanUser.BanUserRequest;
+import com.verylinkedin.mypost.commands.ChangeVisibility.ChangeVisibility;
+import com.verylinkedin.mypost.commands.ChangeVisibility.ChangeVisibilityRequest;
+import com.verylinkedin.mypost.commands.AddComment.AddComment;
+import com.verylinkedin.mypost.commands.AddComment.AddCommentRequest;
+import com.verylinkedin.mypost.commands.CreatePost.CreatePost;
+import com.verylinkedin.mypost.commands.CreatePost.CreatePostRequest;
+import com.verylinkedin.mypost.commands.EditPost.EditPost;
+import com.verylinkedin.mypost.commands.EditPost.EditPostRequest;
+import com.verylinkedin.mypost.commands.LikePost.LikePost;
+import com.verylinkedin.mypost.commands.LikePost.LikePostRequest;
+import com.verylinkedin.mypost.commands.UnlikePost.UnlikePost;
+import com.verylinkedin.mypost.commands.UnlikePost.UnlikePostRequest;
+import com.verylinkedin.mypost.commands.DeletePost.DeletePost;
+import com.verylinkedin.mypost.commands.DeletePost.DeletePostRequest;
 
 import org.springframework.stereotype.Service;
 

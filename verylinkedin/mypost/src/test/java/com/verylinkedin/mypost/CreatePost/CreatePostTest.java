@@ -1,6 +1,8 @@
 package com.verylinkedin.mypost.CreatePost;
 
 import com.verylinkedin.mypost.PostRepository;
+import com.verylinkedin.mypost.commands.CreatePost.CreatePost;
+import com.verylinkedin.mypost.commands.CreatePost.CreatePostRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

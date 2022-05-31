@@ -1,6 +1,8 @@
 package com.verylinkedin.mypost.GetPost;
 
 import com.verylinkedin.mypost.PostRepository;
+import com.verylinkedin.mypost.commands.GetPost.GetPosts;
+import com.verylinkedin.mypost.commands.GetPost.GetPostsRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

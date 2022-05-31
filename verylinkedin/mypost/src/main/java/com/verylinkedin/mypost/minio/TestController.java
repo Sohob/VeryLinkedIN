@@ -1,6 +1,6 @@
 package com.verylinkedin.mypost.minio;
 
-import com.verylinkedin.mypost.CreateMedia.CreateMediaRequest;
+import com.verylinkedin.mypost.commands.CreateMedia.CreateMediaRequest;
 import com.verylinkedin.mypost.MediaService;
 import com.verylinkedin.mypost.minio.config.*;
 import com.verylinkedin.mypost.models.Media;
