@@ -22,3 +22,4 @@ public class MyPostApplication {
         SpringApplication.run(MyPostApplication.class, args);
     }
 }
+

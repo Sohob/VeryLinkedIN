@@ -10,7 +10,6 @@
       <module fileurl="file://$PROJECT_DIR$/verylinkedin/mypost/mypost.iml" filepath="$PROJECT_DIR$/verylinkedin/mypost/mypost.iml" />
       <module fileurl="file://$PROJECT_DIR$/verylinkedin/notifications/notifications.iml" filepath="$PROJECT_DIR$/verylinkedin/notifications/notifications.iml" />
       <module fileurl="file://$PROJECT_DIR$/verylinkedin/Edit profile/profile.iml" filepath="$PROJECT_DIR$/verylinkedin/Edit profile/profile.iml" />
-      <module fileurl="file://$PROJECT_DIR$/verylinkedin/recommendations/recommendations.iml" filepath="$PROJECT_DIR$/verylinkedin/recommendations/recommendations.iml" />
       <module fileurl="file://$PROJECT_DIR$/verylinkedin/redis/redis.iml" filepath="$PROJECT_DIR$/verylinkedin/redis/redis.iml" />
       <module fileurl="file://$PROJECT_DIR$/verylinkedin/reporting/reporting.iml" filepath="$PROJECT_DIR$/verylinkedin/reporting/reporting.iml" />
       <module fileurl="file://$PROJECT_DIR$/verylinkedin/verylinkedin.iml" filepath="$PROJECT_DIR$/verylinkedin/verylinkedin.iml" />
