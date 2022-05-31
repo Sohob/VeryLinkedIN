@@ -23,80 +23,96 @@ public class PostController {
     private final RabbitMQMessageProducerV2 rabbitMQMessageProducer;
 
     @PostMapping("/createPost")
-    public void  createPost(@RequestBody CreatePostRequest createPostRequest)  {
+    public  ResponseEntity<String>  createPost(@RequestBody CreatePostRequest createPostRequest)  {
 
-        rabbitMQMessageProducer.publish(
+        byte[] result = rabbitMQMessageProducer.publishAndReceive(
                 createPostRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(new String(result), HttpStatus.OK);
+        return responseResponseEntity;
     }
     @PutMapping("/editPost")
-    public void editPost(@RequestBody EditPostRequest editPostRequest) {
+    public  ResponseEntity<String> editPost(@RequestBody EditPostRequest editPostRequest) {
 
-        rabbitMQMessageProducer.publish(
+        byte[] result = rabbitMQMessageProducer.publishAndReceive(
                 editPostRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(new String(result), HttpStatus.OK);
+        return responseResponseEntity;
     }
     @DeleteMapping("/deletePost")
-    public void  deletePost(@RequestBody DeletePostRequest deletePostRequest)  {
+    public  ResponseEntity<String>  deletePost(@RequestBody DeletePostRequest deletePostRequest)  {
 
-        rabbitMQMessageProducer.publish(
+        byte[] result = rabbitMQMessageProducer.publishAndReceive(
                 deletePostRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(new String(result), HttpStatus.OK);
+        return responseResponseEntity;
     }
     @PutMapping("/addComment")
-    public void editPost(@RequestBody AddCommentRequest addCommentRequest) {
+    public  ResponseEntity<String> editPost(@RequestBody AddCommentRequest addCommentRequest) {
 
-        rabbitMQMessageProducer.publish(
+        byte[] result = rabbitMQMessageProducer.publishAndReceive(
                 addCommentRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(new String(result), HttpStatus.OK);
+        return responseResponseEntity;
     }
 
     @PutMapping("/changeVisibility")
-    public void  changeVisibility(@RequestBody ChangeVisibilityRequest changeVisibilityRequest)  {
+    public  ResponseEntity<String>  changeVisibility(@RequestBody ChangeVisibilityRequest changeVisibilityRequest)  {
 
-        rabbitMQMessageProducer.publish(
+        byte[] result = rabbitMQMessageProducer.publishAndReceive(
                 changeVisibilityRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(new String(result), HttpStatus.OK);
+        return responseResponseEntity;
     }
 
     @PutMapping("/banUser")
-    public void editPost(@RequestBody BanUserRequest banUserRequest) {
+    public  ResponseEntity<String> editPost(@RequestBody BanUserRequest banUserRequest) {
 
-        rabbitMQMessageProducer.publish(
+        byte[] result = rabbitMQMessageProducer.publishAndReceive(
                 banUserRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(new String(result), HttpStatus.OK);
+        return responseResponseEntity;
     }
 
     @PutMapping("/likePost")
-    public void  likePost(@RequestBody LikePostRequest likePostRequest)  {
+    public  ResponseEntity<String>  likePost(@RequestBody LikePostRequest likePostRequest)  {
 
-        rabbitMQMessageProducer.publish(
+        byte[] result = rabbitMQMessageProducer.publishAndReceive(
                 likePostRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(new String(result), HttpStatus.OK);
+        return responseResponseEntity;
     }
 
     @PutMapping("/unlikePost")
-    public void unlikePost(@RequestBody UnlikePostRequest unlikePostRequest)  {
+    public ResponseEntity<String> unlikePost(@RequestBody UnlikePostRequest unlikePostRequest)  {
 
-        rabbitMQMessageProducer.publish(
+        byte[] result = rabbitMQMessageProducer.publishAndReceive(
                 unlikePostRequest,
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity<String>(new String(result), HttpStatus.OK);
+        return responseResponseEntity;
     }
 
     @GetMapping("")

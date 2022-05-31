@@ -22,7 +22,7 @@ public record AddComment(AddCommentRequest request, PostRepository postRepositor
             postRepository.save(post);
 
         }
-        return null ;
+        return "{\"success\":\"true\"}" ;
 
     }
 }

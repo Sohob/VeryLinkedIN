@@ -1,5 +1,6 @@
 package com.verylinkedin.mypost.commands.CreatePost;
 
+import com.google.gson.Gson;
 import com.verylinkedin.mypost.Command;
 import com.verylinkedin.mypost.PostRepository;
 import com.verylinkedin.mypost.models.Post;
@@ -13,7 +14,8 @@ public record CreatePost(CreatePostRequest request,PostRepository postRepository
                 .build();
         post.setPublic(true);
         postRepository.save(post);
-        return null ;
+        String json = new Gson().toJson(post );
+        return json ;
 
     }
 }

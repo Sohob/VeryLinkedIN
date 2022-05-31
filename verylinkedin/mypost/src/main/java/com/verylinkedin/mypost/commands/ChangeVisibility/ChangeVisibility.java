@@ -13,7 +13,7 @@ public record ChangeVisibility(ChangeVisibilityRequest request, PostRepository p
             post.setPublic(!(post.isPublic()));
         }
         postRepository.save(post);
-        return null ;
+        return "{\"success\":\"true\"}" ;
 
     }
 }

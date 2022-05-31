@@ -16,7 +16,7 @@ public record BanUser(BanUserRequest request, PostRepository postRepository)impl
             post.getBanned().add(request.userId());
         }
         postRepository.save(post);
-        return null ;
+        return "{\"success\":\"true\"}" ;
 
     }
 }
