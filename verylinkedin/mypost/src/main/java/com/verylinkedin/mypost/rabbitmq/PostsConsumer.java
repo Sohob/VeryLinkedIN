@@ -22,21 +22,12 @@ package com.verylinkedin.mypost.rabbitmq;
 
 
 @Component
-//@AllArgsConstructor
+@AllArgsConstructor
 @Slf4j
 
 public class PostsConsumer {
 
     private final PostRepository postRepository;
-
-    @Autowired
-    public PostsConsumer(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
-
-    public PostRepository getPostRepository() {
-        return postRepository;
-    }
 
     @RabbitListener(queues = "${rabbitmq.queues.groups}", concurrency = "${rabbitmq.consumers}-${rabbitmq.max-consumers}")
     public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
