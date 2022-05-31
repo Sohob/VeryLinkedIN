@@ -14,6 +14,7 @@ package com.verylinkedin.mypost.rabbitmq;
         import org.json.JSONObject;
         import org.springframework.amqp.core.Message;
         import org.springframework.amqp.rabbit.annotation.RabbitListener;
+        import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Component;
 
         import java.lang.reflect.Constructor;
@@ -27,7 +28,6 @@ package com.verylinkedin.mypost.rabbitmq;
 public class PostsConsumer {
 
     private final PostRepository postRepository;
-
 
     @RabbitListener(queues = "${rabbitmq.queues.groups}", concurrency = "${rabbitmq.consumers}-${rabbitmq.max-consumers}")
     public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
