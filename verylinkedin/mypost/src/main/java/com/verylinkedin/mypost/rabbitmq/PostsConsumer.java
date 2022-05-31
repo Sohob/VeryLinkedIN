@@ -30,7 +30,7 @@ public class PostsConsumer {
     private final PostRepository postRepository;
 
     @RabbitListener(queues = "${rabbitmq.queues.groups}", concurrency = "${rabbitmq.consumers}-${rabbitmq.max-consumers}")
-    public String consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
+    public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
 
         // This part uses reflection to dynamically process requests
 
@@ -60,7 +60,7 @@ public class PostsConsumer {
 
         // Create the command using the mapped request and the repository
         Command commandObject = (Command) commandConstructor.newInstance(mappedRequest, postRepository);
-        String   response = (String) commandObject.execute();
+        Object   response =  commandObject.execute();
         log.info("Executed the command with response {}",response);
         return response;
 

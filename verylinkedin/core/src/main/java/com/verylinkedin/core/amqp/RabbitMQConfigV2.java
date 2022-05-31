@@ -23,9 +23,9 @@ public class RabbitMQConfigV2 {
     private final ConnectionFactory connectionFactory;
 
     @Bean
-    public AsyncRabbitTemplate asyncRabbitTemplate(
+    public AsyncRabbitTemplate asyncRabbitTemplateV2(
             RabbitTemplate rabbitTemplate){
-        rabbitTemplate.setMessageConverter(jacksonConverter());
+        rabbitTemplate.setMessageConverter(jacksonConverterV2());
         return new AsyncRabbitTemplate(rabbitTemplate);
     }
     //
@@ -47,7 +47,7 @@ public class RabbitMQConfigV2 {
 //    }
 //
     @Bean
-    public MessageConverter jacksonConverter() {
+    public MessageConverter jacksonConverterV2() {
         MessageConverter jackson2JsonMessageConverter =
                 new Jackson2JsonMessageConverter();
         return jackson2JsonMessageConverter;
