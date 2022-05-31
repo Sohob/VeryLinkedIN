@@ -1,0 +1,26 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: groups
+  data:
+    mongodb:
+      host: mongo
+      port: 27017
+      database: GroupChats
+  rabbitmq:
+    addresses: rabbitmq
+    listener:
+      simple:
+        default-requeue-rejected: false
+
+rabbitmq:
+  consumers: 5
+  max-consumers: 5
+  exchanges:
+    internal: internal.exchange
+  queues:
+    groups: groups.queue
+  routing-keys:
+    internal-groups: internal.groups.routing.key

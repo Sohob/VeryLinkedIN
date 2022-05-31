@@ -1,0 +1,21 @@
+config:
+  target: "https://localhost:8080/api/v1/groups/"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: Ramp up load
+    - duration: 600
+      arrivalRate: 50
+      name: Sustained load
+
+scenarios:
+  - name: "Send a message"
+    flow:
+      - post:
+          url: "/20/62913276fe0cf54fc20ca5db/send"
+          json: "{message: reflection man}"
+            

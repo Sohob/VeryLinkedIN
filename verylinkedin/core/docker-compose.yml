@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  core:
+    build: .
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+
+
+networks:
+  default:
+    external:
+      name: test

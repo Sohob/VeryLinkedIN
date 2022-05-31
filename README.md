@@ -1,6 +1,20 @@
-# VeryLinkedIN
+# VeryLinkedIN - a LinkedIN Replica
 
-## Subteam 1 
+## Technologies:
+
+- Java Spring Boot
+- RabbitMQ
+- Redis
+- Docker
+- Kubernetes
+- MongoDB
+- PostgresQL
+
+## Description:
+
+VeryLinkedIN is a replica of the infamous LinkedIN website. Our application is designed to withstand and fully function under heavy loads. Our scalable application was built using Java Spring Boot with a microservices architecture and follows command design pattern. Each service is decoupled so that our microservices run independently. The services run dynamically using the concept of reflection.
+
+## Subteam 1
 1. Sign up, login and delete account
 2. Edit profile
 3. Add profile photo

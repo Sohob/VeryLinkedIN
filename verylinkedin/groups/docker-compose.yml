@@ -3,30 +3,42 @@ services:
   groups:
     build: .
     restart: always
+    environment:
+      RABBITMQ_SERVER: rabbitmq
+      MONGO_SERVER: mongo
+      SPRING_PROFILES_ACTIVE: docker
     ports:
-      - 8081:8081
+      - "8081:8081"
     depends_on:
-      - mongo_db
-  mongo_db:
-    image: "mongo:4.4.3"
-    restart: always
+      - mongo
+      - rabbitmq
+
+
+  mongo:
+    container_name: 'mongo'
+    image: "mongo:latest"
+    volumes:
+      - data:/data/db
     ports:
-      - 27017:27017
+      - "27017:27017"
 
   rabbitmq:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:3-management
     container_name: 'rabbitmq'
-    environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     volumes:
-      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-    networks:
-      - rabbitmq_go_net
+      - rabbitmq_data:/var/lib/rabbitmq/
+      - rabbitmq_log:/var/log/rabbitmq/
+
+
+volumes:
+  rabbitmq_data:
+  rabbitmq_log:
+  data:
+
 networks:
-  rabbitmq_go_net:
-    driver: bridge
+  default:
+    external:
+      name: test
