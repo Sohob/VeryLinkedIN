@@ -20,6 +20,8 @@ spring:
       simple:
         default-requeue-rejected: false
 rabbitmq:
+  consumers: 5
+  max-consumers: 5
   publisher-confirm-type: correlated
   publisher-returns:  true
   exchanges:
