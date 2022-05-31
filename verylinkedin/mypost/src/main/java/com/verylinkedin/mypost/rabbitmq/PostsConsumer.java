@@ -29,7 +29,7 @@ public class PostsConsumer {
     private final PostRepository postRepository;
 
 
-    @RabbitListener(queues = "${rabbitmq.queues.groups}")
+    @RabbitListener(queues = "${rabbitmq.queues.groups}", concurrency = "${rabbitmq.consumers}-${rabbitmq.max-consumers}")
     public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
 
         // This part uses reflection to dynamically process requests
