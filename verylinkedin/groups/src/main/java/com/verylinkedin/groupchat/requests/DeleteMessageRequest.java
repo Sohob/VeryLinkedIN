@@ -1,7 +1,8 @@
 package com.verylinkedin.groupchat.requests;
 
-public record SendMessageRequest(
+public record DeleteMessageRequest(
         String userId,
         String groupId,
-        String message) {
+        String messageId
+) {
 }

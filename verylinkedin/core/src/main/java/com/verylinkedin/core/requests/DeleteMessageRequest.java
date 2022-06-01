@@ -1,7 +1,8 @@
 package com.verylinkedin.core.requests;
 
-public record SendMessageRequest(
+public record DeleteMessageRequest(
         String userId,
         String groupId,
-        String message) {
+        String messageId
+) {
 }

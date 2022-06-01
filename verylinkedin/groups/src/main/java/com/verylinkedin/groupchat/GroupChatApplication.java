@@ -8,8 +8,7 @@ import java.io.IOException;
 @SpringBootApplication
 public class GroupChatApplication {
 
-    public static void main(String[] args) throws IOException {
-        new CommandMap();
+    public static void main(String[] args) throws IOException, NoSuchFieldException, IllegalAccessException {
         SpringApplication.run(GroupChatApplication.class, args);
     }
 }
