@@ -4,3 +4,15 @@ server:
 spring:
   application:
     name: core
+  redis:
+    port: 6379
+    password: eminem7otob
+    host: localhost
+    timeToLive: 180
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    groups: cache.queue
+  routing-keys:
+    internal-groups: internal.cache.routing.key
