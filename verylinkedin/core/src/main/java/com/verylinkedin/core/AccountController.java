@@ -2,6 +2,8 @@ package com.verylinkedin.core;
 
 
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
+import com.verylinkedin.core.auth.repository.CacheRepository;
+import com.verylinkedin.core.auth.requests.JWToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,7 @@ import java.util.Map;
 @AllArgsConstructor
 
 public class AccountController {
-
+    public final CacheRepository cacheRepository;
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
@@ -63,9 +65,15 @@ public class AccountController {
             return reply;
 
         // use the reply as the token
+        cacheRepository.put(reply, true);
         return "AccountLogged with token:   " + reply; //
     }
+    @PostMapping("/logout")
+    public String logout(@RequestHeader JWToken token) {
 
+        cacheRepository.remove(token.getToken());
+        return "done";
+    }
     @DeleteMapping("/account/{id}")
     public String deleteAccount(@PathVariable Long id, @RequestHeader("Authorization") String token){
 
