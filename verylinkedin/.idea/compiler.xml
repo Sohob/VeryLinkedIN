@@ -10,16 +10,17 @@
         <module name="mypost" />
         <module name="core" />
         <module name="viewpost" />
-        <module name="profile" />
         <module name="groups" />
-        <module name="recommendations" />
         <module name="account" />
         <module name="reporting" />
         <module name="notifications" />
+        <module name="redis" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="amqp" target="17" />
+      <module name="profile" target="17" />
+      <module name="recommendations" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

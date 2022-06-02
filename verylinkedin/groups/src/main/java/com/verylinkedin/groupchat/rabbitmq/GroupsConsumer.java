@@ -14,6 +14,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -27,22 +28,22 @@ public class GroupsConsumer {
     private final GroupRepository groupRepository;
 
 
-    @RabbitListener(queues = "${rabbitmq.queues.groups}")
-    public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
+    @RabbitListener(queues = "${rabbitmq.queues.groups}", concurrency = "${rabbitmq.consumers}-${rabbitmq.max-consumers}")
+    public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, IOException, NoSuchFieldException {
 
             // This part uses reflection to dynamically process requests
+            // Load for testing multithreading
+            //BigInteger veryBig = new BigInteger(10000, new Random());
+            //veryBig.nextProbablePrime();
 
             // Get the request type from the message properties
             String typeId = (String) requestFromQueue.getMessageProperties().getHeaders().get("__TypeId__");
             log.info("Consumed {} from queue {}", requestFromQueue, requestObject);
             log.info("Message of type {}", typeId);
 
-            // Initialize the command map
-            //new CommandMap();
-
             // Get classes for the request and the command using the request type header
-            Class commandClass = CommandMap.getCommandClass(typeId);
-            Class requestClass = CommandMap.getRequestClass(typeId);
+            Class commandClass = CommandMap.getInstance().getCommandClass(typeId);
+            Class requestClass = CommandMap.getInstance().getRequestClass(typeId);
             log.info("Maps look like this {} {}",commandClass.getName(), requestClass.getName());
             // Get the constructor for the command class
             Constructor commandConstructor = commandClass.getConstructor(requestClass, GroupRepository.class);
@@ -61,67 +62,5 @@ public class GroupsConsumer {
             Object response = commandObject.execute();
             log.info("Executed the command with response {}",response);
             return response;
-
-        /*
-        switch (typeId){
-            case "com.verylinkedin.core.requests.SendingMessageRequest":
-                Class commandClass = cMap.getCommandMap().get(typeId);
-                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
-                log.info("Request JSON looks like this {}", requestJSON);
-                SendingMessageRequest request = new SendingMessageRequest(
-                        requestJSON.getString("userId"),
-                        requestJSON.getString("groupId"),
-                        requestJSON.getString("message"));
-                log.info("Request looks like this {}", request);
-                groupChatService.sendMessage(request);break;
-           case "com.verylinkedin.core.requests.CreateGroupRequest":
-               // Convert to a JSON object
-                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
-               log.info("Request JSON looks like this {}", requestJSON.getJSONArray("participants").getString(0));
-
-               // Convert participants JSON Array to ArrayList
-               ArrayList<String> convertedArray = new ArrayList<>();
-               JSONArray jsonArray = requestJSON.getJSONArray("participants");
-               for(int i = 0;i < jsonArray.length();i++){
-                   convertedArray.add(jsonArray.getString(i));
-               }
-               // Create the request
-                CreateGroupRequest createGroupRequest = new CreateGroupRequest(
-                        convertedArray,
-                        requestJSON.getString("title"),
-                        requestJSON.getString("description"),
-                        requestJSON.getString("owner"),
-                        requestJSON.getString("groupPhoto"));
-                log.info("Sending {} to service", createGroupRequest);
-                // Execute the request
-               groupChatService.createGroup(createGroupRequest);
-               break;
-            case "com.verylinkedin.core.requests.ViewChatRequest":
-                // Convert to a JSON object
-                //requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
-                requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
-                log.info("Request JSON looks like this {}", requestJSON);
-
-
-                // Create the request
-                ViewChatRequest viewChatRequest = new ViewChatRequest(
-                        requestJSON.getString("userId"),
-                        requestJSON.getString("groupId"));
-                log.info("Request looks like this {}", viewChatRequest);
-                //log.info("Sending {} to service", createGroupRequest);
-                // Execute the request
-                ViewChatResponse viewChatResponse = groupChatService.viewChat(viewChatRequest);
-                log.info("Returning response {}", viewChatResponse);
-                MessageProperties messageProperties = new MessageProperties();
-                messageProperties.setContentType(messageProperties.CONTENT_TYPE_JSON);
-                Gson gson = new Gson();
-                String viewChatResponseGson = gson.toJson(viewChatResponse.toString(), String.class);
-                Message responseMessage = new Message(viewChatResponseGson.getBytes(), messageProperties);
-                return responseMessage;
-
-
-        }
-
-        return null;*/
     }
 }

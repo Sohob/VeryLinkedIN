@@ -1,5 +1,6 @@
 server:
   port: 8080
+  address: localhost
 
 spring:
   application:
@@ -9,3 +10,8 @@ spring:
     password: eminem7otob
     host: localhost
     timeToLive: 180
+  rabbitmq:
+    addresses: localhost:5672
+    listener:
+      simple:
+        default-requeue-rejected: false

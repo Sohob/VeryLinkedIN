@@ -1,6 +1,7 @@
 package com.verylinkedin.groupchat;
 
 
+import com.verylinkedin.groupchat.classes.GroupChat;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

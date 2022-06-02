@@ -3,14 +3,7 @@ package com.verylinkedin.core;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(
-        scanBasePackages = {
-                "com.verylinkedin.core",
-                "com.verylinkedin.amqp",
-                "com.verylinkedin.groups",
-                "com.verylinkedin.notifications"
-        }
-)
+@SpringBootApplication
 public class VerylinkedinApplication {
 
 

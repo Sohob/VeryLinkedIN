@@ -18,6 +18,8 @@ spring:
         default-requeue-rejected: false
 
 rabbitmq:
+  consumers: 5
+  max-consumers: 5
   exchanges:
     internal: internal.exchange
   queues:

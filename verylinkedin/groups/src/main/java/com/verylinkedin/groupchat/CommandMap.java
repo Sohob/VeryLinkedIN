@@ -1,27 +1,21 @@
 package com.verylinkedin.groupchat;
 
-import com.google.common.reflect.ClassPath;
-import com.verylinkedin.groupchat.commands.CreateGroupCommand;
-import com.verylinkedin.groupchat.commands.SendMessageCommand;
-import com.verylinkedin.groupchat.commands.ViewChatCommand;
-import com.verylinkedin.groupchat.requests.CreateGroupRequest;
-import com.verylinkedin.groupchat.requests.SendMessageRequest;
-import com.verylinkedin.groupchat.requests.ViewChatRequest;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CommandMap {
     public static HashMap<String, Class> commandMap = new HashMap<>();
     public static HashMap<String, Class> requestMap = new HashMap<>();
+    private static CommandMap INSTANCE;
 
-    public CommandMap() throws IOException {
-        /*
-        List<Class> requestClassList = findAllClassesUsingGoogleGuice("com.verylinkedin.groupchat.requests");
-        List<Class> commandClassList = findAllClassesUsingGoogleGuice("com.verylinkedin.groupchat.commands");
+    private CommandMap() {
+
+        List<Class> requestClassList = findAllClassesUsingClassLoader("com.verylinkedin.groupchat.requests");
+        List<Class> commandClassList = findAllClassesUsingClassLoader("com.verylinkedin.groupchat.commands");
         Collections.sort(requestClassList, Comparator.comparing(Class::getName));
         Collections.sort(commandClassList, Comparator.comparing(Class::getName));
         for(int i = 0;i < requestClassList.size();i++){
@@ -32,14 +26,14 @@ public class CommandMap {
             commandMap.put("com.verylinkedin.core.requests."+requestClassName.substring(36), commandClass);
             requestMap.put("com.verylinkedin.core.requests."+requestClassName.substring(36), requestClass);
         }
-        System.out.println(commandMap);
-        System.out.println(commandClassList);*/
-        commandMap.put("com.verylinkedin.core.requests.SendMessageRequest", SendMessageCommand.class);
-        requestMap.put("com.verylinkedin.core.requests.SendMessageRequest", SendMessageRequest.class);
-        commandMap.put("com.verylinkedin.core.requests.CreateGroupRequest", CreateGroupCommand.class);
-        requestMap.put("com.verylinkedin.core.requests.CreateGroupRequest", CreateGroupRequest.class);
-        commandMap.put("com.verylinkedin.core.requests.ViewChatRequest", ViewChatCommand.class);
-        requestMap.put("com.verylinkedin.core.requests.ViewChatRequest", ViewChatRequest.class);
+    }
+
+    public static CommandMap getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new CommandMap();
+        }
+
+        return INSTANCE;
     }
 
     public static HashMap<String, Class> getCommandMap() {
@@ -52,13 +46,24 @@ public class CommandMap {
     public static Class getRequestClass(String type){
         return requestMap.get(type);
     }
-    public List<Class> findAllClassesUsingGoogleGuice(String packageName) throws IOException {
-        return ClassPath.from(ClassLoader.getSystemClassLoader())
-                .getAllClasses()
-                .stream()
-                .filter(clazz -> clazz.getPackageName()
-                        .equalsIgnoreCase(packageName))
-                .map(clazz -> clazz.load())
+
+    public List<Class> findAllClassesUsingClassLoader(String packageName) {
+        InputStream stream = ClassLoader.getSystemClassLoader()
+                .getResourceAsStream(packageName.replaceAll("[.]", "/"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        return reader.lines()
+                .filter(line -> line.endsWith(".class"))
+                .map(line -> getClass(line, packageName))
                 .collect(Collectors.toList());
+    }
+
+    private Class getClass(String className, String packageName) {
+        try {
+            return Class.forName(packageName + "."
+                    + className.substring(0, className.lastIndexOf('.')));
+        } catch (ClassNotFoundException e) {
+            // handle the exception
+        }
+        return null;
     }
 }

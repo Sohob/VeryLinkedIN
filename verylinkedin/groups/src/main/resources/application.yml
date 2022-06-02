@@ -6,11 +6,11 @@ spring:
     name: groups
   data:
     mongodb:
-      host: 192.168.1.57
+      host: localhost
       port: 27017
       database: GroupChats
   rabbitmq:
-    addresses: 192.168.1.57:5672
+    addresses: localhost:5672
     username: bor3y
     password: bor3y
     listener:
@@ -18,6 +18,8 @@ spring:
         default-requeue-rejected: false
 
 rabbitmq:
+  consumers: 5
+  max-consumers: 5
   exchanges:
     internal: internal.exchange
   queues:
