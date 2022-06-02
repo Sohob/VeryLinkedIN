@@ -12,6 +12,6 @@ public interface PostRepository extends MongoRepository<Post, Integer> {
    // Post findById(String id);
     void deleteById(String id);
     List<Post>  findByUserId(String id);
-    List<Post>  findById(String id);
+    Post findById(String id);
 
 }

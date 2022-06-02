@@ -1,12 +1,12 @@
 server:
-  port: 8095
+  port: 8085
 
 spring:
   application:
     name: mypost
   data:
     mongodb:
-      host: localhost
+      host: mongo
       port: 27017
       database: MyPost
   servlet:
@@ -14,7 +14,7 @@ spring:
       max-request-size: 100MB
       max-file-size: 100MB
   rabbitmq:
-    #    addresses: rabbitmq
+    addresses: rabbitmq
     username: guest
     password: guest
     listener:

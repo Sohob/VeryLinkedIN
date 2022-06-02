@@ -10,7 +10,7 @@ import java.util.List;
 
 public record GetPost(GetPostRequest request, PostRepository postRepository) implements Command {
     public Object execute() {
-        List<Post> post =  postRepository.findById(request.postId());
+        Post post =  postRepository.findById(request.postId());
         String json = new Gson().toJson(post );
 
         // Message build = MessageBuilder.withBody((new String(json)).getBytes()).build();

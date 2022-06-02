@@ -130,7 +130,11 @@ public class MinioService {
                 try {
                     return itemResult.get();
                 } catch (Exception e) {
-                    throw new MinioFetchException("Error while parsing list of objects", e);
+                    try {
+                        throw new Exception("Error while parsing list of objects", e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
                 } 
             })
             .collect(Collectors.toList());
@@ -190,7 +194,11 @@ public class MinioService {
                             .build();
                     return new HashMap.SimpleEntry<>(path, minioClient.statObject(args));
                 } catch (Exception e) {
-                    throw new MinioFetchException("Error while parsing list of objects", e);
+                    try {
+                        throw new Exception("Error while parsing list of objects", e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             })
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

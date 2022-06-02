@@ -52,12 +52,16 @@ public class  MinioConfiguration {
     public MinioClient minioClient() throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, ErrorResponseException, InvalidResponseException, io.minio.errors.MinioException, XmlParserException, ServerException {
 
         MinioClient minioClient;
+        System.out.println("hna "+minioConfigurationProperties.getUrl());
+
         if (!configuredProxy()) {
             minioClient = MinioClient.builder()
                     .endpoint(minioConfigurationProperties.getUrl())
                     .credentials(minioConfigurationProperties.getAccessKey(), minioConfigurationProperties.getSecretKey())
                     .build();
         } else {
+            System.out.println(minioConfigurationProperties.getUrl());
+
             minioClient = MinioClient.builder()
                     .endpoint(minioConfigurationProperties.getUrl())
                     .credentials(minioConfigurationProperties.getAccessKey(), minioConfigurationProperties.getSecretKey())
