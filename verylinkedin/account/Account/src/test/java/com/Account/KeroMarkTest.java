@@ -3,10 +3,8 @@ package com.Account;
 import com.Account.commands.CreateAccountCommand;
 import com.Account.commands.DeleteAccountCommand;
 import com.Account.commands.LoginCommand;
+import com.Account.commands.RecommendCommand;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +14,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = AccountApplication.class)
 public class KeroMarkTest {
@@ -24,16 +25,15 @@ public class KeroMarkTest {
     ApplicationContext applicationContext;
 
 
-
-    public Map<String, Object> createAcc(String userName , int age){
+    public Map<String, Object> createAcc(String userName , int age, String FOI,boolean isCompany){
         Map<String, Object> accountDetails = new HashMap<>();
         accountDetails.put("username",userName);
         accountDetails.put("full_name","full_name");
         accountDetails.put("age",age);
         accountDetails.put("password","123");
         accountDetails.put("profilePicture","123");
-        accountDetails.put("fieldOfInterest","AI");
-        accountDetails.put("isCompany",false);
+        accountDetails.put("fieldOfInterest",FOI);
+        accountDetails.put("isCompany",isCompany);
         return accountDetails;
     }
 
@@ -49,22 +49,22 @@ public class KeroMarkTest {
         CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
 
         createAccountCommand.accountRepository.deleteAll();
-        Map<String, Object>  accountDetails = createAcc("user1" ,1);
-
+        Map<String, Object>  accountDetails = createAcc("testUser1" ,1,"AI",false);
         assertEquals("Account Created" , createAccountCommand.execute(accountDetails));
     }
     @Test
     public void testSignUp2() throws Exception{
         CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
-
-        Map<String, Object>  accountDetails = createAcc("user1",2);
+        createAccountCommand.accountRepository.deleteAll();
+        Map<String, Object>  accountDetails = createAcc("testUser1",2,"AI",false);
+        createAccountCommand.execute(accountDetails);
         assertEquals("Username Already Taken" , createAccountCommand.execute(accountDetails));
     }
     @Test
     public void testSignUp3() throws Exception{
         CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
 
-        Map<String, Object>  accountDetails = createAcc("",0);
+        Map<String, Object>  accountDetails = createAcc("",0,"AI",false);
         assertEquals("Name Is Empty" , createAccountCommand.execute(accountDetails));
     }
 
@@ -72,7 +72,7 @@ public class KeroMarkTest {
     public void testSignUp4() throws Exception{
         CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
 
-        Map<String, Object>  accountDetails = createAcc("user3" , 0 );
+        Map<String, Object>  accountDetails = createAcc("testUser3" , 0 ,"AI",false);
         assertEquals("Age Is Not Valid" , createAccountCommand.execute(accountDetails));
     }
 
@@ -81,10 +81,10 @@ public class KeroMarkTest {
         LoginCommand loginCommand = applicationContext.getBean(LoginCommand.class);
         CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
 
-        Map<String, Object>  accountCreated = createAcc("user2" ,1);
+        Map<String, Object>  accountCreated = createAcc("testUser2" ,1,"AI",false);
         createAccountCommand.execute(accountCreated);
 
-        Map<String, Object>  accountDetails =  Login("user2" ,"1" );
+        Map<String, Object>  accountDetails =  Login("testUser2" ,"1" );
         assertEquals("Incorrect Password" , loginCommand.execute(accountDetails));
     }
 
@@ -93,15 +93,12 @@ public class KeroMarkTest {
         LoginCommand loginCommand = applicationContext.getBean(LoginCommand.class);
 
         CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
-        Map<String, Object>  accountCreated = createAcc("user3" ,1);
+        Map<String, Object>  accountCreated = createAcc("testUser4" ,1,"AI",false);
         createAccountCommand.execute(accountCreated);
 
-        Map<String, Object>  accountDetails =  Login("user3" ,"123" );
+        Map<String, Object>  accountDetails =  Login("testUser4" ,"123" );
 
-        if ( !loginCommand.execute(accountDetails).equals("Account Doesn't Exist") && !loginCommand.execute(accountDetails).equals("Incorrect Password") )
-            assertTrue(true);
-        else
-            assertTrue(false);
+        assertTrue(!loginCommand.execute(accountDetails).equals("Account Doesn't Exist") && !loginCommand.execute(accountDetails).equals("Incorrect Password"));
     }
 
     @Test
@@ -121,13 +118,13 @@ public class KeroMarkTest {
         CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
 
 
-        Map<String, Object>  accountCreated = createAcc("user10" ,1);
+        Map<String, Object>  accountCreated = createAcc("testUser10" ,1,"AI",false);
         createAccountCommand.execute(accountCreated);
 
-        Map<String, Object>  accountDetails =  Login("user10" ,"123" );
+        Map<String, Object>  accountDetails =  Login("testUser10" ,"123" );
         String token = loginCommand.execute(accountDetails);
 
-        Long wrongID = Long.valueOf(0);
+        Long wrongID = 0L;
         Map<String, Object>  AccountToDelete = new HashMap<>();
         AccountToDelete.put("token" , token);
         AccountToDelete.put("userID" , wrongID);
@@ -143,7 +140,7 @@ public class KeroMarkTest {
         LoginCommand loginCommand = applicationContext.getBean(LoginCommand.class);
 
         CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
-        Map<String, Object>  accountCreated = createAcc("userD" ,1);
+        Map<String, Object>  accountCreated = createAcc("userD" ,1,"AI",false);
         createAccountCommand.execute(accountCreated);
 
         Map<String, Object>  accountDetails =  Login("userD" ,"123" );
@@ -165,7 +162,7 @@ public class KeroMarkTest {
         LoginCommand loginCommand = applicationContext.getBean(LoginCommand.class);
         DeleteAccountCommand deleteAccountCommand = applicationContext.getBean(DeleteAccountCommand.class);
 
-        Map<String, Object>  accountCreated = createAcc("kero",23); // create new acc
+        Map<String, Object>  accountCreated = createAcc("kero",23,"AI",false); // create new acc
         createAccountCommand.execute(accountCreated);
 
         Map<String, Object>  accountDetails =  Login("kero" ,"123" );// log in with the new acc
@@ -184,6 +181,72 @@ public class KeroMarkTest {
 
     }
 
+
+
+    @Test
+    public void testRecommend1() throws Exception{
+        CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
+        LoginCommand loginCommand = applicationContext.getBean(LoginCommand.class);
+
+        Map<String, Object>  accountCreated = createAcc("RecommendUser1",23,"AI",false); // create new acc
+        createAccountCommand.execute(accountCreated);
+
+        Map<String, Object>  accountDetails =  Login("RecommendUser1" ,"123" );// log in with the new acc
+        String token = loginCommand.execute(accountDetails);
+
+
+        Map<String, Object>  comp1Created = createAcc("Company1",23,"AI",true); // create new acc
+        createAccountCommand.execute(comp1Created);
+
+        Map<String, Object>  comp3Created = createAcc("Company3",23,"AI",true); // create new acc
+        createAccountCommand.execute(comp3Created);
+
+
+        RecommendCommand recommendCommand = applicationContext.getBean(RecommendCommand.class);
+
+        Map<String, Object>  tokenBody = new HashMap<>();
+        tokenBody.put("token" , token);
+
+        String companies = (String) recommendCommand.execute(tokenBody);
+
+
+        assertEquals("Company1,Company3" , companies);
+
+
+
+    }
+    @Test
+    public void testRecommend2() throws Exception{
+
+        CreateAccountCommand createAccountCommand = applicationContext.getBean(CreateAccountCommand.class);
+        LoginCommand loginCommand = applicationContext.getBean(LoginCommand.class);
+
+        Map<String, Object>  accountCreated = createAcc("RecommendUser2",23,"GRAPHIC_DESIGN",false); // create new acc
+        createAccountCommand.execute(accountCreated);
+
+        Map<String, Object>  accountDetails =  Login("RecommendUser2" ,"123" );// log in with the new acc
+        String token = loginCommand.execute(accountDetails);
+
+
+        Map<String, Object>  comp1Created = createAcc("Company1",23,"AI",true); // create new acc
+        createAccountCommand.execute(comp1Created);
+
+
+        Map<String, Object>  comp3Created = createAcc("Company3",23,"AI",true); // create new acc
+        createAccountCommand.execute(comp3Created);
+
+
+        RecommendCommand recommendCommand = applicationContext.getBean(RecommendCommand.class);
+
+        Map<String, Object>  tokenBody = new HashMap<>();
+        tokenBody.put("token" , token);
+
+        String companies = (String) recommendCommand.execute(tokenBody);
+
+
+        assertEquals("no match" , companies);
+
+    }
 
 
 
