@@ -15,7 +15,7 @@ public record CreateGroupCommand(CreateGroupRequest request,
     @Override
     public Object execute() {
         Message messages = Message.builder()
-                .sender(request.owner())
+                .sender(request.admin())
                 .content("Chat has been created!")
                 .read(new ArrayList<String>())
                 .unread(request.participants())
@@ -25,13 +25,13 @@ public record CreateGroupCommand(CreateGroupRequest request,
         tempList.add(messages);
         GroupChat groupChat = GroupChat.builder()
                 .participants(request.participants())
-                .admin(request.owner())
+                .admin(request.admin())
                 .title(request.title())
                 .description(request.description())
                 .groupPhoto(request.groupPhoto())
                 .chatText(tempList)
                 .build();
         groupRepository.save(groupChat);
-        return null;
+        return "Group created successfully: " + groupChat;
     }
 }

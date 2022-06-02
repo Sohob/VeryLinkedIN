@@ -14,6 +14,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -28,7 +29,7 @@ public class GroupsConsumer {
 
 
     @RabbitListener(queues = "${rabbitmq.queues.groups}", concurrency = "${rabbitmq.consumers}-${rabbitmq.max-consumers}")
-    public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
+    public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, IOException, NoSuchFieldException {
 
             // This part uses reflection to dynamically process requests
             // Load for testing multithreading
@@ -41,8 +42,8 @@ public class GroupsConsumer {
             log.info("Message of type {}", typeId);
 
             // Get classes for the request and the command using the request type header
-            Class commandClass = CommandMap.getCommandClass(typeId);
-            Class requestClass = CommandMap.getRequestClass(typeId);
+            Class commandClass = CommandMap.getInstance().getCommandClass(typeId);
+            Class requestClass = CommandMap.getInstance().getRequestClass(typeId);
             log.info("Maps look like this {} {}",commandClass.getName(), requestClass.getName());
             // Get the constructor for the command class
             Constructor commandConstructor = commandClass.getConstructor(requestClass, GroupRepository.class);

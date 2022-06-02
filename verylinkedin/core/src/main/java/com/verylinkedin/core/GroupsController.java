@@ -22,31 +22,15 @@ import org.springframework.web.bind.annotation.*;
 public class GroupsController {
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
-    @PostMapping("/notification_user")
-    public String notification(@RequestBody Notification notification) {
-        rabbitMQMessageProducer.publish(
-                notification,
-                "internal.exchange",
-                "internal.notifications.routing.key"
-        );
-        return "NOTIFICATION";
-    }
-    @PostMapping("/notifications")
-    public String notificationList(@RequestBody NotificationList notificationList) {
-        rabbitMQMessageProducer.publish(
-                notificationList,
-                "internal.exchange",
-                "internal.notifications.routing.key"
-        );
-        return "NOTIFICATION";
-    }
-
     // TODO Replace userId from path variable when authentication is finished
     @PostMapping("/view/{userId}/{groupId}/send")
-    public void sendMessage(@RequestBody SendMessageRequest request, @PathVariable String userId, @PathVariable String groupId) {
+    public void sendMessage(@RequestBody SendMessageRequest sendMessageRequest,
+                            @PathVariable String userId,
+                            @PathVariable String groupId) {
         try {
+            log.info("message being sent {}", sendMessageRequest);
             rabbitMQMessageProducer.publish(
-                    new SendMessageRequest(userId, groupId, request.message()),
+                    new SendMessageRequest(userId, groupId, sendMessageRequest.message()),
                     "internal.exchange",
                     "internal.groups.routing.key"
             );
@@ -57,7 +41,7 @@ public class GroupsController {
     }
     @PostMapping("/create")
     public void createGroup(@RequestBody CreateGroupRequest createGroupRequest) {
-        //log.info("message being sent {}", createGroupRequest);
+        log.info("message being sent {}", createGroupRequest);
         rabbitMQMessageProducer.publish(
                 createGroupRequest,
                 "internal.exchange",
@@ -66,44 +50,71 @@ public class GroupsController {
     }
     // TODO Replace userId from path variable when authentication is finished
     @GetMapping("/view/{userId}/{groupId}")
-    public ResponseEntity<String> viewChat(@PathVariable String userId, @PathVariable String groupId) throws JSONException, JsonProcessingException {
+    public ResponseEntity<String> viewChat(@PathVariable String userId, @PathVariable String groupId) {
         log.info("viewing messages in group {} as user {}", groupId, userId);
-        Object viewChatResponse = rabbitMQMessageProducer.publishAndReceive(
-                new ViewChatRequest(userId,groupId),
+        Object response = rabbitMQMessageProducer.publishAndReceive(
+                new ViewGroupRequest(userId,groupId),
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
-        return new ResponseEntity<String>("Chat details: " + viewChatResponse.toString(),
+        return new ResponseEntity<String>("Chat details: " + response.toString(),
                 HttpStatus.OK);
-
-                /*
-        try {
-            ViewChatResponse res = listenableFuture.get();
-            return new ResponseEntity<String>("Chat details: " + res,
-                    HttpStatus.OK);
-        } catch (InterruptedException | ExecutionException e) {
-            return new ResponseEntity<String>("Invalid chat",
-                    HttpStatus.BAD_REQUEST);
-        }*/
-
-        /*
-        AsyncRabbitTemplate.RabbitConverterFuture<ViewChatResponse> rabbitConverterFuture =  rabbitMQMessageProducer.publishAndReceive(
-                new ViewChatRequest(userId,groupId),
+    }
+    @DeleteMapping("/view/{userId}/{groupId}/deletemsg")
+    public void deleteMessage(@RequestBody DeleteMessageRequest deleteMessageRequest,
+                              @PathVariable String userId,
+                              @PathVariable String groupId) {
+        log.info("message being sent {}", deleteMessageRequest);
+        rabbitMQMessageProducer.publish(
+                new DeleteMessageRequest(userId, groupId, deleteMessageRequest.messageId()),
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
-        rabbitConverterFuture.addCallback(new ListenableFutureCallback<>() {
-            @Override
-            public void onFailure(Throwable ex) {
-                // ...
-            }
-
-            @Override
-            public void onSuccess(ViewChatResponse viewChatResponse) {
-                log.info("Response received {}", viewChatResponse);
-
-            }
-        });*/
     }
-
+    @PutMapping("/view/{userId}/{groupId}/editmsg")
+    public void editMessage(@RequestBody EditMessageRequest editMessageRequest,
+                            @PathVariable String userId,
+                            @PathVariable String groupId) {
+        log.info("message being sent {}", editMessageRequest);
+        rabbitMQMessageProducer.publish(
+                new EditMessageRequest(
+                        userId,
+                        groupId,
+                        editMessageRequest.messageId(),
+                        editMessageRequest.editedMessage()
+                ),
+                "internal.exchange",
+                "internal.groups.routing.key"
+        );
+    }
+    @DeleteMapping("/view/{userId}/{groupId}/deletegroup")
+    public void deleteGroup(@RequestBody DeleteGroupRequest deleteGroupRequest,
+                            @PathVariable String userId,
+                            @PathVariable String groupId) {
+        log.info("message being sent {}", deleteGroupRequest);
+        rabbitMQMessageProducer.publish(
+                new DeleteGroupRequest(userId, groupId),
+                "internal.exchange",
+                "internal.groups.routing.key"
+        );
+    }
+    @PutMapping("/view/{userId}/{groupId}/updategroup")
+    public void updateGroup(@RequestBody UpdateGroupRequest updateGroupRequest,
+                            @PathVariable String userId,
+                            @PathVariable String groupId) {
+        log.info("message being sent {}", updateGroupRequest);
+        rabbitMQMessageProducer.publish(
+                new UpdateGroupRequest(
+                        userId,
+                        groupId,
+                        updateGroupRequest.participants(),
+                        updateGroupRequest.title(),
+                        updateGroupRequest.description(),
+                        updateGroupRequest.admin(),
+                        updateGroupRequest.groupPhoto()
+                ),
+                "internal.exchange",
+                "internal.groups.routing.key"
+        );
+    }
 }

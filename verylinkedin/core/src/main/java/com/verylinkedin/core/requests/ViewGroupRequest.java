@@ -1,6 +1,6 @@
 package com.verylinkedin.core.requests;
 
-public record ViewChatRequest(
+public record ViewGroupRequest(
         String userId,
         String groupId
 ) {

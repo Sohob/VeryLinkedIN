@@ -5,13 +5,15 @@ server:
 spring:
   application:
     name: core
-  data:
-    mongodb.host: localhost
-    mongodb.port: 27017
   servlet:
     multipart:
       max-request-size: 100MB
       max-file-size: 100MB
+  redis:
+    port: 6379
+    password: eminem7otob
+    host: localhost
+    timeToLive: 180
   rabbitmq:
     addresses: localhost:5672
     username: guest
@@ -19,6 +21,8 @@ spring:
     listener:
       simple:
         default-requeue-rejected: false
+
+        f
 rabbitmq:
   consumers: 5
   max-consumers: 5
@@ -30,4 +34,5 @@ rabbitmq:
     groups: mypost.queue
   routing-keys:
     internal-groups: internal.mypost.routing.key
+
 
