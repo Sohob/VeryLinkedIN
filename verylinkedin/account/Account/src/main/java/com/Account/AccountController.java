@@ -51,7 +51,7 @@ public class AccountController {
         return deleteAccountCommand.execute(body);
     }
 
-    @GetMapping("/recommend-companies/{id}")
+    @GetMapping("/recommend-companies")
     public String recommendCompanies(@RequestHeader("Authorization") String token) {
         Map<String, Object> body = new HashMap<>();
         body.put("token" ,token);
