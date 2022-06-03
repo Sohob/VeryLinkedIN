@@ -1,0 +1,26 @@
+#server:
+#  port: 5100
+#spring:
+#  application:
+#    name: notification
+#  datasource:
+#    password: 0192208076
+#    url: jdbc:postgresql://postgres:5432/LinkedIn
+#    username: postgres
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+#    show-sql: true
+#
+#
+#rabbitmq:
+#  exchanges:
+#    internal: Kero.accountApp
+#  queues:
+#    notification: Kero.queue
+#  routing-keys:
+#    internal-notification: Kero.accountKey

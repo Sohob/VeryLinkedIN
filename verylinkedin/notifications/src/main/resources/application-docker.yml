@@ -4,8 +4,12 @@ server:
 spring:
   application:
     name: notifications
+  data:
   rabbitmq:
-    addresses: localhost:5672
+    addresses: rabbitmq
+    listener:
+      simple:
+        default-requeue-rejected: false
 
 rabbitmq:
   consumers: 5

@@ -1,10 +1,10 @@
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import com.verylinkedin.core.requests.Notification;
-import com.verylinkedin.core.requests.NotificationList;
+import com.verylinkedin.core.requests.AddNotification;
+import com.verylinkedin.core.requests.AddNotificationList;
 import com.verylinkedin.notifications.FirebaseInitialize;
-import com.verylinkedin.notifications.NotificationController;
+import com.verylinkedin.notifications.NotificationsConsumer;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.amqp.core.Message;
@@ -26,9 +26,9 @@ public class NotificationTest {
             Firestore db=FirestoreClient.getFirestore();
             deleteCollection(db.collection("testUser"),10);
             String m="single user test";
-            Notification notification=new Notification(m,"testUser");
+            AddNotification notification=new AddNotification(m,"testUser");
             Message message=jackson2JsonMessageConverter.toMessage(notification,null);
-            NotificationController.Notification(message);
+            NotificationsConsumer.consumer(message);
             Boolean flag=checkUserHasMessage(db,"testUser",m);
             Assert.assertEquals(flag,true);
         }catch (Exception e){
@@ -45,9 +45,9 @@ public class NotificationTest {
                 deleteCollection(db.collection(user),10);
             }
             String m="testing list";
-            NotificationList notification=new NotificationList(m,users);
+            AddNotificationList notification=new AddNotificationList(m,users);
             Message message=jackson2JsonMessageConverter.toMessage(notification,null);
-            NotificationController.Notification(message);
+            NotificationsConsumer.consumer(message);
             boolean flag=true;
             for(String user:users){
                 flag=checkUserHasMessage(db,user,m);
