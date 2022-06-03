@@ -9,7 +9,7 @@ spring:
     port: 6379
     password: eminem7otob
     host: localhost
-    timeToLive: 180
+    timeToLive: 10800
   rabbitmq:
     addresses: localhost:5672
     listener:
