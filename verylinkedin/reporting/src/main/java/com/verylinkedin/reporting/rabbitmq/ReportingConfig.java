@@ -1,4 +1,4 @@
-package com.veryLinkedin.reporting.rabbitmq;
+package com.verylinkedin.reporting.rabbitmq;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

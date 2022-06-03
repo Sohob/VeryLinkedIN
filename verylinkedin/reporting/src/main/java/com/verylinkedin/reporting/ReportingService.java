@@ -1,14 +1,12 @@
-package com.veryLinkedin.reporting;
+package com.verylinkedin.reporting;
 
-import com.veryLinkedin.reporting.addreport.AddReport;
-import com.veryLinkedin.reporting.addreport.AddReportRequest;
-import com.veryLinkedin.reporting.getreport.GetReport;
-import com.veryLinkedin.reporting.getreport.GetReportRequest;
+import com.verylinkedin.reporting.commands.AddReport;
+import com.verylinkedin.reporting.requests.AddReportRequest;
+import com.verylinkedin.reporting.commands.GetReport;
+import com.verylinkedin.reporting.requests.GetReportRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service

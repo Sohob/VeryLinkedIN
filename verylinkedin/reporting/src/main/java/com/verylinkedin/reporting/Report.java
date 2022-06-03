@@ -1,4 +1,4 @@
-package com.veryLinkedin.reporting;
+package com.verylinkedin.reporting;
 
 
 import javax.persistence.*;

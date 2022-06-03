@@ -1,10 +1,10 @@
-package com.veryLinkedin.reporting.rabbitmq;
+package com.verylinkedin.reporting.rabbitmq;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.veryLinkedin.reporting.Command;
-import com.veryLinkedin.reporting.CommandMap;
-import com.veryLinkedin.reporting.ReportingRepository;
+import com.verylinkedin.reporting.Command;
+import com.verylinkedin.reporting.CommandMap;
+import com.verylinkedin.reporting.ReportingRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.parser.ParseException;
@@ -24,7 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 public class ReportingConsumer {
     private final ReportingRepository reportingRepository;
 
-    @RabbitListener(queues = "${rabbitmq.queues.reports}")
+    @RabbitListener(queues = "${rabbitmq.queues.reports}", concurrency = "${rabbitmq.consumers}-${rabbitmq.max-consumers}")
     public Object consumer(String requestObject, Message requestFromQueue) throws JSONException, ParseException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
 
         // This part uses reflection to dynamically process requests
@@ -38,8 +38,9 @@ public class ReportingConsumer {
         //new CommandMap();
 
         // Get classes for the request and the command using the request type header
-        Class commandClass = CommandMap.getCommandClass(typeId);
-        Class requestClass = CommandMap.getRequestClass(typeId);
+        Class commandClass = CommandMap.getInstance().getCommandClass(typeId);
+        Class requestClass = CommandMap.getInstance().getRequestClass(typeId);
+//        System.err.println(CommandMap.getInstance()+" "+typeId);
         log.info("Maps look like this {} {}", commandClass.getName(), requestClass.getName());
         // Get the constructor for the command class
         Constructor commandConstructor = commandClass.getConstructor(requestClass, ReportingRepository.class);

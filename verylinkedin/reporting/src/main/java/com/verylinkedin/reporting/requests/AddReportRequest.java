@@ -1,4 +1,4 @@
-package com.veryLinkedin.reporting.addreport;
+package com.verylinkedin.reporting.requests;
 
 
 public class AddReportRequest {

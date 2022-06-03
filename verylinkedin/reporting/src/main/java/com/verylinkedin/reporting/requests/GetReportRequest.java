@@ -1,4 +1,4 @@
-package com.veryLinkedin.reporting.getreport;
+package com.verylinkedin.reporting.requests;
 
 public record GetReportRequest(Long id) {
 //    private Long ID;

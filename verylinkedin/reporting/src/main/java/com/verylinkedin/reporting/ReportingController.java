@@ -1,7 +1,7 @@
-package com.veryLinkedin.reporting;
+package com.verylinkedin.reporting;
 /*
-import com.veryLinkedin.reporting.addreport.AddReportRequest;
-import com.veryLinkedin.reporting.getreport.GetReportRequest;
+import com.veryLinkedin.reporting.requests.AddReportRequest;
+import com.veryLinkedin.reporting.requests.GetReportRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

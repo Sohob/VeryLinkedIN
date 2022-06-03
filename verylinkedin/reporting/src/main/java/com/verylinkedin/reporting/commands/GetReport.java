@@ -1,8 +1,8 @@
-package com.veryLinkedin.reporting.getreport;
+package com.verylinkedin.reporting.commands;
 
-import com.veryLinkedin.reporting.Command;
-import com.veryLinkedin.reporting.ReportingRepository;
-import org.hibernate.mapping.List;
+import com.verylinkedin.reporting.Command;
+import com.verylinkedin.reporting.ReportingRepository;
+import com.verylinkedin.reporting.requests.GetReportRequest;
 
 public class GetReport implements Command {
     private GetReportRequest request;

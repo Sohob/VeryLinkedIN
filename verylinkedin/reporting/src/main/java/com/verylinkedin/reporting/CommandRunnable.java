@@ -1,4 +1,4 @@
-package com.veryLinkedin.reporting;
+package com.verylinkedin.reporting;
 
 public class CommandRunnable implements Runnable {
     private final Command command;

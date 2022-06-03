@@ -1,4 +1,4 @@
-package com.veryLinkedin.reporting;
+package com.verylinkedin.reporting;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,8 +1,9 @@
-package com.veryLinkedin.reporting.addreport;
+package com.verylinkedin.reporting.commands;
 
-import com.veryLinkedin.reporting.Command;
-import com.veryLinkedin.reporting.Report;
-import com.veryLinkedin.reporting.ReportingRepository;
+import com.verylinkedin.reporting.Command;
+import com.verylinkedin.reporting.Report;
+import com.verylinkedin.reporting.ReportingRepository;
+import com.verylinkedin.reporting.requests.AddReportRequest;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ public class AddReport implements Command {
     public Object execute() {
         Report r = new Report(request.getReporterID(), request.getReportedID(), LocalDateTime.now(), request.getReason());
         repository.save(r);
-        return r.getID();
+        return r.getID() + "";
 //        return null;
     }
 
