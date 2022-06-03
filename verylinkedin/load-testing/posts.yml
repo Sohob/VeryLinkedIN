@@ -20,4 +20,6 @@ scenarios:
     flow:
       - post:
           url: "/createPost"
-          json: "{ \"userId\": \"1\", \"content\": \"hi hamada\" }"
+          json:
+            userId: "1"
+            content: "hi hamada"
