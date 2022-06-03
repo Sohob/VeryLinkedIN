@@ -27,6 +27,7 @@ com\verylinkedin\core\auth\commands\Command.class
 com\verylinkedin\core\requests\NotificationList.class
 com\verylinkedin\core\postsRequests\CreateMediaRequest.class
 com\verylinkedin\core\postsRequests\GetPostRequest.class
+com\verylinkedin\core\VerylinkedinApplication.class
 com\verylinkedin\core\ProfileController.class
 com\verylinkedin\core\postsRequests\AddCommentRequest.class
 com\verylinkedin\core\NotificationsController.class
