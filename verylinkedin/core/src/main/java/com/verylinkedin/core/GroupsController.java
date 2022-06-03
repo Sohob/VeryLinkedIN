@@ -1,11 +1,12 @@
 package com.verylinkedin.core;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
 import com.verylinkedin.core.requests.*;
+import com.verylinkedin.core.responses.Response;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -24,59 +25,88 @@ public class GroupsController {
 
     // TODO Replace userId from path variable when authentication is finished
     @PostMapping("/view/{userId}/{groupId}/send")
-    public void sendMessage(@RequestBody SendMessageRequest sendMessageRequest,
-                            @PathVariable String userId,
-                            @PathVariable String groupId) {
-        try {
-            log.info("message being sent {}", sendMessageRequest);
-            rabbitMQMessageProducer.publish(
+    public ResponseEntity<String> sendMessage(@RequestBody SendMessageRequest sendMessageRequest,
+                                              @PathVariable String userId,
+                                              @PathVariable String groupId) {
+        log.info("message being sent {}", sendMessageRequest);
+        byte[] response = (byte[]) rabbitMQMessageProducer.publishAndReceive(
                     new SendMessageRequest(userId, groupId, sendMessageRequest.message()),
                     "internal.exchange",
                     "internal.groups.routing.key"
             );
+        log.info("Response received {}", new String(response));
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
+            return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
         }
         catch (Exception e){
-            log.info(e.toString());
+            return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
     @PostMapping("/create")
-    public void createGroup(@RequestBody CreateGroupRequest createGroupRequest) {
+    public ResponseEntity<String> createGroup(@RequestBody CreateGroupRequest createGroupRequest) {
         log.info("message being sent {}", createGroupRequest);
-        rabbitMQMessageProducer.publish(
+        byte[] response = (byte[]) rabbitMQMessageProducer.publishAndReceive(
                 createGroupRequest,
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
+        log.info("Response received {}", new String(response));
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
+            return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
         // TODO Replace userId from path variable when authentication is finished
     @GetMapping("/view/{userId}/{groupId}")
     public ResponseEntity<String> viewChat(@PathVariable String userId, @PathVariable String groupId) {
         log.info("viewing messages in group {} as user {}", groupId, userId);
-        Object response = rabbitMQMessageProducer.publishAndReceive(
+        byte[] response = (byte[]) rabbitMQMessageProducer.publishAndReceive(
                 new ViewGroupRequest(userId,groupId),
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
-        return new ResponseEntity<String>("Chat details: " + response.toString(),
-                HttpStatus.OK);
+        log.info("Response received {}", new String(response));
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
+            return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
     @DeleteMapping("/view/{userId}/{groupId}/deletemsg")
-    public void deleteMessage(@RequestBody DeleteMessageRequest deleteMessageRequest,
-                              @PathVariable String userId,
-                              @PathVariable String groupId) {
+    public ResponseEntity<String> deleteMessage(@RequestBody DeleteMessageRequest deleteMessageRequest,
+                                                @PathVariable String userId,
+                                                @PathVariable String groupId) {
         log.info("message being sent {}", deleteMessageRequest);
-        rabbitMQMessageProducer.publish(
+        byte[] response = (byte[]) rabbitMQMessageProducer.publishAndReceive(
                 new DeleteMessageRequest(userId, groupId, deleteMessageRequest.messageId()),
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
+        log.info("Response received {}", new String(response));
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
+            return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
     @PutMapping("/view/{userId}/{groupId}/editmsg")
-    public void editMessage(@RequestBody EditMessageRequest editMessageRequest,
-                            @PathVariable String userId,
-                            @PathVariable String groupId) {
+    public ResponseEntity<String> editMessage(@RequestBody EditMessageRequest editMessageRequest,
+                                              @PathVariable String userId,
+                                              @PathVariable String groupId) {
         log.info("message being sent {}", editMessageRequest);
-        rabbitMQMessageProducer.publish(
+        byte[] response = (byte[]) rabbitMQMessageProducer.publishAndReceive(
                 new EditMessageRequest(
                         userId,
                         groupId,
@@ -86,24 +116,42 @@ public class GroupsController {
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
+        log.info("Response received {}", new String(response));
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
+            return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
     @DeleteMapping("/view/{userId}/{groupId}/deletegroup")
-    public void deleteGroup(@RequestBody DeleteGroupRequest deleteGroupRequest,
-                            @PathVariable String userId,
-                            @PathVariable String groupId) {
+    public ResponseEntity<String> deleteGroup(@RequestBody DeleteGroupRequest deleteGroupRequest,
+                                              @PathVariable String userId,
+                                              @PathVariable String groupId) {
         log.info("message being sent {}", deleteGroupRequest);
-        rabbitMQMessageProducer.publish(
+        byte[] response = (byte[]) rabbitMQMessageProducer.publishAndReceive(
                 new DeleteGroupRequest(userId, groupId),
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
+        log.info("Response received {}", new String(response));
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
+            return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
     @PutMapping("/view/{userId}/{groupId}/updategroup")
-    public void updateGroup(@RequestBody UpdateGroupRequest updateGroupRequest,
-                            @PathVariable String userId,
-                            @PathVariable String groupId) {
+    public ResponseEntity<String> updateGroup(@RequestBody UpdateGroupRequest updateGroupRequest,
+                                              @PathVariable String userId,
+                                              @PathVariable String groupId) {
         log.info("message being sent {}", updateGroupRequest);
-        rabbitMQMessageProducer.publish(
+        byte[] response = (byte[]) rabbitMQMessageProducer.publishAndReceive(
                 new UpdateGroupRequest(
                         userId,
                         groupId,
@@ -116,5 +164,14 @@ public class GroupsController {
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
+        log.info("Response received {}", new String(response));
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
+            return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

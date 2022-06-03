@@ -1,10 +1,13 @@
 package com.verylinkedin.groupchat.commands;
 
+import com.google.gson.Gson;
 import com.verylinkedin.groupchat.Command;
-import com.verylinkedin.groupchat.classes.GroupChat;
 import com.verylinkedin.groupchat.GroupRepository;
+import com.verylinkedin.groupchat.classes.GroupChat;
 import com.verylinkedin.groupchat.classes.Message;
 import com.verylinkedin.groupchat.requests.CreateGroupRequest;
+import com.verylinkedin.groupchat.responses.Response;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public record CreateGroupCommand(CreateGroupRequest request,
                 .chatText(tempList)
                 .build();
         groupRepository.save(groupChat);
-        return "Group created successfully: " + groupChat;
+        Gson gson = new Gson();
+        return gson.toJson(new Response(groupChat.toString(), HttpStatus.OK));
     }
 }

@@ -1,17 +1,19 @@
 package com.verylinkedin.groupchat.commands;
 
+import com.google.gson.Gson;
 import com.verylinkedin.groupchat.Command;
 import com.verylinkedin.groupchat.classes.GroupChat;
 import com.verylinkedin.groupchat.GroupRepository;
 import com.verylinkedin.groupchat.classes.Message;
 import com.verylinkedin.groupchat.requests.ViewGroupRequest;
-import com.verylinkedin.groupchat.responses.ViewChatResponse;
+import com.verylinkedin.groupchat.responses.Response;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 
 public record ViewGroupCommand(ViewGroupRequest request, GroupRepository groupRepository) implements Command {
     @Override
-    public String execute() {
+    public Object execute() {
         // Query the database for GroupChats of the same ID
         GroupChat chat = groupRepository.findById(request.groupId()).get(0);
         // Get the chat's messages
@@ -26,7 +28,7 @@ public record ViewGroupCommand(ViewGroupRequest request, GroupRepository groupRe
         }
         // Update the group chat in the database
         groupRepository.save(chat);
-
-        return new ViewChatResponse(groupRepository.findById(request.groupId()).get(0).toString()).toString();
+        Gson gson = new Gson();
+        return gson.toJson(new Response(chat.toString(), HttpStatus.OK));
     }
 }
