@@ -16,7 +16,7 @@ config:
       name: Sustained load
 
   payload:
-    path: "notifications-data.csv"
+    path: "notification-data.csv"
     fields:
       - "to"
       - "message"
