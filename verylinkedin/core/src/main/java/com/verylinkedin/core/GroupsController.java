@@ -62,7 +62,7 @@ public class GroupsController {
             return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
-        // TODO Replace userId from path variable when authentication is finished
+    // TODO Replace userId from path variable when authentication is finished
     @GetMapping("/view/{userId}/{groupId}")
     public ResponseEntity<String> viewChat(@PathVariable String userId, @PathVariable String groupId) {
         log.info("viewing messages in group {} as user {}", groupId, userId);
