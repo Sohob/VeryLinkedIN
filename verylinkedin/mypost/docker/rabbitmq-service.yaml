@@ -19,4 +19,4 @@ spec:
   selector:
     io.kompose.service: rabbitmq
 status:
-  loadBalancer: {}
+  loadBalancer: { }

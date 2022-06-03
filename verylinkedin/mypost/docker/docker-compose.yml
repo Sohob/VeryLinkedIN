@@ -61,10 +61,10 @@ services:
       MONGO_SERVER: mongo
       SPRING_PROFILES_ACTIVE: docker
       MINIO_URL: minio
-#      - MINIO_SECRET_KEY=minio123
-#      - CONSOLE_ACCESS_KEY=minio
-#      - CONSOLE_SECRET_KEY=minio123
-   # command: server --address ":9000" --console-address ":9001" /data
+    #      - MINIO_SECRET_KEY=minio123
+    #      - CONSOLE_ACCESS_KEY=minio
+    #      - CONSOLE_SECRET_KEY=minio123
+    # command: server --address ":9000" --console-address ":9001" /data
     depends_on:
       - mongo
       - minio

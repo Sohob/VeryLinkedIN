@@ -1,6 +1,5 @@
 package com.verylinkedin.core;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
 import com.verylinkedin.core.requests.*;
@@ -30,20 +29,20 @@ public class GroupsController {
                                               @PathVariable String groupId) {
         log.info("message being sent {}", sendMessageRequest);
         byte[] response = (byte[]) rabbitMQMessageProducer.publishAndReceive(
-                    new SendMessageRequest(userId, groupId, sendMessageRequest.message()),
-                    "internal.exchange",
-                    "internal.groups.routing.key"
-            );
+                new SendMessageRequest(userId, groupId, sendMessageRequest.message()),
+                "internal.exchange",
+                "internal.groups.routing.key"
+        );
         log.info("Response received {}", new String(response));
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
             return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @PostMapping("/create")
     public ResponseEntity<String> createGroup(@RequestBody CreateGroupRequest createGroupRequest) {
         log.info("message being sent {}", createGroupRequest);
@@ -57,17 +56,17 @@ public class GroupsController {
         try {
             Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
             return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
+
     // TODO Replace userId from path variable when authentication is finished
     @GetMapping("/view/{userId}/{groupId}")
     public ResponseEntity<String> viewChat(@PathVariable String userId, @PathVariable String groupId) {
         log.info("viewing messages in group {} as user {}", groupId, userId);
         byte[] response = (byte[]) rabbitMQMessageProducer.publishAndReceive(
-                new ViewGroupRequest(userId,groupId),
+                new ViewGroupRequest(userId, groupId),
                 "internal.exchange",
                 "internal.groups.routing.key"
         );
@@ -76,11 +75,11 @@ public class GroupsController {
         try {
             Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
             return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @DeleteMapping("/view/{userId}/{groupId}/deletemsg")
     public ResponseEntity<String> deleteMessage(@RequestBody DeleteMessageRequest deleteMessageRequest,
                                                 @PathVariable String userId,
@@ -96,11 +95,11 @@ public class GroupsController {
         try {
             Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
             return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @PutMapping("/view/{userId}/{groupId}/editmsg")
     public ResponseEntity<String> editMessage(@RequestBody EditMessageRequest editMessageRequest,
                                               @PathVariable String userId,
@@ -121,11 +120,11 @@ public class GroupsController {
         try {
             Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
             return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @DeleteMapping("/view/{userId}/{groupId}/deletegroup")
     public ResponseEntity<String> deleteGroup(@RequestBody DeleteGroupRequest deleteGroupRequest,
                                               @PathVariable String userId,
@@ -141,11 +140,11 @@ public class GroupsController {
         try {
             Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
             return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @PutMapping("/view/{userId}/{groupId}/updategroup")
     public ResponseEntity<String> updateGroup(@RequestBody UpdateGroupRequest updateGroupRequest,
                                               @PathVariable String userId,
@@ -169,8 +168,7 @@ public class GroupsController {
         try {
             Response mappedResponse = objectMapper.readValue(new String(response), Response.class);
             return new ResponseEntity<String>(mappedResponse.body(), mappedResponse.status());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<String>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }

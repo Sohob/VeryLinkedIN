@@ -44,8 +44,8 @@ import java.util.stream.StreamSupport;
  * The bucket name is provided with the one defined in the configuration properties.
  *
  * @author Jordan LEFEBURE
- *
- *
+ * <p>
+ * <p>
  * This service adapetd with minio sdk 7.0.x
  * @author Mostafa Jalambadani
  */
@@ -131,19 +131,19 @@ public class MinioService {
      */
     private List<Item> getItems(Iterable<Result<Item>> myObjects) {
         return StreamSupport
-            .stream(myObjects.spliterator(), true)
-            .map(itemResult -> {
-                try {
-                    return itemResult.get();
-                } catch (Exception e) {
+                .stream(myObjects.spliterator(), true)
+                .map(itemResult -> {
                     try {
-                        throw new Exception("Error while parsing list of objects", e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
+                        return itemResult.get();
+                    } catch (Exception e) {
+                        try {
+                            throw new Exception("Error while parsing list of objects", e);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
-                } 
-            })
-            .collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
     }
 
     /**
@@ -165,7 +165,7 @@ public class MinioService {
         }
     }
 
-    public String getURL(Path path){
+    public String getURL(Path path) {
         Map<String, String> reqParams = new HashMap<String, String>();
         reqParams.put("response-content-type", "image/png");
 
@@ -201,9 +201,11 @@ public class MinioService {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * Get metadata of an object from Minio
-     *getObject
+     * getObject
+     *
      * @param path Path with prefix to the object. Object name must be included.
      * @return Metadata of the  object
      * @throws com.verylinkedin.mypost.minio.config.MinioException if an error occur while fetching object metadatas
@@ -228,22 +230,22 @@ public class MinioService {
      */
     public Map<Path, StatObjectResponse> getMetadata(Iterable<Path> paths) {
         return StreamSupport.stream(paths.spliterator(), false)
-            .map(path -> {
-                try {
-                    StatObjectArgs args = StatObjectArgs.builder()
-                            .bucket(configurationProperties.getBucket())
-                            .object(path.toString())
-                            .build();
-                    return new HashMap.SimpleEntry<>(path, minioClient.statObject(args));
-                } catch (Exception e) {
+                .map(path -> {
                     try {
-                        throw new Exception("Error while parsing list of objects", e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
+                        StatObjectArgs args = StatObjectArgs.builder()
+                                .bucket(configurationProperties.getBucket())
+                                .object(path.toString())
+                                .build();
+                        return new HashMap.SimpleEntry<>(path, minioClient.statObject(args));
+                    } catch (Exception e) {
+                        try {
+                            throw new Exception("Error while parsing list of objects", e);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
-                }
-            })
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                })
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     /**
@@ -269,13 +271,13 @@ public class MinioService {
     /**
      * Upload a file to Minio
      *
-     * @param source      Path with prefix to the object. Object name must be included.
-     * @param file        File as an inputstream
-     * @param headers     Additional headers to put on the file. The map MUST be mutable. All custom headers will start with 'x-amz-meta-' prefix when fetched with {@code getMetadata()} method.
+     * @param source  Path with prefix to the object. Object name must be included.
+     * @param file    File as an inputstream
+     * @param headers Additional headers to put on the file. The map MUST be mutable. All custom headers will start with 'x-amz-meta-' prefix when fetched with {@code getMetadata()} method.
      * @throws com.verylinkedin.mypost.minio.config.MinioException if an error occur while uploading object
      */
     public void upload(Path source, InputStream file, Map<String, String> headers) throws
-        com.verylinkedin.mypost.minio.config.MinioException {
+            com.verylinkedin.mypost.minio.config.MinioException {
         try {
             PutObjectArgs args = PutObjectArgs.builder()
                     .bucket(configurationProperties.getBucket())
@@ -292,12 +294,12 @@ public class MinioService {
     /**
      * Upload a file to Minio
      *
-     * @param source      Path with prefix to the object. Object name must be included.
-     * @param file        File as an inputstream
+     * @param source Path with prefix to the object. Object name must be included.
+     * @param file   File as an inputstream
      * @throws com.verylinkedin.mypost.minio.config.MinioException if an error occur while uploading object
      */
     public void upload(Path source, InputStream file) throws
-        com.verylinkedin.mypost.minio.config.MinioException {
+            com.verylinkedin.mypost.minio.config.MinioException {
         try {
             PutObjectArgs args = PutObjectArgs.builder()
                     .bucket(configurationProperties.getBucket())
@@ -320,7 +322,7 @@ public class MinioService {
      * @throws com.verylinkedin.mypost.minio.config.MinioException if an error occur while uploading object
      */
     public void upload(Path source, InputStream file, String contentType, Map<String, String> headers) throws
-        com.verylinkedin.mypost.minio.config.MinioException {
+            com.verylinkedin.mypost.minio.config.MinioException {
         try {
             PutObjectArgs args = PutObjectArgs.builder()
                     .bucket(configurationProperties.getBucket())
@@ -345,7 +347,7 @@ public class MinioService {
      * @throws com.verylinkedin.mypost.minio.config.MinioException if an error occur while uploading object
      */
     public void upload(Path source, InputStream file, String contentType) throws
-        com.verylinkedin.mypost.minio.config.MinioException {
+            com.verylinkedin.mypost.minio.config.MinioException {
         try {
             PutObjectArgs args = PutObjectArgs.builder()
                     .bucket(configurationProperties.getBucket())
@@ -354,7 +356,7 @@ public class MinioService {
                     .contentType(contentType)
                     .build();
 
-           minioClient.putObject(args);
+            minioClient.putObject(args);
 
         } catch (Exception e) {
             throw new com.verylinkedin.mypost.minio.config.MinioException("Error while fetching files in Minio", e);
@@ -364,8 +366,9 @@ public class MinioService {
     /**
      * Upload a file to Minio
      * upload file bigger than Xmx size
-     * @param source      Path with prefix to the object. Object name must be included.
-     * @param file        File as an Filename
+     *
+     * @param source Path with prefix to the object. Object name must be included.
+     * @param file   File as an Filename
      * @throws com.verylinkedin.mypost.minio.config.MinioException if an error occur while uploading object
      */
     public void upload(Path source, File file) throws

@@ -18,4 +18,4 @@ spec:
     io.kompose.service: mypost
   type: LoadBalancer
 status:
-  loadBalancer: {}
+  loadBalancer: { }

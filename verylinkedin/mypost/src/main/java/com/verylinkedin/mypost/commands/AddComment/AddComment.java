@@ -9,20 +9,20 @@ import java.util.ArrayList;
 
 public record AddComment(AddCommentRequest request, PostRepository postRepository) implements Command {
     public Object execute() {
-        Post post = (Post) postRepository.findById(request.postId());
+        Post post = postRepository.findById(request.postId());
         Comment comment = Comment.builder()
                 .userId(request.userId())
                 .content(request.content())
                 .build();
-        if(post.getComments() == null)
+        if (post.getComments() == null)
             post.setComments(new ArrayList<Comment>());
 
-        if(post.getBanned() == null || !post.getBanned().contains(request.userId())) {
+        if (post.getBanned() == null || !post.getBanned().contains(request.userId())) {
             post.getComments().add(comment);
             postRepository.save(post);
 
         }
-        return "{\"success\":\"true\"}" ;
+        return "{\"success\":\"true\"}";
 
     }
 }

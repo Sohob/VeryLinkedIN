@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verylinkedin.mypost.Command;
 import com.verylinkedin.mypost.CommandMap;
-//import com.verylinkedin.mypost.MediaRepository;
 import com.verylinkedin.mypost.PostRepository;
 import com.verylinkedin.mypost.minio.config.MinioService;
 import lombok.AllArgsConstructor;
@@ -57,8 +56,6 @@ public class PostsConsumer {
         // Get the constructor for the command class
 
 
-
-
         // Now parse the request body
         JSONObject requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
         log.info("Request JSON looks like this {}", requestJSON);
@@ -68,20 +65,20 @@ public class PostsConsumer {
 
         // Create the command using the mapped request and the repository
         Command commandObject;
-        try{
+        try {
 
-            Constructor commandConstructor =  commandClass.getConstructor(requestClass, PostRepository.class) ;
+            Constructor commandConstructor = commandClass.getConstructor(requestClass, PostRepository.class);
             ObjectMapper objectMapper = new ObjectMapper();
             Object mappedRequest = objectMapper.readValue(requestJSON.toString(), requestClass);
             log.info("Mapped object looks like this {}", mappedRequest);
-             commandObject =    (Command) commandConstructor.newInstance(mappedRequest,postRepository);
+            commandObject = (Command) commandConstructor.newInstance(mappedRequest, postRepository);
 
-        }catch (Exception e){
-            Constructor commandConstructor =  commandClass.getConstructor(requestClass,MinioService.class, PostRepository.class);
+        } catch (Exception e) {
+            Constructor commandConstructor = commandClass.getConstructor(requestClass, MinioService.class, PostRepository.class);
             ObjectMapper objectMapper = new ObjectMapper();
             Object mappedRequest = objectMapper.readValue(requestJSON.toString(), requestClass);
             log.info("Mapped object looks like this {}", mappedRequest);
-             commandObject =    (Command) commandConstructor.newInstance(mappedRequest,minioService,postRepository);
+            commandObject = (Command) commandConstructor.newInstance(mappedRequest, minioService, postRepository);
         }
         Object response = commandObject.execute();
         log.info("Executed the command with response {}", response);

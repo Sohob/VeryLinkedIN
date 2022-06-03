@@ -3,10 +3,8 @@ package com.verylinkedin.mypost.models;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import org.jetbrains.annotations.Contract;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.ArrayList;
 
@@ -33,9 +31,9 @@ public class Post {
     @Builder.Default
     private ArrayList<Media> media = new ArrayList<Media>();
     @Builder.Default
-    private ArrayList<String> likes=new ArrayList<String>();
+    private ArrayList<String> likes = new ArrayList<String>();
     @Builder.Default
-    private ArrayList<String> banned=new ArrayList<String>();
+    private ArrayList<String> banned = new ArrayList<String>();
 
     @Override
     public String toString() {

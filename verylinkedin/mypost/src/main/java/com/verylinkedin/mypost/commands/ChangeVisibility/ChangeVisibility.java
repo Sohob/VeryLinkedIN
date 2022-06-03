@@ -8,12 +8,12 @@ public record ChangeVisibility(ChangeVisibilityRequest request, PostRepository p
     public Object execute() {
 
 
-        Post post = (Post) postRepository.findById(request.postId());
-        if(post.getUserId().equals(request.userId())) {
+        Post post = postRepository.findById(request.postId());
+        if (post.getUserId().equals(request.userId())) {
             post.setPublic(!(post.isPublic()));
         }
         postRepository.save(post);
-        return "{\"success\":\"true\"}" ;
+        return "{\"success\":\"true\"}";
 
     }
 }

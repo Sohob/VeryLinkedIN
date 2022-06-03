@@ -7,22 +7,22 @@ import com.verylinkedin.mypost.models.Post;
 
 import java.util.ArrayList;
 
-public record LikePost(LikePostRequest request, PostRepository postRepository)implements Command {
+public record LikePost(LikePostRequest request, PostRepository postRepository) implements Command {
     public Object execute() {
-        Post post = (Post) postRepository.findById(request.postId());
+        Post post = postRepository.findById(request.postId());
         ArrayList<String> likes = post.getLikes();
 
-        if(likes == null){
+        if (likes == null) {
             likes = new ArrayList<String>();
         }
 
-        if(!likes.contains(request.userId())){
+        if (!likes.contains(request.userId())) {
             likes.add(request.userId());
             post.setLikes(likes);
             postRepository.save(post);
         }
 
-           String json = new Gson().toJson(post );
-        return json ;
+        String json = new Gson().toJson(post);
+        return json;
     }
 }

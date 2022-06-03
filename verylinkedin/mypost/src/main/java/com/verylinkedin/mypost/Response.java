@@ -1,4 +1,5 @@
 package com.verylinkedin.mypost;
+
 import java.io.Serializable;
 
 

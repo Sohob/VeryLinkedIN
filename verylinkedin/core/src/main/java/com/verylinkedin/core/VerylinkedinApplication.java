@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class VerylinkedinApplication {
 
 
-    public static void main(String[] args) {SpringApplication.run(VerylinkedinApplication.class, args);}
+    public static void main(String[] args) {
+        SpringApplication.run(VerylinkedinApplication.class, args);
+    }
 }
 

@@ -47,7 +47,7 @@ spec:
           ports:
             - containerPort: 9000
             - containerPort: 9001
-          resources: {}
+          resources: { }
           volumeMounts:
             - mountPath: /data
               name: minio-volume
@@ -56,4 +56,4 @@ spec:
         - name: minio-volume
           persistentVolumeClaim:
             claimName: minio-volume
-status: {}
+status: { }

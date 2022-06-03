@@ -1,11 +1,12 @@
 package com.verylinkedin.core;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
-import com.verylinkedin.core.requests.*;
+import com.verylinkedin.core.requests.AddReportRequest;
+import com.verylinkedin.core.requests.DeleteReportRequest;
+import com.verylinkedin.core.requests.GetReportRequest;
+import com.verylinkedin.core.requests.UpdateReportRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,7 @@ public class ReportingController {
                 "internal.exchange",
                 "internal.reports.routing.key"
         );
-        return  Long.parseLong(new String((byte[])(response)));
+        return Long.parseLong(new String((byte[]) (response)));
     }
 
     @DeleteMapping("/delete-report")
@@ -39,7 +40,7 @@ public class ReportingController {
                 "internal.exchange",
                 "internal.reports.routing.key"
         );
-        return  new String((byte[])(response));
+        return new String((byte[]) (response));
     }
 
     @PutMapping("/update-report")
@@ -49,7 +50,7 @@ public class ReportingController {
                 "internal.exchange",
                 "internal.reports.routing.key"
         );
-        return  new String((byte[])(response));
+        return new String((byte[]) (response));
     }
 
     @GetMapping("/get-report/{reportId}")

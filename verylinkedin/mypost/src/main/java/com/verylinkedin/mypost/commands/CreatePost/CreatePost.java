@@ -5,7 +5,7 @@ import com.verylinkedin.mypost.Command;
 import com.verylinkedin.mypost.PostRepository;
 import com.verylinkedin.mypost.models.Post;
 
-public record CreatePost(CreatePostRequest request,PostRepository postRepository) implements Command {
+public record CreatePost(CreatePostRequest request, PostRepository postRepository) implements Command {
 
     public Object execute() {
         Post post = Post.builder()
@@ -15,7 +15,7 @@ public record CreatePost(CreatePostRequest request,PostRepository postRepository
         post.setPublic(true);
         postRepository.save(post);
         String json = new Gson().toJson(post);
-        return json ;
+        return json;
 
     }
 }

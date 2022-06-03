@@ -9,16 +9,16 @@ import java.util.ArrayList;
 
 public record UnlikePost(UnlikePostRequest request, PostRepository postRepository) implements Command {
     public Object execute() {
-        Post post = (Post) postRepository.findById(request.postId());
+        Post post = postRepository.findById(request.postId());
         ArrayList<String> likes = post.getLikes();
 
-        if(likes != null && likes.contains(request.userId())){
+        if (likes != null && likes.contains(request.userId())) {
             likes.remove(request.userId());
             post.setLikes(likes);
             postRepository.save(post);
         }
-        String json = new Gson().toJson(post );
-        return json ;
+        String json = new Gson().toJson(post);
+        return json;
 
     }
 }

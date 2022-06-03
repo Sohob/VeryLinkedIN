@@ -26,24 +26,23 @@ import java.time.Duration;
 public class MinioConfigurationProperties {
     /**
      * URL for Minio instance. Can include the HTTP scheme. Must include the port. If the port is not provided, then the port of the HTTP is taken.
-
      */
 
     @Value("http://${minio.endpoint}:${minio.port}")
-    private String url ;
-            //"http://localhost:9000";
+    private String url;
+    //"http://localhost:9000";
 //System.out.println(url);
     /**
      * Access key (login) on Minio instance
      */
     @Value("${minio.accessKey}")
-    private String accessKey   ;
+    private String accessKey;
 
     /**
      * Secret key (password) on Minio instance
      */
     @Value("${minio.secretKey}")
-    private String secretKey ;
+    private String secretKey;
 
     /**
      * If the scheme is not provided in {@code url} property, define if the connection is done via HTTP or HTTPS.
@@ -53,7 +52,7 @@ public class MinioConfigurationProperties {
     /**
      * Bucket name for the application. The bucket must already exists on Minio.
      */
-    private String bucket="tempo";
+    private String bucket = "tempo";
 
     /**
      * Metric configuration prefix which are registered on Actuator.

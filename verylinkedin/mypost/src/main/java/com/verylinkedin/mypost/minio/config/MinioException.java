@@ -19,6 +19,7 @@ package com.verylinkedin.mypost.minio.config;
 
 /**
  * Wrapper exception for all Minio errors that occurs while fetching, removing, uploading an object to Minio.
+ *
  * @author Jordan LEFEBURE
  */
 public class MinioException extends Exception {

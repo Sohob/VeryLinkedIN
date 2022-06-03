@@ -11,12 +11,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class CreatePostTest {
-    private String userID = "userId";
-    private String content = "Hello World";
+    private final String userID = "userId";
+    private final String content = "Hello World";
     @Mock
     private PostRepository mockPostRepository;
     private CreatePost createPostUnderTest;

@@ -22,7 +22,7 @@ class GetPostTest {
 
     @BeforeEach
     void setUp() {
-        getPostUnderTest = new GetPost(mockRequest, minioService,mockPostRepository);
+        getPostUnderTest = new GetPost(mockRequest, minioService, mockPostRepository);
     }
 
     @Test

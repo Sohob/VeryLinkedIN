@@ -14,7 +14,7 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: mypost
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       annotations:
@@ -40,6 +40,6 @@ spec:
           name: mypost
           ports:
             - containerPort: 8085
-          resources: {}
+          resources: { }
       restartPolicy: Always
-status: {}
+status: { }

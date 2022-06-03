@@ -6,12 +6,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.Assert.assertEquals;
 
-public class GroupTests extends AbstractTest{
+public class GroupTests extends AbstractTest {
     @Override
     @Before
     public void setUp() {
         super.setUp();
     }
+
     @Test
     public void createGroup() throws Exception {
         String uri = "/api/v1/groups/create";
@@ -23,6 +24,7 @@ public class GroupTests extends AbstractTest{
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
     }
+
     @Test
     public void deleteGroup() throws Exception {
         String uri = "/api/v1/groups/view/{userId}/{groupId}/deletegroup";
@@ -34,6 +36,7 @@ public class GroupTests extends AbstractTest{
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
     }
+
     @Test
     public void deleteMessage() throws Exception {
         String uri = "/api/v1/groups/view/{userId}/{groupId}/deletemsg";
@@ -45,6 +48,7 @@ public class GroupTests extends AbstractTest{
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
     }
+
     @Test
     public void editMessage() throws Exception {
         String uri = "/api/v1/groups/view/{userId}/{groupId}/editmsg";
@@ -56,6 +60,7 @@ public class GroupTests extends AbstractTest{
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
     }
+
     @Test
     public void sendMessage() throws Exception {
         String uri = "/api/v1/groups/view/{userId}/{groupId}/send";
@@ -67,6 +72,7 @@ public class GroupTests extends AbstractTest{
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
     }
+
     @Test
     public void updateGroup() throws Exception {
         String uri = "/api/v1/groups/view/{userId}/{groupId}/updategroup";
@@ -78,6 +84,7 @@ public class GroupTests extends AbstractTest{
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
     }
+
     @Test
     public void viewGroup() throws Exception {
         String uri = "/api/v1/groups/view/{userId}/{groupId}";

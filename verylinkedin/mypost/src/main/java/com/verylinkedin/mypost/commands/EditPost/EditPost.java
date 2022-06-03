@@ -7,11 +7,11 @@ import com.verylinkedin.mypost.models.Post;
 
 public record EditPost(EditPostRequest request, PostRepository postRepository) implements Command {
     public Object execute() {
-        Post post = (Post) postRepository.findById(request.postId());
+        Post post = postRepository.findById(request.postId());
         post.setContent(request.content());
 
         postRepository.save(post);
-        String json = new Gson().toJson(post );
-        return json ;
+        String json = new Gson().toJson(post);
+        return json;
     }
 }

@@ -31,7 +31,7 @@ rabbitmq:
     internal-groups: internal.mypost.routing.key
 
 minio:
-  endpoint:  ${MINIO_URL:127.0.0.1}
+  endpoint: ${MINIO_URL:127.0.0.1}
   port: 9000
   accessKey: minio
   secretKey: minio123

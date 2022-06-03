@@ -16,9 +16,9 @@ import java.util.concurrent.TimeUnit;
 @Repository
 public class DiabCacheRepository implements CacheRepository {
 
-    private long ttl;
-    private StringRedisTemplate redisTemplate;
-    private ValueOperations<String, String> valueOps;
+    private final long ttl;
+    private final StringRedisTemplate redisTemplate;
+    private final ValueOperations<String, String> valueOps;
 
     @Autowired
     public DiabCacheRepository(StringRedisTemplate redisTemplate,

@@ -19,8 +19,8 @@ package com.verylinkedin.mypost.minio.config;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
-import io.minio.errors.*;
 import io.minio.errors.MinioException;
+import io.minio.errors.*;
 import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ import java.security.NoSuchAlgorithmException;
 @ConditionalOnClass(MinioClient.class)
 @EnableConfigurationProperties(MinioConfigurationProperties.class)
 @ComponentScan("com.verylinkedin.mypost.minio.config")
-public class  MinioConfiguration {
+public class MinioConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MinioConfiguration.class);
 
@@ -49,10 +49,10 @@ public class  MinioConfiguration {
     private MinioConfigurationProperties minioConfigurationProperties;
 
     @Bean
-    public MinioClient minioClient() throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, ErrorResponseException, InvalidResponseException, io.minio.errors.MinioException, XmlParserException, ServerException {
+    public MinioClient minioClient() throws IOException, InvalidKeyException, NoSuchAlgorithmException, io.minio.errors.MinioException {
 
         MinioClient minioClient;
-        System.out.println("hna "+minioConfigurationProperties.getUrl());
+        System.out.println("hna " + minioConfigurationProperties.getUrl());
 
         if (!configuredProxy()) {
             minioClient = MinioClient.builder()
@@ -89,7 +89,7 @@ public class  MinioConfiguration {
                                     .build();
                             minioClient.makeBucket(makeBucketArgs);
                         } catch (Exception e) {
-                            throw new MinioException("Cannot create bucket "+ e);
+                            throw new MinioException("Cannot create bucket " + e);
                         }
                     } else {
                         throw new IllegalStateException("Bucket does not exist: " + minioConfigurationProperties.getBucket());
