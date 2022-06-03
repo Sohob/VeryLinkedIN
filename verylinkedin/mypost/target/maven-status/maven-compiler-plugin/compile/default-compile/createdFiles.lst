@@ -12,7 +12,6 @@ com\verylinkedin\mypost\minio\config\MinioConfigurationProperties.class
 com\verylinkedin\mypost\commands\EditPost\EditPostRequest.class
 com\verylinkedin\mypost\Response.class
 com\verylinkedin\mypost\commands\DeletePost\DeletePost.class
-com\verylinkedin\mypost\PostService.class
 com\verylinkedin\mypost\models\Post$PostBuilder.class
 com\verylinkedin\mypost\commands\AddComment\AddComment.class
 com\verylinkedin\mypost\minio\config\MinioMetricConfiguration.class
@@ -24,7 +23,6 @@ com\verylinkedin\mypost\minio\config\MinioConfiguration.class
 com\verylinkedin\mypost\commands\CreatePost\CreatePost.class
 com\verylinkedin\mypost\models\Media$MediaBuilder.class
 com\verylinkedin\mypost\rabbitmq\PostsConsumer.class
-com\verylinkedin\mypost\minio\TestController.class
 com\verylinkedin\mypost\models\Post.class
 com\verylinkedin\mypost\rabbitmq\PostsConfig.class
 com\verylinkedin\mypost\MediaRepository.class
@@ -37,7 +35,6 @@ com\verylinkedin\mypost\commands\AddComment\AddCommentRequest.class
 com\verylinkedin\mypost\models\Comment.class
 com\verylinkedin\mypost\models\Media.class
 com\verylinkedin\mypost\PostRepository.class
-com\verylinkedin\mypost\MediaService.class
 com\verylinkedin\mypost\models\Comment$CommentBuilder.class
 com\verylinkedin\mypost\commands\CreateMedia\CreateMedia.class
 com\verylinkedin\mypost\minio\config\MinioHealthIndicator.class

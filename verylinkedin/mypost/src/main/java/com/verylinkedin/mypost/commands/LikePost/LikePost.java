@@ -1,5 +1,6 @@
 package com.verylinkedin.mypost.commands.LikePost;
 
+import com.google.gson.Gson;
 import com.verylinkedin.mypost.Command;
 import com.verylinkedin.mypost.PostRepository;
 import com.verylinkedin.mypost.models.Post;
@@ -21,6 +22,7 @@ public record LikePost(LikePostRequest request, PostRepository postRepository)im
             postRepository.save(post);
         }
 
-  return null ;
+           String json = new Gson().toJson(post );
+        return json ;
     }
 }

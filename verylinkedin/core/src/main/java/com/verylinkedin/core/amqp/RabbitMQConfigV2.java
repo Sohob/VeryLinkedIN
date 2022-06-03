@@ -22,12 +22,12 @@ public class RabbitMQConfigV2 {
 
     private final ConnectionFactory connectionFactory;
 
-    @Bean
-    public AsyncRabbitTemplate asyncRabbitTemplateV2(
-            RabbitTemplate rabbitTemplate){
-        rabbitTemplate.setMessageConverter(jacksonConverterV2());
-        return new AsyncRabbitTemplate(rabbitTemplate);
-    }
+//    @Bean
+//    public AsyncRabbitTemplate asyncRabbitTemplateV2(
+//            RabbitTemplate rabbitTemplate){
+//        rabbitTemplate.setMessageConverter(jacksonConverterV2());
+//        return new AsyncRabbitTemplate(rabbitTemplate);
+//    }
     //
 //
 //    @Bean
@@ -46,12 +46,12 @@ public class RabbitMQConfigV2 {
 //        return factory;
 //    }
 //
-    @Bean
-    public MessageConverter jacksonConverterV2() {
-        MessageConverter jackson2JsonMessageConverter =
-                new Jackson2JsonMessageConverter();
-        return jackson2JsonMessageConverter;
-    }
+//    @Bean
+//    public MessageConverter jacksonConverterV2() {
+//        MessageConverter jackson2JsonMessageConverter =
+//                new Jackson2JsonMessageConverter();
+//        return jackson2JsonMessageConverter;
+//    }
 //    @Bean
 //    public DefaultMessageHandlerMethodFactory myHandlerMethodFactory() {
 //        DefaultMessageHandlerMethodFactory factory = new DefaultMessageHandlerMethodFactory();

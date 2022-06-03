@@ -34,6 +34,9 @@ public class CommandMap {
     public static HashMap<String, Class> requestMap = new HashMap<>();
 
     public CommandMap() throws IOException {
+
+        requestMap.put("com.verylinkedin.core.postsRequests.CreateMediaRequest", CreateMediaRequest.class);
+        commandMap.put("com.verylinkedin.core.postsRequests.CreateMediaRequest", CreateMedia.class);
         requestMap.put("com.verylinkedin.core.postsRequests.AddCommentRequest", AddCommentRequest.class);
         commandMap.put("com.verylinkedin.core.postsRequests.AddCommentRequest", AddComment.class);
         commandMap.put("com.verylinkedin.core.postsRequests.BanUserRequest", BanUser.class);

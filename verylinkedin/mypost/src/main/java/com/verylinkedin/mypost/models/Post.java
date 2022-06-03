@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.jetbrains.annotations.Contract;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.ArrayList;
 
@@ -29,9 +30,12 @@ public class Post {
 //    private DateTime lastModified;
     private boolean isPublic;
     private ArrayList<Comment> comments;
-    private ArrayList<Media> media;
-    private ArrayList<String> likes;
-    private ArrayList<String> banned;
+    @Builder.Default
+    private ArrayList<Media> media = new ArrayList<Media>();
+    @Builder.Default
+    private ArrayList<String> likes=new ArrayList<String>();
+    @Builder.Default
+    private ArrayList<String> banned=new ArrayList<String>();
 
     @Override
     public String toString() {

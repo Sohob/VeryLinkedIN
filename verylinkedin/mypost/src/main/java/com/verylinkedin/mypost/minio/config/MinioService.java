@@ -18,16 +18,22 @@ package com.verylinkedin.mypost.minio.config;
 
 
 import io.minio.*;
+import io.minio.errors.*;
+import io.minio.http.Method;
 import io.minio.messages.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -159,9 +165,45 @@ public class MinioService {
         }
     }
 
+    public String getURL(Path path){
+        Map<String, String> reqParams = new HashMap<String, String>();
+        reqParams.put("response-content-type", "image/png");
+
+        String url =
+                null;
+        try {
+            url = minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Method.GET)
+                            .bucket(configurationProperties.getBucket())
+                            .object(path.toString())
+                            .expiry(2, TimeUnit.HOURS)
+                            .extraQueryParams(reqParams)
+                            .build());
+            return url;
+        } catch (ErrorResponseException e) {
+            throw new RuntimeException(e);
+        } catch (InsufficientDataException e) {
+            throw new RuntimeException(e);
+        } catch (InternalException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeyException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidResponseException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (XmlParserException e) {
+            throw new RuntimeException(e);
+        } catch (ServerException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * Get metadata of an object from Minio
-     *
+     *getObject
      * @param path Path with prefix to the object. Object name must be included.
      * @return Metadata of the  object
      * @throws com.verylinkedin.mypost.minio.config.MinioException if an error occur while fetching object metadatas

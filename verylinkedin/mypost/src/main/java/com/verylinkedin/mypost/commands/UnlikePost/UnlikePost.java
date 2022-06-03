@@ -1,5 +1,6 @@
 package com.verylinkedin.mypost.commands.UnlikePost;
 
+import com.google.gson.Gson;
 import com.verylinkedin.mypost.Command;
 import com.verylinkedin.mypost.PostRepository;
 import com.verylinkedin.mypost.models.Post;
@@ -16,7 +17,8 @@ public record UnlikePost(UnlikePostRequest request, PostRepository postRepositor
             post.setLikes(likes);
             postRepository.save(post);
         }
-        return null ;
+        String json = new Gson().toJson(post );
+        return json ;
 
     }
 }

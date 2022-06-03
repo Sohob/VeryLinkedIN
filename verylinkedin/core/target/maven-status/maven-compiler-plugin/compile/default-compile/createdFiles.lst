@@ -40,6 +40,7 @@ com\verylinkedin\core\amqp\RabbitMQConfig.class
 com\verylinkedin\core\postsRequests\UnlikePostRequest.class
 com\verylinkedin\core\requests\SendMessageRequest.class
 com\verylinkedin\core\postsRequests\ChangeVisibilityRequest.class
+com\verylinkedin\core\postsRequests\GetMediaRequest.class
 com\verylinkedin\core\requests\Notification.class
 com\verylinkedin\core\requests\UpdateGroupRequest.class
 com\verylinkedin\core\postsRequests\LikePostRequest.class

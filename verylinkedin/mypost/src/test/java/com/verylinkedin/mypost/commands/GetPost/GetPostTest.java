@@ -1,6 +1,7 @@
 package com.verylinkedin.mypost.commands.GetPost;
 
 import com.verylinkedin.mypost.PostRepository;
+import com.verylinkedin.mypost.minio.config.MinioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,12 +15,14 @@ class GetPostTest {
     private GetPostRequest mockRequest;
     @Mock
     private PostRepository mockPostRepository;
+    @Mock
+    private MinioService minioService;
 
     private GetPost getPostUnderTest;
 
     @BeforeEach
     void setUp() {
-        getPostUnderTest = new GetPost(mockRequest, mockPostRepository);
+        getPostUnderTest = new GetPost(mockRequest, minioService,mockPostRepository);
     }
 
     @Test

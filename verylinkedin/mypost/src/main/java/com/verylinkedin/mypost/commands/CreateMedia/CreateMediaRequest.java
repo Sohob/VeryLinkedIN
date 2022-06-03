@@ -1,4 +1,6 @@
 package com.verylinkedin.mypost.commands.CreateMedia;
 
-public record CreateMediaRequest() {
+import org.springframework.web.multipart.MultipartFile;
+
+public record CreateMediaRequest(byte[] file , String imageName ,String contentType  , String postId ) {
 }
