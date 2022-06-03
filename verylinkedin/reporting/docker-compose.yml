@@ -1,0 +1,45 @@
+version: "3.7"
+services:
+  account:
+    build:
+      context: .
+    container_name: app
+    ports:
+      - "5100:5100"
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+
+
+  rabbitmq:
+    image: rabbitmq:3.9.11-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+
+networks:
+  postgres:
+    driver: bridge
+  spring:
+    driver: bridge
+
+volumes:
+  postgres:
+  rabbitmq_data:
+  rabbitmq_log:
+  data:
+
+
