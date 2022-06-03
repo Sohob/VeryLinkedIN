@@ -25,6 +25,8 @@ volumes:
   data:
 
 networks:
+  NETWORK:
+    external: true
   default:
     external:
       name: test
