@@ -14,6 +14,19 @@ on: [ push ]
 
 jobs:
 
+  Core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 18
+        uses: actions/setup-java@v3
+        with:
+          java-version: '18'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build Posts service
+        run: mvn -B package --file verylinkedin/mypost/pom.xml
+
   Posts:
     runs-on: ubuntu-latest
 
