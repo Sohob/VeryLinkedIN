@@ -3,6 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/VeryLinkedIN.iml" filepath="$PROJECT_DIR$/.idea/VeryLinkedIN.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/account/account.iml" filepath="$PROJECT_DIR$/verylinkedin/account/account.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/core/core.iml" filepath="$PROJECT_DIR$/verylinkedin/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/groups/groups.iml" filepath="$PROJECT_DIR$/verylinkedin/groups/groups.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/mypost/mypost.iml" filepath="$PROJECT_DIR$/verylinkedin/mypost/mypost.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/notifications/notifications.iml" filepath="$PROJECT_DIR$/verylinkedin/notifications/notifications.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/reporting/reporting.iml" filepath="$PROJECT_DIR$/verylinkedin/reporting/reporting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/verylinkedin.iml" filepath="$PROJECT_DIR$/verylinkedin/verylinkedin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verylinkedin/viewpost/viewpost.iml" filepath="$PROJECT_DIR$/verylinkedin/viewpost/viewpost.iml" />
     </modules>
   </component>
 </project>

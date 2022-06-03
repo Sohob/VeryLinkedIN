@@ -3,7 +3,7 @@ package com.verylinkedin.core;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-me@SpringBootApplication
+@SpringBootApplication
 public class VerylinkedinApplication {
 
 

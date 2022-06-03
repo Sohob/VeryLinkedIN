@@ -7,6 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mypost" />
+        <module name="core" />
+        <module name="viewpost" />
+        <module name="groups" />
+        <module name="reporting" />
+        <module name="notifications" />
+        <module name="account" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -23,5 +30,10 @@
       <module name="verylinkedin" target="17" />
       <module name="viewpost" target="17" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="reporting" options="-parameters" />
+    </option>
   </component>
 </project>
