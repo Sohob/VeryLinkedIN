@@ -6,7 +6,6 @@ C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\UnlikePost\UnlikePost.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\rabbitmq\PostsConfig.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\BanUser\BanUserRequest.java
-C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\MediaRepository.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\rabbitmq\PostsConsumer.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\CreateMedia\CreateMedia.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\GetPost\GetPosts.java
@@ -16,7 +15,6 @@ C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\minio\config\MinioConfigurationProperties.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\minio\config\MinioException.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\CommandMap.java
-C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\minio\TestController.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\ChangeVisibility\ChangeVisibilityRequest.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\DeletePost\DeletePostRequest.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\models\Post.java
@@ -32,12 +30,10 @@ C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\models\Media.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\GetPost\GetPostRequest.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\EditPost\EditPostRequest.java
-C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\MediaService.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\Command.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\minio\config\MinioService.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\CreatePost\CreatePost.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\minio\config\MinioMetricConfiguration.java
-C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\PostService.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\AddComment\AddCommentRequest.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\LikePost\LikePost.java
 C:\Users\Lenovo\VeryLinkedIN\verylinkedin\mypost\src\main\java\com\verylinkedin\mypost\commands\DeletePost\DeletePost.java

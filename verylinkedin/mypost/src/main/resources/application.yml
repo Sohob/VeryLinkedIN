@@ -1,7 +1,13 @@
 server:
   port: 8099
 
+
+logging:
+  pattern:
+    console:
 spring:
+  main:
+    banner-mode: "off"
   application:
     name: mypost
   data:

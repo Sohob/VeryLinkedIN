@@ -1,0 +1,13 @@
+com\verylinkedin\mypost\commands\DeletePost\DeletePostTest.class
+com\verylinkedin\mypost\CreatePost\CreatePostTestTest.class
+com\verylinkedin\mypost\commands\AddComment\AddCommentTest.class
+com\verylinkedin\mypost\commands\GetPost\GetPostTest.class
+com\verylinkedin\mypost\commands\LikePost\LikePostTest.class
+com\verylinkedin\mypost\commands\CreatePost\CreatePostTest.class
+com\verylinkedin\mypost\commands\EditPost\EditPostTest.class
+com\verylinkedin\mypost\CreatePost\CreatePostTest.class
+com\verylinkedin\mypost\commands\BanUser\BanUserTest.class
+com\verylinkedin\mypost\commands\GetPost\GetPostsTest.class
+com\verylinkedin\mypost\commands\ChangeVisibility\ChangeVisibilityTest.class
+com\verylinkedin\mypost\commands\UnlikePost\UnlikePostTest.class
+com\verylinkedin\mypost\GetPost\GetPostsTest.class
