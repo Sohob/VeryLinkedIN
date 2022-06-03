@@ -1,0 +1,44 @@
+# Use this command to run the tests and generate a json file with the report
+# generate a different json file for each report as they override each other
+# artillery run --output report.json NAME_OF_SCRIPT.yaml
+config:
+  target: "http://localhost:8080/api/v1/accountSubApp/"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: Ramp up load
+    - duration: 600
+      arrivalRate: 50
+      name: Sustained load
+
+  payload:
+    path: "users.csv"
+    fields:
+      - "username"
+
+scenarios:
+  - flow:
+      - post:
+          url: "/account"
+          json:
+            username: "{{ username }}"
+            full_name: "userX"
+            password: "123"
+            age: 20
+            fieldOfInterest: "AI"
+            isCompany: false
+            profilePicture: "Profile_PIC"
+
+      - post:
+          url: "/login"
+          json:
+            username: "{{ username }}"
+            password: "123"
+
+
+
+            
