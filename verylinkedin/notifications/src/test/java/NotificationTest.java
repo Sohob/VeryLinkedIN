@@ -1,8 +1,8 @@
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import com.verylinkedin.core.requests.AddNotification;
-import com.verylinkedin.core.requests.AddNotificationList;
+//import com.verylinkedin.core.requests.AddNotification;
+//import com.verylinkedin.core.requests.AddNotificationList;
 import com.verylinkedin.notifications.FirebaseInitialize;
 import com.verylinkedin.notifications.NotificationsConsumer;
 import org.junit.Assert;

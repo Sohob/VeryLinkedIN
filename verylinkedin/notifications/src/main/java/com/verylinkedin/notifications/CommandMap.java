@@ -20,7 +20,7 @@ public class CommandMap {
         for(int i = 0;i < commandClassList.size();i++){
             Class commandClass = commandClassList.get(i);
             String commandClassName = commandClass.getName();
-            commandMap.put("com.verylinkedin.core.requests."+commandClassName.substring(40,commandClass.getName().length()-7), commandClass);
+            commandMap.put(commandClassName.substring(40,commandClassName.length()-7), commandClass);
         }
         System.out.println(commandMap);
     }

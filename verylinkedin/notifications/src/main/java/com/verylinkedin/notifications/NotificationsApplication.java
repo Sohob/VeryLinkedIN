@@ -9,6 +9,7 @@ import java.io.IOException;
 public class NotificationsApplication {
 
     public static void main(String[] args) throws IOException {
+        CommandMap.getInstance();
         FirebaseInitialize.initialize();
         SpringApplication.run(NotificationsApplication.class, args);
         DatabaseListener listener=new DatabaseListener("user1");

@@ -43,8 +43,9 @@
             <groupId>com.verylinkedin.app</groupId>
             <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
+           <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <properties>
