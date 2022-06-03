@@ -2,10 +2,12 @@ package com.verylinkedin.core;
 
 
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
+//import com.verylinkedin.core.auth.JwtUtil;
 import com.verylinkedin.core.auth.repository.CacheRepository;
-import com.verylinkedin.core.auth.requests.JWToken;
+import com.verylinkedin.core.auth.JWToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ import java.util.Optional;
 
 public class AccountController {
     public final CacheRepository cacheRepository;
+//    @Autowired
+//    public final JwtUtil jwtUtil;
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
@@ -99,24 +103,29 @@ public class AccountController {
 
     }
     @GetMapping("/recommend-companies")
-    public String recommendCompanies(@RequestHeader("Authorization") JWToken token) {
+    public String recommendCompanies(@RequestHeader("Authorization") String token) {
+        JWToken tokenSer = new JWToken();
+        tokenSer.setToken(token);
+        Optional<String> s = cacheRepository.get(tokenSer.getToken());
+        //&& jwtUtil.validateToken(token, userid)
+        if (s.isPresent() ) {
+            Map<String, Object> tmp = new HashMap<>();
+            tmp.put("Command", "recommendCommand");
 
-        Map<String, Object> tmp = new HashMap<>();
-        tmp.put("Command" ,"recommendCommand");
+            Map<String, Object> body = new HashMap<>();
+            body.put("token", token);
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("token" ,token.getToken());
+            tmp.put("data", body);
 
-        tmp.put("data" ,body);
+            String reply = (String) rabbitMQMessageProducer.publishAndReceive(
+                    tmp,
+                    TOPIC_NAME,
+                    ROUTING_KEY
+            );
 
-        String reply = (String)rabbitMQMessageProducer.publishAndReceive(
-                tmp,
-                TOPIC_NAME,
-                ROUTING_KEY
-        );
+            return reply.toString();
 
-        return  reply.toString();
-
+        }
+        return "Unauthorized";
     }
-
     }
