@@ -5,10 +5,13 @@ server:
 spring:
   application:
     name: core
+  redis:
+    port: 6379
+    password: eminem7otob
+    host: localhost
+    timeToLive: 10800
   rabbitmq:
     addresses: localhost:5672
-    username: bor3y
-    password: bor3y
     listener:
       simple:
         default-requeue-rejected: false

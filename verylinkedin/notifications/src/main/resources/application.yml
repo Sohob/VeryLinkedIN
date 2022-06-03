@@ -8,6 +8,8 @@ spring:
     addresses: localhost:5672
 
 rabbitmq:
+  consumers: 5
+  max-consumers: 5
   exchanges:
     internal: internal.exchange
   queues:

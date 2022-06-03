@@ -1,0 +1,22 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: notifications
+  data:
+  rabbitmq:
+    addresses: rabbitmq
+    listener:
+      simple:
+        default-requeue-rejected: false
+
+rabbitmq:
+  consumers: 5
+  max-consumers: 5
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notifications: notifications.queue
+  routing-keys:
+    internal-notifications: internal.notifications.routing.key
