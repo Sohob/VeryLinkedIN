@@ -2,14 +2,20 @@ package com.verylinkedin.core;
 
 
 import com.verylinkedin.core.amqp.RabbitMQMessageProducer;
+//import com.verylinkedin.core.auth.JwtUtil;
+import com.verylinkedin.core.auth.repository.CacheRepository;
+import com.verylinkedin.core.auth.JWToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+//import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Slf4j
@@ -20,7 +26,9 @@ import java.util.Map;
 @AllArgsConstructor
 
 public class AccountController {
-
+    public final CacheRepository cacheRepository;
+//    @Autowired
+//    public final JwtUtil jwtUtil;
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
@@ -63,15 +71,24 @@ public class AccountController {
             return reply;
 
         // use the reply as the token
+        cacheRepository.put(reply, true);
         return "AccountLogged with token:   " + reply; //
     }
-
+    @PostMapping("/logout")
+    public ResponseEntity<Object> logout(@RequestHeader JWToken token) {
+        Optional<String> s = cacheRepository.get(token.getToken());
+        if (s.isPresent()) {
+            cacheRepository.remove(token.getToken());
+            return ResponseEntity.ok("Token removed & logged out!" );
+        }
+        return ResponseEntity.badRequest().body("Token not in Cache, no one to log out!");
+    }
     @DeleteMapping("/account/{id}")
-    public String deleteAccount(@PathVariable Long id, @RequestHeader("Authorization") String token){
+    public String deleteAccount(@PathVariable Long id, @RequestHeader("Authorization") JWToken token){
 
         Map<String, Object> body = new HashMap<>();
         body.put("userID" ,id);
-        body.put("token" ,token);
+        body.put("token" ,token.getToken());
 
         Map<String, Object> tmp = new HashMap<>();
         tmp.put("Command" ,"deleteAccountCommand");
@@ -87,40 +104,28 @@ public class AccountController {
     }
     @GetMapping("/recommend-companies")
     public String recommendCompanies(@RequestHeader("Authorization") String token) {
+        JWToken tokenSer = new JWToken();
+        tokenSer.setToken(token);
+        Optional<String> s = cacheRepository.get(tokenSer.getToken());
+        //&& jwtUtil.validateToken(token, userid)
+        if (s.isPresent() ) {
+            Map<String, Object> tmp = new HashMap<>();
+            tmp.put("Command", "recommendCommand");
 
-        Map<String, Object> tmp = new HashMap<>();
-        tmp.put("Command" ,"recommendCommand");
+            Map<String, Object> body = new HashMap<>();
+            body.put("token", token);
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("token" ,token);
+            tmp.put("data", body);
 
-        tmp.put("data" ,body);
+            String reply = (String) rabbitMQMessageProducer.publishAndReceive(
+                    tmp,
+                    TOPIC_NAME,
+                    ROUTING_KEY
+            );
 
-        String reply = (String)rabbitMQMessageProducer.publishAndReceive(
-                tmp,
-                TOPIC_NAME,
-                ROUTING_KEY
-        );
+            return reply.toString();
 
-        return  reply.toString();
-
+        }
+        return "Unauthorized";
     }
-
-//    @GetMapping("/recommend-companies")
-//    public String recommendCompanies(@RequestHeader("Authorization") String token) {
-//        //parse jwt to get userid
-//        String userid = token.getToken().parse();
-//        //get the user's field of interest from postgresDB
-//        Fields userInterest = Db.get(userid)
-//        //get companies with same field of interest from postgresDB
-//        ArrayList<User> companies = Db.get(isCompany == true, fieldOfInterest == userInterest);
-//        String ret = "";
-//        for (User user : companies) {
-//            ret += user.name();
-//        }
-//        return new ResponseEntity<String>(ret,
-//                HttpStatus.OK);
-//        ;
-//    }
-
     }
