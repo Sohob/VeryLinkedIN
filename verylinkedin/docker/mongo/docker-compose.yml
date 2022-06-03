@@ -1,0 +1,33 @@
+version: "3"
+
+volumes:
+  mongo_data:
+
+networks:
+  mongo-net:
+  dev-net:
+    driver: bridge
+
+services:
+  mongo-client:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo_results
+      # - ME_CONFIG_OPTIONS_READONLY=false
+    networks:
+      - mongo-net
+      - dev-net
+
+  mongo_results:
+    container_name: mongo_container
+    image: mongo:4.0.1
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - mongo-net
+      - dev-net

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: minio
+  name: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: minio
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose.exe convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/dev-net: "true"
+        io.kompose.service: minio
+    spec:
+      containers:
+        - args:
+            - server
+            - --address
+            - :9000
+            - --console-address
+            - :9001
+            - /data
+          env:
+            - name: CONSOLE_ACCESS_KEY
+              value: minio
+            - name: CONSOLE_SECRET_KEY
+              value: minio123
+            - name: MINIO_ACCESS_KEY
+              value: minio
+            - name: MINIO_SECRET_KEY
+              value: minio123
+          image: minio/minio:latest
+          name: minio
+          ports:
+            - containerPort: 9000
+            - containerPort: 9001
+          resources: {}
+          volumeMounts:
+            - mountPath: /data
+              name: minio-volume
+      restartPolicy: Always
+      volumes:
+        - name: minio-volume
+          persistentVolumeClaim:
+            claimName: minio-volume
+status: {}
