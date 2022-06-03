@@ -76,6 +76,7 @@ public class GroupsConsumer {
                     //return new Message(jsonString.getBytes(), messageProperties);
             }
             catch (Exception e) {
+                    log.info(e.toString());
                     return new Response(e.toString(), HttpStatus.BAD_REQUEST);
             }
     }

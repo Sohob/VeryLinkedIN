@@ -14,17 +14,18 @@
         <module name="account" />
         <module name="reporting" />
         <module name="notifications" />
-        <module name="redis" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="amqp" target="17" />
       <module name="profile" target="17" />
       <module name="recommendations" target="17" />
+      <module name="redis" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="account" options="-parameters" />
       <module name="reporting" options="-parameters" />
     </option>
   </component>

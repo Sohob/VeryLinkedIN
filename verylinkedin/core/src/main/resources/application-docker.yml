@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: core
+  rabbitmq:
+    addresses: rabbitmq:5672
+    listener:
+      simple:
+        default-requeue-rejected: false

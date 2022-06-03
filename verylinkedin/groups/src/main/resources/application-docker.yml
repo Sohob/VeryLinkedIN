@@ -10,7 +10,7 @@ spring:
       port: 27017
       database: GroupChats
   rabbitmq:
-    addresses: rabbitmq
+    addresses: rabbitmq:5672
     listener:
       simple:
         default-requeue-rejected: false
