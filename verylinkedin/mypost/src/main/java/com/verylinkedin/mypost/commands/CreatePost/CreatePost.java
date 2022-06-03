@@ -14,7 +14,7 @@ public record CreatePost(CreatePostRequest request,PostRepository postRepository
                 .build();
         post.setPublic(true);
         postRepository.save(post);
-        String json = new Gson().toJson(post );
+        String json = new Gson().toJson(post);
         return json ;
 
     }
