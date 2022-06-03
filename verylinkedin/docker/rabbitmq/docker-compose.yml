@@ -1,0 +1,27 @@
+version: "3"
+
+networks:
+  dev-net:
+    driver: bridge
+
+services:
+  rabbitmq:
+    networks:
+      - dev-net
+    image: rabbitmq:3-management-alpine
+    # image: registry.gitlab.com/mgc-developers/admins/e-cluster:rabbitmq-configs
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    #   args:
+    #     - RMQ_PASSWORD=guest
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "whatever"
+      RABBITMQ_DEFAULT_USER: "guest" #"rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "guest" #"rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+

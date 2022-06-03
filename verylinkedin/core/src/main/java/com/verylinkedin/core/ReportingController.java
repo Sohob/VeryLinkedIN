@@ -23,13 +23,33 @@ public class ReportingController {
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     @PostMapping("/add-report")
-    public long notification(@RequestBody AddReportRequest request) {
-        rabbitMQMessageProducer.publish(
+    public Object addReport(@RequestBody AddReportRequest request) {
+        Object response = rabbitMQMessageProducer.publishAndReceive(
                 request,
                 "internal.exchange",
                 "internal.reports.routing.key"
         );
-        return 1;
+        return  Long.parseLong(new String((byte[])(response)));
+    }
+
+    @DeleteMapping("/delete-report")
+    public Object deleteReport(@RequestBody DeleteReportRequest request) {
+        Object response = rabbitMQMessageProducer.publishAndReceive(
+                request,
+                "internal.exchange",
+                "internal.reports.routing.key"
+        );
+        return  new String((byte[])(response));
+    }
+
+    @PutMapping("/update-report")
+    public Object updateReport(@RequestBody UpdateReportRequest request) {
+        Object response = rabbitMQMessageProducer.publishAndReceive(
+                request,
+                "internal.exchange",
+                "internal.reports.routing.key"
+        );
+        return  new String((byte[])(response));
     }
 
     @GetMapping("/get-report/{reportId}")
@@ -40,7 +60,7 @@ public class ReportingController {
                 "internal.reports.routing.key"
         );
 //        new String(res)
-        return new ResponseEntity<String>("Report details: " +  new String((byte[]) response),
+        return new ResponseEntity<String>("Report details: " + new String((byte[]) response),
                 HttpStatus.OK);
 
     }
