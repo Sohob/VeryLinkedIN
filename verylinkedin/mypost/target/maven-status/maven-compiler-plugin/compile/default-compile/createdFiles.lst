@@ -25,7 +25,6 @@ com\verylinkedin\mypost\models\Media$MediaBuilder.class
 com\verylinkedin\mypost\rabbitmq\PostsConsumer.class
 com\verylinkedin\mypost\models\Post.class
 com\verylinkedin\mypost\rabbitmq\PostsConfig.class
-com\verylinkedin\mypost\MediaRepository.class
 com\verylinkedin\mypost\commands\DeletePost\DeletePostRequest.class
 com\verylinkedin\mypost\Command.class
 com\verylinkedin\mypost\CommandMap.class

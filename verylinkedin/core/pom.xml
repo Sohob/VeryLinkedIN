@@ -22,6 +22,10 @@
             <version>0.9.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
     </dependencies>
     <artifactId>core</artifactId>
     <build>
