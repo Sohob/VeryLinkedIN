@@ -1,5 +1,8 @@
+# Use this command to run the tests and generate a json file with the report
+# generate a different json file for each report as they override each other
+# artillery run --output report.json NAME_OF_SCRIPT.yaml
 config:
-  target: "https://localhost:8080/api/v1/groups/"
+  target: "http://localhost:8080/api/v1/groups/"
   phases:
     - duration: 60
       arrivalRate: 5
