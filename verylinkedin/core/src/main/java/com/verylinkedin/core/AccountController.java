@@ -6,12 +6,14 @@ import com.verylinkedin.core.auth.repository.CacheRepository;
 import com.verylinkedin.core.auth.requests.JWToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Slf4j
@@ -69,17 +71,20 @@ public class AccountController {
         return "AccountLogged with token:   " + reply; //
     }
     @PostMapping("/logout")
-    public String logout(@RequestHeader JWToken token) {
-
-        cacheRepository.remove(token.getToken());
-        return "done";
+    public ResponseEntity<Object> logout(@RequestHeader JWToken token) {
+        Optional<String> s = cacheRepository.get(token.getToken());
+        if (s.isPresent()) {
+            cacheRepository.remove(token.getToken());
+            return ResponseEntity.ok("Token removed & logged out!" );
+        }
+        return ResponseEntity.badRequest().body("Token not in Cache, no one to log out!");
     }
     @DeleteMapping("/account/{id}")
-    public String deleteAccount(@PathVariable Long id, @RequestHeader("Authorization") String token){
+    public String deleteAccount(@PathVariable Long id, @RequestHeader("Authorization") JWToken token){
 
         Map<String, Object> body = new HashMap<>();
         body.put("userID" ,id);
-        body.put("token" ,token);
+        body.put("token" ,token.getToken());
 
         Map<String, Object> tmp = new HashMap<>();
         tmp.put("Command" ,"deleteAccountCommand");
@@ -94,13 +99,13 @@ public class AccountController {
 
     }
     @GetMapping("/recommend-companies")
-    public String recommendCompanies(@RequestHeader("Authorization") String token) {
+    public String recommendCompanies(@RequestHeader("Authorization") JWToken token) {
 
         Map<String, Object> tmp = new HashMap<>();
         tmp.put("Command" ,"recommendCommand");
 
         Map<String, Object> body = new HashMap<>();
-        body.put("token" ,token);
+        body.put("token" ,token.getToken());
 
         tmp.put("data" ,body);
 
@@ -113,22 +118,5 @@ public class AccountController {
         return  reply.toString();
 
     }
-
-//    @GetMapping("/recommend-companies")
-//    public String recommendCompanies(@RequestHeader("Authorization") String token) {
-//        //parse jwt to get userid
-//        String userid = token.getToken().parse();
-//        //get the user's field of interest from postgresDB
-//        Fields userInterest = Db.get(userid)
-//        //get companies with same field of interest from postgresDB
-//        ArrayList<User> companies = Db.get(isCompany == true, fieldOfInterest == userInterest);
-//        String ret = "";
-//        for (User user : companies) {
-//            ret += user.name();
-//        }
-//        return new ResponseEntity<String>(ret,
-//                HttpStatus.OK);
-//        ;
-//    }
 
     }
