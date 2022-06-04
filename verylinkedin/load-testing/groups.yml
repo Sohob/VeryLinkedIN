@@ -19,6 +19,54 @@ scenarios:
   - name: "Send a message"
     flow:
       - post:
-          url: "/20/62913276fe0cf54fc20ca5db/send"
+          url: "/5/62913276fe0cf54fc20ca5db/send"
           json: "{message: reflection man}"
             
+  - name: "Create a group"
+    flow:
+      - post:
+          url: "/create"
+          json: "{
+            participans: [5,2,69],
+            title: yo,
+            description: yoyo,
+            admin: 5
+            }"
+            
+  - name: "View a group"
+    flow:
+      - post:
+          url: "/5/62913276fe0cf54fc20ca5db/view"
+          json: "{}"
+            
+  - name: "Edit a message"
+    flow:
+      - post:
+          url: "/5/62913276fe0cf54fc20ca5db/editmsg"
+          json: "{
+            messageId: 0,
+            editedMessage: 3aw
+            }"
+  
+  - name: "Update a group"
+    flow:
+      - post:
+          url: "/5/62913276fe0cf54fc20ca5db/updategroup"
+          json:  "{
+            participans: [5,2,69,50,420],
+            title: oi,
+            description: oioi,
+            admin: 2
+            }"
+            
+  - name: "Delete a message"
+    flow:
+      - post:
+          url: "/5/62913276fe0cf54fc20ca5db/deletemsg"
+          json: "{messageId: 0}"
+            
+  - name: "Delete a group"
+    flow:
+      - post:
+          url: "/5/62913276fe0cf54fc20ca5db/deletegroup"
+          json: "{}"
