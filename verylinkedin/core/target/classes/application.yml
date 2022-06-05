@@ -20,8 +20,8 @@ spring:
     timeToLive: 10800
   rabbitmq:
     addresses: localhost:5672
-    username: guest
-    password: guest
+#    username: guest
+#    password: guest
     listener:
       simple:
         default-requeue-rejected: false
