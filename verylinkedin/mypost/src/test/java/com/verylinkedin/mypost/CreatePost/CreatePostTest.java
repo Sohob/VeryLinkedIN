@@ -17,13 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CreatePostTest {
     private final String userID = "userId";
     private final String content = "Hello World";
+    private final String label = "AI";
     @Mock
     private PostRepository mockPostRepository;
     private CreatePost createPostUnderTest;
 
     @BeforeEach
     void setUp() {
-        createPostUnderTest = new CreatePost(new CreatePostRequest(userID, content), mockPostRepository);
+        createPostUnderTest = new CreatePost(new CreatePostRequest(userID, content,label), mockPostRepository);
     }
 
     @Test

@@ -7,22 +7,22 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"
-
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: 'rabbitmq'
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq/
-      - rabbitmq_log:/var/log/rabbitmq/
+    networks:
+      - dev-net
+#  rabbitmq:
+#    image: rabbitmq:3-management
+#    container_name: 'rabbitmq'
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    volumes:
+#      - rabbitmq_data:/var/lib/rabbitmq/
+#      - rabbitmq_log:/var/log/rabbitmq/
 
 volumes:
   rabbitmq_data:
   rabbitmq_log:
 
 networks:
-  default:
-    external:
-      name: test
+  dev-net:
+    driver: bridge

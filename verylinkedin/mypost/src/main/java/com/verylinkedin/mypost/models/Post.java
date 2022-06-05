@@ -1,5 +1,6 @@
 package com.verylinkedin.mypost.models;
 
+import com.verylinkedin.mypost.util.Fields;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
@@ -28,6 +29,8 @@ public class Post {
 //    private DateTime lastModified;
     private boolean isPublic;
     private ArrayList<Comment> comments;
+    private Fields label ;
+
     @Builder.Default
     private ArrayList<Media> media = new ArrayList<Media>();
     @Builder.Default

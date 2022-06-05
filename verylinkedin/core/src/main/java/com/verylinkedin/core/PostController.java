@@ -159,6 +159,23 @@ public class PostController {
         return responseResponseEntity;
     }
 
+    @GetMapping("/recommend")
+    public ResponseEntity<String> recommendPosts(@RequestParam(required = true) String label) throws JSONException, JsonProcessingException {
+        byte[] viewPostsResponse = rabbitMQMessageProducer.publishAndReceive(
+                new RecommendPostsRequest(label),
+                "internal.exchange",
+                "internal.mypost.routing.key"
+        );
+        log.info("here {}", new String(viewPostsResponse));
+        Map<String, Object> map = new HashMap<String, Object>();
+        Gson gson = new Gson();
+
+        map = (Map<String, Object>) gson.fromJson("{\"result\":" + new String(viewPostsResponse) + "}", map.getClass());
+
+        ResponseEntity<String> responseResponseEntity = new ResponseEntity(map, HttpStatus.OK);
+        return responseResponseEntity;
+    }
+
     @PostMapping("/upload")
     public ResponseEntity uploadAttachement(@RequestParam("file") MultipartFile file, @RequestParam(required = true) String postId, HttpServletRequest request) throws IOException {
 
