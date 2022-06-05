@@ -22,13 +22,15 @@ config:
       - "message"
 
 scenarios:
-  - flow:
-      - post:
-          url: "/user"
-          json:
-            to: "{{ to }}"
-            message: "{{message}}"
-
-
-
-            
+    - name: "Send Notification To User And List"
+      flow:
+        - post:
+            url: "/list"
+            json:
+              to: ['user1','l2','l3','l4']
+              message: "TESTING LOAD LIST"
+        - post:
+            url: "/user"
+            json:
+              to: "{{ to }}"
+              message: "{{message}}"

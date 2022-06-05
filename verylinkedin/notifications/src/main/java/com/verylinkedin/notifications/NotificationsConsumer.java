@@ -25,10 +25,7 @@ public class NotificationsConsumer {
             JSONObject body= new JSONObject(new String(messageFromQueue.getBody()));
             String type=(String) messageFromQueue.getMessageProperties().getHeaders().get("__TypeId__");
             String[] split=type.split(".");
-            System.out.println(split);
-            System.out.println(type);
             String typeId=type.split("\\.")[type.split("\\.").length-1];
-            System.out.println(typeId);
             Class commandClass = CommandMap.getInstance().getCommandClass(typeId);
             Constructor commandConstructor = commandClass.getConstructor(JSONObject.class);
             Command commandObject = (Command) commandConstructor.newInstance(body);

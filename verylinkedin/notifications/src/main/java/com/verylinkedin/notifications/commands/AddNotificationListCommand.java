@@ -18,15 +18,12 @@ public class AddNotificationListCommand implements Command {
 
     }
     public Object execute(){
+        System.out.println("LIST");
         try {
             Firestore db = FirestoreClient.getFirestore();
-
             JSONArray arr=body.getJSONArray("to");
-
                 for(int i=0;i<arr.length();i++){
-
                  String id=arr.getString(i);
-                    System.out.println(id);
                 Map<String, Object> docData = new HashMap<>();
                 docData.put("message", body.getString("message"));
                 db.collection(id).document().set(docData);

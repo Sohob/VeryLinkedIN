@@ -17,6 +17,7 @@ public class AddNotificationCommand implements Command {
 
     }
     public Object execute(){
+        System.out.println("USER");
         try {
             Firestore db= FirestoreClient.getFirestore();
             Map<String, Object> docData = new HashMap<>();
