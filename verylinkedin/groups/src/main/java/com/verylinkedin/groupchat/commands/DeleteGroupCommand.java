@@ -19,7 +19,6 @@ public record DeleteGroupCommand(DeleteGroupRequest request, GroupRepository gro
         if (chat.getAdmin().equals(request.userId())){
             // Delete the chat
             groupRepository.delete(chat);
-
             return gson.toJson(new Response(chat.toString(), HttpStatus.OK));
         }
         return gson.toJson(new Response(chat.toString(), HttpStatus.METHOD_NOT_ALLOWED));

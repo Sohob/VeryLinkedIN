@@ -64,16 +64,10 @@ public class GroupsConsumer {
                     Command commandObject = (Command) commandConstructor.newInstance(mappedRequest, groupRepository);
                     Object response = commandObject.execute();
 
-                    //Creating the ObjectMapper object
-                    //ObjectMapper mapper = new ObjectMapper();
-                    //Converting the Object to JSONString
-                    //String jsonString = mapper.writeValueAsString(new ResponseEntity<String>((String) response, HttpStatus.OK));
-                    //System.out.println(jsonString);
                     log.info("Executed the command with response {}", response);
                     MessageProperties messageProperties = new MessageProperties();
                     messageProperties.setContentType("json");
                     return response;
-                    //return new Message(jsonString.getBytes(), messageProperties);
             }
             catch (Exception e) {
                     log.info(e.toString());
