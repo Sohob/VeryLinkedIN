@@ -15,15 +15,16 @@ public record UpdateGroupCommand(UpdateGroupRequest request, GroupRepository gro
         // Query the database for GroupChats of the same ID
         GroupChat chat = groupRepository.findById(request.groupId()).get(0);
         if(chat.getAdmin().equals(request.userId())) {
+
             // Change the chat details using the given data in the body
             chat.setParticipants(request.participants());
             chat.setTitle(request.title());
             chat.setAdmin(request.admin());
             chat.setDescription(request.description());
             chat.setGroupPhoto(request.groupPhoto());
+
             // Update the group chat in the database
             groupRepository.save(chat);
-
             return gson.toJson(new Response(chat.toString(), HttpStatus.OK));
         }
         return gson.toJson(new Response(chat.toString(), HttpStatus.METHOD_NOT_ALLOWED));
