@@ -1,4 +1,4 @@
-# Project: Scalable
+# Posts Service
 
 ## End-point: createPost
 ### Method: POST
