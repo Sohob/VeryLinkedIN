@@ -23,3 +23,60 @@ scenarios:
           json:
             userId: "1"
             content: "hi hamada"
+            label: "AI"
+
+  - name: "edit post"
+    flow:
+      - put:
+          url: "/editPost"
+          json:
+            curUserId: "1"
+            postId: "629fe09e63dca132f287cf14"
+            content: "test"
+
+  - name: "ban User"
+    flow:
+      - put:
+          url: "/banUser"
+          json:
+            curUserId: "1"
+            postId: "629fe09e63dca132f287cf14"
+            userId: "2"
+
+
+
+  - name: "add comment"
+    flow:
+      - put:
+          url: "/userId"
+          json:
+            curUserId: "5"
+            postId: "629fe09e63dca132f287cf14"
+            content: "hi hahaha"
+
+
+  - name: "unlike post"
+    flow:
+      - put:
+          url: "/unlikePost"
+          json:
+            postId: "629fe09e63dca132f287cf14"
+            curUserId: "3"
+
+  - name: "like post"
+    flow:
+      - put:
+          url: "/likePost"
+          json:
+            postId: "629fe09e63dca132f287cf14"
+            curUserId: "3"
+
+  - name: "get post"
+    flow:
+      - get:
+          url: "/629fe09e63dca132f287cf14?curUserId=1"
+
+  - name: "get post"
+    flow:
+      - get:
+          url: "/recommend?label=AI&curUserId=1"

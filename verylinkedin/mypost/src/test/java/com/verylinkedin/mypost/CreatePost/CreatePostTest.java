@@ -34,7 +34,6 @@ class CreatePostTest {
         final String result = (String) createPostUnderTest.execute();
         JsonObject jsonObject = new JsonParser().parse(result).getAsJsonObject();
         // Verify the results
-
         assertEquals(content, jsonObject.get("content").getAsString());
         assertEquals(userID, jsonObject.get("userId").getAsString());
     }

@@ -1,3 +1,4 @@
+com\verylinkedin\core\utils\Fields.class
 com\verylinkedin\core\auth\repository\DiabCacheRepository.class
 com\verylinkedin\core\responses\Response.class
 com\verylinkedin\core\requests\DeleteMessageRequest.class
@@ -7,6 +8,7 @@ com\verylinkedin\core\GroupsController.class
 com\verylinkedin\core\AccountController.class
 com\verylinkedin\core\auth\repository\CacheRepository.class
 com\verylinkedin\core\requests\DeleteReportRequest.class
+com\verylinkedin\core\postsRequests\RecommendPostsRequest.class
 com\verylinkedin\core\PostController.class
 com\verylinkedin\core\postsRequests\GetPostsRequest.class
 com\verylinkedin\core\requests\AddNotification.class

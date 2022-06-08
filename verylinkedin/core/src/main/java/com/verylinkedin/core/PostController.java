@@ -125,9 +125,9 @@ public class PostController {
     }
 
     @GetMapping("/{object}")
-    public ResponseEntity<String> getPost(@PathVariable("object") String object) throws JSONException, JsonProcessingException {
+    public ResponseEntity<String> getPost(@PathVariable("object") String object,@RequestParam(required = false) String curUserId ) throws JSONException, JsonProcessingException {
         byte[] viewPostsResponse = rabbitMQMessageProducer.publishAndReceive(
-                new GetPostRequest(object),
+                new GetPostRequest(object,curUserId),
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
@@ -142,10 +142,10 @@ public class PostController {
     }
 
     @GetMapping("")
-    public ResponseEntity<String> getPosts(@RequestParam(required = true) String userId) throws JSONException, JsonProcessingException {
+    public ResponseEntity<String> getPosts(@RequestParam(required = true) String userId,@RequestParam(required = false) String curUserId) throws JSONException, JsonProcessingException {
         log.info("viewing posts of user {}", userId);
         byte[] viewPostsResponse = rabbitMQMessageProducer.publishAndReceive(
-                new GetPostsRequest(userId),
+                new GetPostsRequest(userId,curUserId),
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
@@ -160,9 +160,9 @@ public class PostController {
     }
 
     @GetMapping("/recommend")
-    public ResponseEntity<String> recommendPosts(@RequestParam(required = true) String label) throws JSONException, JsonProcessingException {
+    public ResponseEntity<String> recommendPosts(@RequestParam(required = true) String label,@RequestParam(required = false) String curUserId) throws JSONException, JsonProcessingException {
         byte[] viewPostsResponse = rabbitMQMessageProducer.publishAndReceive(
-                new RecommendPostsRequest(label),
+                new RecommendPostsRequest(label,curUserId),
                 "internal.exchange",
                 "internal.mypost.routing.key"
         );
@@ -177,10 +177,10 @@ public class PostController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity uploadAttachement(@RequestParam("file") MultipartFile file, @RequestParam(required = true) String postId, HttpServletRequest request) throws IOException {
+    public ResponseEntity uploadAttachement(@RequestParam("file") MultipartFile file, @RequestParam(required = true) String postId, HttpServletRequest request,@RequestParam(required = false) String curUserId) throws IOException {
 
 
-        CreateMediaRequest createMediaRequest = new CreateMediaRequest(file.getBytes(), file.getOriginalFilename(), file.getContentType(), postId);
+        CreateMediaRequest createMediaRequest = new CreateMediaRequest(file.getBytes(), file.getOriginalFilename(), file.getContentType(), postId,curUserId);
         byte[] result = rabbitMQMessageProducer.publishAndReceive(
                 createMediaRequest,
                 "internal.exchange",

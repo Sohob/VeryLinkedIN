@@ -21,6 +21,7 @@ spring:
       simple:
         default-requeue-rejected: false
 rabbitmq:
+  connection-timeout: 10000
   consumers: 5
   max-consumers: 5
   exchanges:

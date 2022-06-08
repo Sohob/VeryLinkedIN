@@ -7,6 +7,7 @@ import com.verylinkedin.mypost.Command;
 import com.verylinkedin.mypost.CommandMap;
 import com.verylinkedin.mypost.PostRepository;
 import com.verylinkedin.mypost.minio.config.MinioService;
+import com.verylinkedin.mypost.models.Post;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.parser.ParseException;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 
 @Component
@@ -59,6 +61,9 @@ public class PostsConsumer {
         // Now parse the request body
         JSONObject requestJSON = new JSONObject(new String(requestFromQueue.getBody()));
         log.info("Request JSON looks like this {}", requestJSON);
+        if (!isAuthorized(requestJSON, commandClass.getName())) {
+            return "{\"message\":\"unauthorized action\"}";
+        }
 
         // We map the request to our request class
 
@@ -85,4 +90,49 @@ public class PostsConsumer {
         return response;
 
     }
+
+    public boolean isAuthorized(JSONObject requestJSON, String className) throws NoSuchMethodException {
+        String curUserId = null;
+        try {
+            curUserId = (String) requestJSON.get("curUserId");
+        } catch (Exception e) {
+
+        }
+        String postId = null;
+        try {
+            postId = (String) requestJSON.get("postId");
+        } catch (Exception e) {
+
+        }
+
+        if (curUserId != null && postId == null) return true;
+        if (className.contains("Like") || className.contains("Unlike") || className.contains("Comment") || className.contains("Recommend") || className.contains("CreateMediaRequest") || className.contains("GetPost")) {
+            if (curUserId != null) {
+
+                Post post = postRepository.findById(postId);
+                String userId = post.getUserId();
+                ArrayList<String> bannedList = post.getBanned();
+                return (userId != null && userId.equals(curUserId)) || (bannedList != null && !bannedList.contains(curUserId));
+            } else {
+                return (className.contains("GetPost") && curUserId == null);
+            }
+
+        } else if (className.contains("Ban") || className.contains("Visibility") || className.contains("DeletePost") || className.contains("EditPost") || className.contains("CreateMedia")) {
+            if (curUserId != null) {
+
+                Post post = postRepository.findById(postId);
+                String userId = post.getUserId();
+                ArrayList<String> bannedList = post.getBanned();
+                return (userId != null && userId.equals(curUserId));
+
+            } else {
+                return false;
+            }
+
+        } else return true;
+
+
+    }
+
+
 }

@@ -9,8 +9,10 @@ com\verylinkedin\mypost\commands\CreatePost\CreatePostRequest.class
 com\verylinkedin\mypost\commands\GetPost\GetPosts.class
 com\verylinkedin\mypost\minio\config\MinioException.class
 com\verylinkedin\mypost\minio\config\MinioConfigurationProperties.class
+com\verylinkedin\mypost\commands\RecommendPosts\RecommendPostsRequest.class
 com\verylinkedin\mypost\commands\EditPost\EditPostRequest.class
 com\verylinkedin\mypost\Response.class
+com\verylinkedin\mypost\util\Fields.class
 com\verylinkedin\mypost\commands\DeletePost\DeletePost.class
 com\verylinkedin\mypost\models\Post$PostBuilder.class
 com\verylinkedin\mypost\commands\AddComment\AddComment.class
@@ -31,6 +33,7 @@ com\verylinkedin\mypost\CommandMap.class
 com\verylinkedin\mypost\commands\BanUser\BanUserRequest.class
 com\verylinkedin\mypost\MyPostApplication.class
 com\verylinkedin\mypost\commands\AddComment\AddCommentRequest.class
+com\verylinkedin\mypost\commands\RecommendPosts\RecommendPosts.class
 com\verylinkedin\mypost\models\Comment.class
 com\verylinkedin\mypost\models\Media.class
 com\verylinkedin\mypost\PostRepository.class

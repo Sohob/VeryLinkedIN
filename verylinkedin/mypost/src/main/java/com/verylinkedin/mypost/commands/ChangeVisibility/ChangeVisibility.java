@@ -9,7 +9,7 @@ public record ChangeVisibility(ChangeVisibilityRequest request, PostRepository p
 
 
         Post post = postRepository.findById(request.postId());
-        if (post.getUserId().equals(request.userId())) {
+        if (post.getUserId().equals(request.curUserId())) {
             post.setPublic(!(post.isPublic()));
         }
         postRepository.save(post);

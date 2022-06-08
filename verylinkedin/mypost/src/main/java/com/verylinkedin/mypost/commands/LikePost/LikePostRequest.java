@@ -1,4 +1,4 @@
 package com.verylinkedin.mypost.commands.LikePost;
 
-public record LikePostRequest(String userId, String postId) {
+public record LikePostRequest(String postId,String curUserId) {
 }

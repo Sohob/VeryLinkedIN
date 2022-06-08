@@ -1,13 +1,12 @@
 server:
   port: 8099
 
-
-#logging:
-#  pattern:
-#    console:
+logging:
+  pattern:
+    console:
 spring:
-#  main:
-#    banner-mode: "off"
+  main:
+    banner-mode: "off"
   application:
     name: mypost
   data:
@@ -20,6 +19,7 @@ spring:
       max-request-size: 100MB
       max-file-size: 100MB
   rabbitmq:
+    connection-timeout: 10000
     #    addresses: rabbitmq
     username: guest
     password: guest
@@ -28,7 +28,7 @@ spring:
         default-requeue-rejected: false
 rabbitmq:
   consumers: 5
-  max-consumers: 5
+  max-consumers: 15
   exchanges:
     internal: internal.exchange
   queues:

@@ -12,8 +12,8 @@ public record UnlikePost(UnlikePostRequest request, PostRepository postRepositor
         Post post = postRepository.findById(request.postId());
         ArrayList<String> likes = post.getLikes();
 
-        if (likes != null && likes.contains(request.userId())) {
-            likes.remove(request.userId());
+        if (likes != null && likes.contains(request.curUserId())) {
+            likes.remove(request.curUserId());
             post.setLikes(likes);
             postRepository.save(post);
         }

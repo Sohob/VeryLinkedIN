@@ -24,6 +24,8 @@ import com.verylinkedin.mypost.commands.LikePost.LikePost;
 import com.verylinkedin.mypost.commands.LikePost.LikePostRequest;
 import com.verylinkedin.mypost.commands.RecommendPosts.RecommendPosts;
 import com.verylinkedin.mypost.commands.RecommendPosts.RecommendPostsRequest;
+import com.verylinkedin.mypost.commands.UnlikePost.UnlikePost;
+import com.verylinkedin.mypost.commands.UnlikePost.UnlikePostRequest;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,8 +39,6 @@ public class CommandMap {
     public CommandMap() throws IOException {
         requestMap.put("com.verylinkedin.core.postsRequests.RecommendPostsRequest", RecommendPostsRequest.class);
         commandMap.put("com.verylinkedin.core.postsRequests.RecommendPostsRequest", RecommendPosts.class);
-        requestMap.put("com.verylinkedin.core.postsRequests.CreateMediaRequest", CreateMediaRequest.class);
-        commandMap.put("com.verylinkedin.core.postsRequests.CreateMediaRequest", CreateMedia.class);
         requestMap.put("com.verylinkedin.core.postsRequests.AddCommentRequest", AddCommentRequest.class);
         commandMap.put("com.verylinkedin.core.postsRequests.AddCommentRequest", AddComment.class);
         commandMap.put("com.verylinkedin.core.postsRequests.BanUserRequest", BanUser.class);
@@ -59,6 +59,8 @@ public class CommandMap {
         requestMap.put("com.verylinkedin.core.postsRequests.GetPostsRequest", GetPostsRequest.class);
         commandMap.put("com.verylinkedin.core.postsRequests.LikePostRequest", LikePost.class);
         requestMap.put("com.verylinkedin.core.postsRequests.LikePostRequest", LikePostRequest.class);
+        commandMap.put("com.verylinkedin.core.postsRequests.UnlikePostRequest", UnlikePost.class);
+        requestMap.put("com.verylinkedin.core.postsRequests.UnlikePostRequest", UnlikePostRequest.class);
     }
 
     public static HashMap<String, Class> getCommandMap() {

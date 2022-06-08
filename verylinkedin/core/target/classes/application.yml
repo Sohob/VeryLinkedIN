@@ -2,8 +2,13 @@ server:
   port: 8080
   address: localhost
 
+logging:
+  pattern:
+    console:
 
 spring:
+  main:
+    banner-mode: "off"
   jackson:
     serialization:
       FAIL_ON_EMPTY_BEANS: false
@@ -28,8 +33,9 @@ spring:
 
 
 rabbitmq:
+  connection-timeout: 10000
   consumers: 5
-  max-consumers: 5
+  max-consumers: 15
   publisher-confirm-type: correlated
   publisher-returns: true
   exchanges:

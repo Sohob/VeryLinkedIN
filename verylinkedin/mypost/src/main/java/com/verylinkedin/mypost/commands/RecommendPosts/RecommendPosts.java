@@ -14,6 +14,8 @@ public record RecommendPosts(RecommendPostsRequest request, MinioService minioSe
     public String execute() {
         List<Post> result = postRepository.findByLabel(request.label());
 
+        result.removeIf( s -> (s!=null && s.getBanned().contains(request.curUserId())));
+
         for (Post post : result) {
             if (post.getMedia() != null) {
                 for (Media media : post.getMedia()) {

@@ -1,4 +1,4 @@
 package com.verylinkedin.core.postsRequests;
 
-public record EditPostRequest(String postId, String content) {
+public record EditPostRequest(String postId, String content,String curUserId)  {
 }

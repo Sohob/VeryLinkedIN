@@ -16,8 +16,8 @@ public record LikePost(LikePostRequest request, PostRepository postRepository) i
             likes = new ArrayList<String>();
         }
 
-        if (!likes.contains(request.userId())) {
-            likes.add(request.userId());
+        if (!likes.contains(request.curUserId())) {
+            likes.add(request.curUserId());
             post.setLikes(likes);
             postRepository.save(post);
         }

@@ -8,6 +8,7 @@ import com.verylinkedin.mypost.minio.config.MinioService;
 import com.verylinkedin.mypost.models.Media;
 import com.verylinkedin.mypost.models.Post;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
+import org.bson.types.ObjectId;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -21,49 +22,53 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 public record CreateMedia(CreateMediaRequest createMediaRequest, MinioService minioService,
                           PostRepository postRepository
 ) implements Command {
 
-    public static InputStream compressImage(InputStream imgStream, String imageName) {
-        float quality = 0.0f;
-        String imageExtension = imageName.substring(imageName.lastIndexOf(".") + 1);
-        // Returns an Iterator containing all currently registered ImageWriters that claim to be able to encode the named format.
-        // You don't have to register one yourself; some are provided.
-        ImageWriter imageWriter = ImageIO.getImageWritersByFormatName(imageExtension).next();
-        ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
-        imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT); // Check the api value that suites your needs.
-        // A compression quality setting of 0.0 is most generically interpreted as "high compression is important,"
-        // while a setting of 1.0 is most generically interpreted as "high image quality is important."
-        imageWriteParam.setCompressionQuality(quality);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        // MemoryCacheImageOutputStream: An implementation of ImageOutputStream that writes its output to a regular
-        // OutputStream, i.e. the ByteArrayOutputStream.
-        ImageOutputStream imageOutputStream = new MemoryCacheImageOutputStream(baos);
-        // Sets the destination to the given ImageOutputStream or other Object.
-        imageWriter.setOutput(imageOutputStream);
-        BufferedImage originalImage = null;
-        try (InputStream inputStream = imgStream) {
-            originalImage = ImageIO.read(inputStream);
-        } catch (IOException e) {
-            String info = String.format("compressImage - bufferedImage (file %s)- IOException - message: %s ", imageName, e.getMessage());
-            System.out.println(info);
-            InputStream myInputStream = new ByteArrayInputStream(baos.toByteArray());
 
-            return myInputStream;
-        }
-        IIOImage image = new IIOImage(originalImage, null, null);
-        try {
-            imageWriter.write(null, image, imageWriteParam);
-        } catch (IOException e) {
-            String info = String.format("compressImage - imageWriter (file %s)- IOException - message: %s ", imageName, e.getMessage());
-            System.out.println(info);
-        } finally {
-            imageWriter.dispose();
-        }
-        InputStream myInputStream = new ByteArrayInputStream(baos.toByteArray());
+    public static InputStream compressImage(InputStream inputStream, String imageName) throws IOException
+    {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String imageExtension = imageName.substring(imageName.lastIndexOf(".") + 1);
+
+        float imageQuality = 0.0f;
+
+        // Create the buffered image
+        BufferedImage bufferedImage = ImageIO.read(inputStream);
+
+        // Get image writers
+        Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName(imageExtension); // Input your Format Name here
+
+        if (!imageWriters.hasNext())
+            throw new IllegalStateException("Writers Not Found!!");
+
+        ImageWriter imageWriter = imageWriters.next();
+        ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
+        imageWriter.setOutput(imageOutputStream);
+
+        ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
+
+        // Set the compress quality metrics
+        imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        imageWriteParam.setCompressionQuality(imageQuality);
+
+        // Compress and insert the image into the byte array.
+        imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
+
+        byte[] imageBytes = outputStream.toByteArray();
+
+        // close all streams
+        inputStream.close();
+        outputStream.close();
+        imageOutputStream.close();
+        imageWriter.dispose();
+
+        InputStream myInputStream = new ByteArrayInputStream(imageBytes);
 
         return myInputStream;
     }
@@ -74,7 +79,8 @@ public record CreateMedia(CreateMediaRequest createMediaRequest, MinioService mi
         String contentType = createMediaRequest.contentType();
         String postId = createMediaRequest.postId();
         Post post = postRepository.findById(createMediaRequest.postId());
-        Media media = Media.builder().build();
+        Media media = Media.builder().postId(post.getId()).low_quality_image_id( String.valueOf(new ObjectId())).high_quality_image_id( String.valueOf(new ObjectId())).build();
+
 
         Path path = Path.of(imageName);
         try {
@@ -93,19 +99,22 @@ public record CreateMedia(CreateMediaRequest createMediaRequest, MinioService mi
                 map.put("low_quality_link", media.getLow_quality_link(minioService()));
 
             }
+            System.out.println(Path.of(id)+" "+ new ByteArrayInputStream(file)+" "+ contentType);
 
             minioService.upload(Path.of(id), new ByteArrayInputStream(file), contentType);
             map.put("link", media.getHigh_quality_link(minioService()));
 
 
+
             post.getMedia().add(media);
             postRepository.save(post);
-
             String json = new Gson().toJson(map);
             return json;
 
         } catch (MinioException e) {
             throw new IllegalStateException("The file cannot be upload on the internal storage. Please retry later", e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }

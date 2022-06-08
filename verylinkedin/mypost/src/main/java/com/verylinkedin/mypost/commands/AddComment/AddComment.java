@@ -11,13 +11,13 @@ public record AddComment(AddCommentRequest request, PostRepository postRepositor
     public Object execute() {
         Post post = postRepository.findById(request.postId());
         Comment comment = Comment.builder()
-                .userId(request.userId())
+                .userId(request.curUserId())
                 .content(request.content())
                 .build();
         if (post.getComments() == null)
             post.setComments(new ArrayList<Comment>());
 
-        if (post.getBanned() == null || !post.getBanned().contains(request.userId())) {
+        if (post.getBanned() == null || !post.getBanned().contains(request.curUserId())) {
             post.getComments().add(comment);
             postRepository.save(post);
 
