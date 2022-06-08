@@ -3,10 +3,19 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/verylinkedin/mypost/pom.xml" />
-        <option value="$PROJECT_DIR$/verylinkedin/core/pom.xml" />
         <option value="$PROJECT_DIR$/verylinkedin/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/Edit profile/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/verylinkedin/account/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/groups/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/notifications/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/redis/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/reporting/pom.xml" />
+        <option value="$PROJECT_DIR$/verylinkedin/viewpost/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="openjdk-18" project-jdk-type="JavaSDK" />

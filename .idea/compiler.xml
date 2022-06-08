@@ -7,13 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mypost" />
         <module name="core" />
-        <module name="viewpost" />
-        <module name="groups" />
-        <module name="reporting" />
-        <module name="notifications" />
-        <module name="account" />
+        <module name="mypost" />
+        <module name="profile" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
