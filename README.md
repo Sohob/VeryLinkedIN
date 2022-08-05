@@ -26,3 +26,32 @@ VeryLinkedIN is a replica of the infamous LinkedIN website. Our application is d
 ### Testing
 - JUnit 5
 - Artillery
+
+
+## Architecture
+
+```
+```
+
+![Project Architecture](./architecture.jpeg)
+
+```
+```
+## Teams
+
+### Subteam 1
+
+- Account
+- Profile
+- Reporting
+
+### Subteam 2
+
+- MyPost
+- ViewPost
+
+### Subteam 3
+
+- Groups
+- Core
+- Notifications
