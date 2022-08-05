@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose.exe convert
+    kompose.service.type: LoadBalancer
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mypost
+  name: mypost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mypost
+  strategy: { }
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose.exe convert
+        kompose.service.type: LoadBalancer
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/dev-net: "true"
+        io.kompose.service: mypost
+    spec:
+      containers:
+        - env:
+            - name: MINIO_URL
+              value: minio
+            - name: MONGO_SERVER
+              value: mongo
+            - name: RABBITMQ_SERVER
+              value: rabbitmq
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+          image: abzokhattab/posts-service:posts
+          name: mypost
+          ports:
+            - containerPort: 8085
+          resources: { }
+      restartPolicy: Always
+status: { }

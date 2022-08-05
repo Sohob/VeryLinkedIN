@@ -1,0 +1,39 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: mypost
+  data:
+    mongodb:
+      host: mongo
+      port: 27017
+      database: MyPost
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+  rabbitmq:
+    addresses: rabbitmq
+    username: guest
+    password: guest
+    listener:
+      simple:
+        default-requeue-rejected: false
+rabbitmq:
+  connection-timeout: 10000
+  consumers: 5
+  max-consumers: 5
+  exchanges:
+    internal: internal.exchange
+  queues:
+    groups: mypost.queue
+  routing-keys:
+    internal-groups: internal.mypost.routing.key
+
+minio:
+  endpoint: ${MINIO_URL:127.0.0.1}
+  port: 9000
+  accessKey: minio
+  secretKey: minio123
+

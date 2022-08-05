@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: core
+  rabbitmq:
+    addresses: rabbitmq:5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        default-requeue-rejected: false

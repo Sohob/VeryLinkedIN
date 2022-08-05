@@ -1,0 +1,48 @@
+server:
+  port: 8080
+  address: localhost
+
+#logging:
+#  pattern:
+#    console:
+
+spring:
+#  main:
+#    banner-mode: "off"
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  application:
+    name: core
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+  redis:
+    port: 6379
+    password: eminem7otob
+    host: localhost
+    timeToLive: 10800
+  rabbitmq:
+    addresses: localhost:5672
+#    username: guest
+#    password: guest
+    listener:
+      simple:
+        default-requeue-rejected: false
+
+
+rabbitmq:
+  connection-timeout: 10000
+  consumers: 5
+  max-consumers: 15
+  publisher-confirm-type: correlated
+  publisher-returns: true
+  exchanges:
+    internal: internal.exchange
+  queues:
+    groups: mypost.queue
+  routing-keys:
+    internal-groups: internal.mypost.routing.key
+
+
